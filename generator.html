@@ -5,294 +5,254 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crafters3D - Produktgenerator</title>
     <style>
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
+        :root {
+            --bg: #060a12;
+            --panel: rgba(12, 18, 30, 0.6);
+            --panel-solid: #0c121e;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f6f2e9;
+            --text-muted: #9aa0a6;
+            --accent: #f3b23a;
         }
-        
-        body { 
-            font-family: system-ui, -apple-system, sans-serif; 
-            background: #f8f9fa; 
-            color: #333; 
-            padding: 20px; 
-            line-height: 1.5; 
-            min-height: 100vh;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg); color: var(--text-main);
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            line-height: 1.6; padding: 2rem;
+            background-image: radial-gradient(circle at 50% 0%, rgba(243, 178, 58, 0.05), transparent 60%);
         }
-        
-        .header { 
-            text-align: center; 
-            margin-bottom: 20px; 
-            padding: 10px;
+
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 2.5rem; letter-spacing: 0.05em; }
+        .header p { color: var(--text-muted); max-width: 600px; margin: 0.5rem auto 0; }
+
+        .layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto;
         }
-        
-        .header h1 { 
-            font-size: 1.8rem; 
-            color: #212529; 
-            margin-bottom: 10px;
+        @media(max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+
+        .panel {
+            background: var(--panel-solid); border: 1px solid var(--border);
+            border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
         
-        .header p { 
-            font-size: 0.95rem; 
-            color: #6c757d; 
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .col { 
-            flex: 1; 
-            min-width: 300px; 
-            background: #fff; 
-            padding: 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
-        }
-        
-        label { 
-            display: block; 
-            margin-top: 15px; 
-            font-weight: bold; 
-            font-size: 0.9rem; 
-            color: #212529;
-        }
-        
-        input, textarea { 
-            width: 100%; 
-            padding: 10px; 
-            margin-top: 5px; 
-            border: 1px solid #ced4da; 
-            border-radius: 5px; 
-            font-family: inherit; 
+        input[type="text"], input[type="number"], textarea {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            color: #fff; padding: 0.8rem; border-radius: 0.5rem; font-family: inherit;
             transition: border-color 0.2s;
         }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #0d6efd;
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 80px; }
+
+        .color-picker { display: flex; gap: 0.5rem; }
+        .color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+        .color-btn.active { border-color: #fff; transform: scale(1.1); }
+
+        .file-upload-wrapper {
+            position: relative; border: 2px dashed var(--border); border-radius: 0.5rem;
+            padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s;
+            background: rgba(0,0,0,0.2);
         }
-        
-        textarea { 
-            resize: vertical; 
-            min-height: 80px; 
+        .file-upload-wrapper:hover { border-color: var(--accent); background: rgba(243, 178, 58, 0.05); }
+        .file-upload-wrapper input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+
+        .product-card {
+            background: rgba(12, 18, 30, 0.6); border-radius: 1.2rem; border: 1px solid var(--border);
+            padding: 1.2rem; display: flex; flex-direction: column; position: relative; margin-bottom: 2rem;
         }
-        
-        .preview-card { 
-            border: 1px solid #eaeaea; 
-            border-radius: 10px; 
-            padding: 20px; 
-            text-align: center; 
-            margin-top: 10px;
+        .product-media {
+            height: 250px; border-radius: 0.8rem; background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.2rem; position: relative; overflow: hidden; background-size: cover; background-position: center;
         }
-        
-        .preview-image { 
-            width: 100%; 
-            height: 200px; 
-            background: #e9ecef; 
-            border-radius: 8px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin-bottom: 15px; 
-            font-size: 1.1rem; 
-            color: #6c757d; 
-            overflow: hidden; 
-            word-break: break-all;
-            padding: 10px;
+        .badge {
+            position: absolute; top: 0.8rem; left: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 999px;
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--card-accent); color: #fff; z-index: 2;
         }
-        
-        .preview-card h3 { 
-            margin-bottom: 10px; 
-            font-size: 1.4rem; 
+        .product-specs { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--card-accent); font-weight: 700; margin-bottom: 0.4rem; }
+        .product-card h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+        .product-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .product-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.2rem; }
+        .price-tag { font-size: 1.4rem; font-weight: 800; }
+        .btn-add { border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; background: transparent; color: #fff; padding: 0.6rem 1.4rem; font-weight: 600; }
+
+        .code-output {
+            width: 100%; height: 250px; background: #000; color: #58d08b; font-family: monospace;
+            padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); resize: none;
         }
-        
-        .preview-card p { 
-            font-size: 0.95rem; 
-            color: #666; 
-            margin-bottom: 15px; 
-            min-height: 40px; 
+
+        .btn-copy {
+            width: 100%; background: var(--accent); color: #000; border: none; padding: 1rem;
+            border-radius: 0.5rem; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 1rem;
         }
+        .btn-copy:hover { transform: translateY(-2px); }
         
-        .preview-card .price { 
-            display: block; 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            margin-bottom: 15px; 
-        }
-        
-        .buy-btn { 
-            width: 100%; 
-            background-color: #198754; 
-            color: white; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 5px; 
-            font-size: 1.1rem; 
-            cursor: not-allowed; 
-            opacity: 0.8; 
-        }
-        
-        .code-output { 
-            width: 100%; 
-            height: 250px; 
-            margin-top: 15px; 
-            background: #282c34; 
-            color: #abb2bf; 
-            font-family: monospace; 
-            font-size: 0.9rem; 
-            padding: 15px; 
-            border-radius: 5px; 
-            border: none; 
-        }
-        
-        .instructions { 
-            background: #cfe2ff; 
-            border-left: 4px solid #0d6efd; 
-            padding: 15px; 
-            margin-bottom: 20px; 
-            font-size: 0.9rem; 
-            color: #084298;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .copy-btn {
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        
-        .copy-btn:active {
-            background-color: #0b5ed7;
+        .instructions {
+            background: rgba(125, 211, 252, 0.1); border-left: 4px solid #7dd3fc;
+            padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 2rem; font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>🛠️ Crafters3D Produktgenerator</h1>
-        <p>Eftersom webbplatsen är helt statisk (hostad på GitHub) kan produkter inte läggas till via en databas. Använd detta verktyg för att snabbt skapa exakt den HTML-kod du behöver!</p>
-    </div>
-    
-    <div class="grid">
-        <div class="col">
-            <div class="instructions">
-                💡 <strong>Gör så här:</strong> Skriv in detaljerna för din nya 3D-printade produkt här. Verktyget genererar automatiskt koden du ska kopiera och lägga in i <code>index.html</code>.
-            </div>
-            
-            <label for="name">📦 Produktnamn</label>
-            <input type="text" id="name" placeholder="t.ex. Blockig Panda" oninput="updateCode()">
-            
-            <label for="price">💰 Pris (kr)</label>
-            <input type="number" id="price" placeholder="149" oninput="updateCode()">
-            
-            <label for="desc">📝 Beskrivning</label>
-            <textarea id="desc" placeholder="En söt och detaljerad blockig panda..." oninput="updateCode()"></textarea>
-            
-            <label for="image">🖼️ Bildens filnamn (Måste laddas upp på GitHub först)</label>
-            <input type="text" id="image" placeholder="block-panda.jpg" oninput="updateCode()">
-        </div>
-        
-        <div class="col">
-            <label>👀 Förhandsgranskning</label>
-            <div class="preview-card">
-                <div class="preview-image" id="prevImg">🖼️ block-panda.jpg</div>
-                <h3 id="prevName">Blockig Panda</h3>
-                <p id="prevDesc">En söt och detaljerad blockig panda...</p>
-                <span class="price" id="prevPrice">149 kr</span>
-                <button class="buy-btn">🛒 Lägg i varukorg</button>
-            </div>
-        </div>
+        <h1>🛠️ Crafters3D Studio Generator</h1>
+        <p>Bygg din produkt visuellt och kopiera koden till din index.html.</p>
     </div>
 
-    <div class="grid" style="margin-top: 0;">
-        <div class="col">
-            <label>💻 Din genererade HTML-kod</label>
-            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 5px;">
-                1. Klicka på "Kopiera kod"<br>
-                2. Öppna din <code>index.html</code> på GitHub.<br>
-                3. Klistra in koden inuti <code>&lt;section class="product-grid"&gt;</code> (gärna längst ner innan <code>&lt;/section&gt;</code>).
-            </p>
-            <textarea id="output" class="code-output" readonly></textarea>
-            <button class="copy-btn" onclick="copyCode()">📋 Kopiera kod</button>
-            <span id="copyMsg" style="color: #198754; font-size: 0.9rem; margin-left: 10px; display: none;">Kopierad! ✔️</span>
+    <div class="layout">
+        <div class="panel">
+            <h3 style="margin-bottom: 1.5rem;">Produktdetaljer</h3>
+            
+            <div class="form-group">
+                <label>Produktnamn</label>
+                <input type="text" id="p-name" placeholder="T.ex. Geometrisk Vas" oninput="updateAll()">
+            </div>
+            
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <label>Pris (kr)</label>
+                    <input type="number" id="p-price" placeholder="249" oninput="updateAll()">
+                </div>
+                <div>
+                    <label>Badge (Frivillig)</label>
+                    <input type="text" id="p-badge" placeholder="T.ex. Nyhet" oninput="updateAll()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Specifikationer / Taggar</label>
+                <input type="text" id="p-specs" placeholder="T.ex. Matt Vit PLA · 15cm" oninput="updateAll()">
+            </div>
+
+            <div class="form-group">
+                <label>Beskrivning</label>
+                <textarea id="p-desc" placeholder="Kort beskrivning av produkten..." oninput="updateAll()"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Accentfärg</label>
+                <div class="color-picker">
+                    <div class="color-btn active" style="background: #f3b23a;" data-color="#f3b23a" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #7dd3fc;" data-color="#7dd3fc" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #58d08b;" data-color="#58d08b" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #f87171;" data-color="#f87171" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #a78bfa;" data-color="#a78bfa" onclick="selectColor(this)"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Lokal Bild (Bara för Live Preview)</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" accept="image/*" onchange="handleImage(event)">
+                    <span id="file-label">Välj fil från datorn...</span>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    Bildens filnamn används automatiskt i koden. Kom ihåg att ladda upp själva bilden till GitHub!
+                </p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3 style="margin-bottom: 1.5rem;">Live Preview</h3>
+            
+            <div id="preview-container"></div>
+
+            <div class="instructions">
+                <strong>Så här gör du:</strong><br>
+                1. Klicka på "Kopiera kod".<br>
+                2. Öppna <code>index.html</code> på GitHub.<br>
+                3. Leta upp <code>const products = [ ... ]</code>.<br>
+                4. Klistra in koden inuti hakparenteserna <code>[ ]</code>.<br>
+                5. Ladda upp din bildfil till GitHub så den ligger bredvid index.html.
+            </div>
+
+            <textarea class="code-output" id="code-output" readonly></textarea>
+            <button class="btn-copy" onclick="copyCode()">📋 Kopiera kod</button>
+            <p id="copy-msg" style="color: #58d08b; font-weight: bold; text-align: center; margin-top: 0.5rem; opacity: 0; transition: opacity 0.3s;">Kopierad till urklipp!</p>
         </div>
     </div>
 
     <script>
-        function updateCode() {
-            const name = document.getElementById('name').value || 'Ny Produkt';
-            const price = document.getElementById('price').value || '0';
-            const desc = document.getElementById('desc').value || 'Kort beskrivning av produkten...';
-            const image = document.getElementById('image').value || 'bild.jpg';
-            
-            // Generate URL-friendly ID based on name
-            const id = name.toLowerCase()
-                           .replace(/ä/g, 'a')
-                           .replace(/å/g, 'a')
-                           .replace(/ö/g, 'o')
-                           .replace(/[^a-z0-9]+/g, '-')
-                           .replace(/(^-|-$)+/g, '') || 'produkt-id';
+        let selectedColor = '#f3b23a';
+        let imageFileName = '';
+        let imageLocalUrl = '';
 
-            // Update Visual Preview
-            document.getElementById('prevName').innerText = name;
-            document.getElementById('prevPrice').innerText = price + ' kr';
-            document.getElementById('prevDesc').innerText = desc;
-            document.getElementById('prevImg').innerText = '🖼️ ' + image;
+        const generateId = () => 'prod_' + Math.random().toString(36).substr(2, 6);
 
-            // Generate HTML Code String
-            const htmlCode = `            <!-- Produkt: ${name} -->
-            <div class="product-card">
-                <img class="product-image" src="${image}" alt="${name}">
-                <h3>${name}</h3>
-                <p>${desc}</p>
-                <span class="price">${price} kr</span>
-                <button class="buy-btn snipcart-add-item"
-                    data-item-id="${id}"
-                    data-item-price="${price}.00"
-                    data-item-url="/"
-                    data-item-description="${desc}"
-                    data-item-image="${image}"
-                    data-item-name="${name}">
-                    Lägg i varukorg
-                </button>
-            </div>`;
-
-            document.getElementById('output').value = htmlCode;
+        function selectColor(el) {
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            selectedColor = el.getAttribute('data-color');
+            updateAll();
         }
 
-        function copyCode() {
-            const codeOutput = document.getElementById('output');
-            codeOutput.select();
-            codeOutput.setSelectionRange(0, 99999); // For mobile devices
-            
-            try {
-                navigator.clipboard.writeText(codeOutput.value);
-                const msg = document.getElementById('copyMsg');
-                msg.style.display = 'inline';
-                setTimeout(() => { msg.style.display = 'none'; }, 2000);
-            } catch (err) {
-                // Fallback for older browsers
-                document.execCommand('copy');
-                const msg = document.getElementById('copyMsg');
-                msg.style.display = 'inline';
-                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+        function handleImage(e) {
+            const file = e.target.files;
+            if(file) {
+                imageFileName = file.name;
+                document.getElementById('file-label').innerText = file.name;
+                imageLocalUrl = URL.createObjectURL(file);
+                updateAll();
             }
         }
 
-        // Initialize empty state on page load
-        updateCode();
+        function updateAll() {
+            const name = document.getElementById('p-name').value || 'Produktnamn';
+            const price = document.getElementById('p-price').value || '0';
+            const badge = document.getElementById('p-badge').value;
+            const specs = document.getElementById('p-specs').value || 'Specifikationer';
+            const desc = document.getElementById('p-desc').value || 'Beskrivning av produkten visas här...';
+            
+            const badgeHtml = badge ? `<div class="badge">${badge}</div>` : '';
+            const visualHtml = imageLocalUrl 
+                ? `<div class="product-media" style="background-image: url('${imageLocalUrl}'); border-color: ${selectedColor}40;">${badgeHtml}</div>`
+                : `<div class="product-media" style="background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.5)); border-color: ${selectedColor}40;">${badgeHtml}<span style="font-size:3rem; opacity:0.5;">🖼️</span></div>`;
+
+            document.getElementById('preview-container').innerHTML = `
+                <article class="product-card" style="--card-accent: ${selectedColor};">
+                    ${visualHtml}
+                    <p class="product-specs">${specs}</p>
+                    <h3>${name}</h3>
+                    <p class="product-desc">${desc}</p>
+                    <div class="product-bottom">
+                        <span class="price-tag">${price} kr</span>
+                        <button class="btn-add">Köp Nu</button>
+                    </div>
+                </article>
+            `;
+
+            const jsObject = `{
+    id: '${generateId()}',
+    name: '${name.replace(/'/g, "\\'")}',
+    price: ${price},
+    image: '${imageFileName}', 
+    description: '${desc.replace(/'/g, "\\'")}',
+    specs: '${specs.replace(/'/g, "\\'")}',
+    accent: '${selectedColor}',
+    badge: '${badge.replace(/'/g, "\\'")}'
+},`;
+            
+            document.getElementById('code-output').value = jsObject;
+        }
+
+        function copyCode() {
+            const textarea = document.getElementById('code-output');
+            textarea.select();
+            document.execCommand('copy');
+            
+            const msg = document.getElementById('copy-msg');
+            msg.style.opacity = '1';
+            setTimeout(() => msg.style.opacity = '0', 2000);
+        }
+
+        updateAll();
     </script>
 </body>
 </html>
