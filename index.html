@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min 3D-Print Butik</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Snipcart setup för varukorg och betalning -->
+    <link rel="preconnect" href="https://app.snipcart.com">
+    <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.2/default/snipcart.css" />
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <h1>PolyPrints 3D</h1> <!-- Byt ut mot ditt butiksnamn -->
+            
+            <!-- Varukorgsknapp -->
+            <button class="cart-btn snipcart-checkout">
+                Varukorg (<span class="snipcart-items-count">0</span>)
+                <span class="snipcart-total-price">0 kr</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Unika 3D-printade produkter direkt till din dörr</h2>
+            <p>Vi tillverkar högkvalitativa inredningsdetaljer och smarta prylar i miljövänlig PLA-plast.</p>
+        </section>
+
+        <section class="product-grid">
+            <!-- Produkt 1 -->
+            <div class="product-card">
+                <div class="product-image" style="background-color: #e0e0e0;">
+                    <!-- Här lägger vi in riktiga bilder senare -->
+                    <span>📷 Bild på Vas</span>
+                </div>
+                <h3>Geometrisk Vas</h3>
+                <p>En snygg och modern vas med polygon-design. Perfekt för torkade blommor.</p>
+                <span class="price">199 kr</span>
+                <button class="buy-btn snipcart-add-item"
+                    data-item-id="vas-01"
+                    data-item-price="199.00"
+                    data-item-url="/"
+                    data-item-description="Geometrisk vas i vit PLA."
+                    data-item-image=""
+                    data-item-name="Geometrisk Vas">
+                    Lägg i varukorg
+                </button>
+            </div>
+
+            <!-- Produkt 2 -->
+            <div class="product-card">
+                <div class="product-image" style="background-color: #e0e0e0;">
+                    <span>📷 Bild på Hörlursställ</span>
+                </div>
+                <h3>Hörlursställ</h3>
+                <p>Håll ordning på skrivbordet med detta stilrena och stabila ställ för dina hörlurar.</p>
+                <span class="price">149 kr</span>
+                <button class="buy-btn snipcart-add-item"
+                    data-item-id="hs-02"
+                    data-item-price="149.00"
+                    data-item-url="/"
+                    data-item-description="Hörlursställ i svart PLA."
+                    data-item-image=""
+                    data-item-name="Hörlursställ">
+                    Lägg i varukorg
+                </button>
+            </div>
+
+            <!-- Produkt 3 -->
+            <div class="product-card">
+                <div class="product-image" style="background-color: #e0e0e0;">
+                    <span>📷 Bild på Flexi-drake</span>
+                </div>
+                <h3>Ledad Flexi-Drake</h3>
+                <p>En rolig, fullt rörlig drake som är printad i ett enda stycke! Fantastisk leksak eller prydnad.</p>
+                <span class="price">249 kr</span>
+                <button class="buy-btn snipcart-add-item"
+                    data-item-id="drake-03"
+                    data-item-price="249.00"
+                    data-item-url="/"
+                    data-item-description="Ledad drake i regnbågsfärg."
+                    data-item-image=""
+                    data-item-name="Ledad Flexi-Drake">
+                    Lägg i varukorg
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PolyPrints 3D. Alla rättigheter reserverade.</p>
+    </footer>
+
+    <!-- Snipcart Script (Använder en test-nyckel tills du skaffar en egen) -->
+    <script async src="https://cdn.snipcart.com/themes/v3.2.2/default/snipcart.js"></script>
+    <div hidden id="snipcart" data-api-key="ZDJlOWExZDEtYTZmMi00NzM4LThlNjgtNmJkZWIxM2RkOTY3NjM4NDg1OTY4Nzc3MjM0NTM2"></div>
+
+</body>
+</html>
