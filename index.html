@@ -52,12 +52,12 @@
         .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.04em; color: var(--text-main); }
         .header-controls { display: flex; gap: 0.8rem; align-items: center; }
 
-        .icon-btn { background: transparent; border: 1px solid var(--border-light); border-radius: 8px; padding: 0.5rem; font-size: 1.2rem; cursor: pointer; color: var(--text-main); transition: all 0.2s; }
+        .icon-btn { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid var(--border-light); border-radius: 8px; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; color: var(--text-main); text-decoration: none; transition: all 0.2s; }
         .icon-btn:hover { background: var(--text-main); color: var(--bg-surface); }
-        .lang-btn { background: transparent; border: 1px solid var(--border-light); border-radius: 8px; padding: 0.5rem 0.8rem; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+        .lang-btn { background: transparent; border: 1px solid var(--border-light); border-radius: 8px; padding: 0 0.8rem; height: 40px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
         .lang-btn span.active { color: var(--text-main); }
 
-        .cart-btn { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 10px; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; transition: all 0.3s var(--ease-spring); }
+        .cart-btn { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 10px; height: 40px; padding: 0 1.2rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; transition: all 0.3s var(--ease-spring); }
         .cart-btn:hover { transform: scale(1.05); }
         .badge-count { background: var(--bg-surface); color: var(--text-main); padding: 0.1rem 0.6rem; border-radius: 12px; font-weight: 800; transition: 0.2s; }
 
@@ -160,6 +160,10 @@
         .faq-a { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; display: none; }
         .faq-a.open { display: block; animation: fadeUp 0.3s ease; }
 
+        /* Stor kontaktknapp i footer */
+        .footer-contact-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; background: var(--text-main); color: var(--bg-surface); padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: 800; text-decoration: none; transition: transform 0.2s var(--ease-spring); }
+        .footer-contact-btn:hover { transform: translateY(-3px); }
+
         /* --- Modals (Payment) --- */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
@@ -180,6 +184,8 @@
         <div class="nav-block">
             <div class="logo">CRAFTERS</div>
             <div class="header-controls">
+                <!-- NY KONTAKTKNAPP I HEADER -->
+                <a href="mailto:contact.crafters3d@gmail.com" class="icon-btn" title="Kontakta Oss">✉️</a>
                 <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
                 <button onclick="toggleLang()" class="lang-btn"><span id="lang-en" class="active">EN</span> / <span id="lang-sv">SV</span></button>
                 <button class="cart-btn" onclick="toggleCart(true)" id="main-cart-btn">
@@ -255,6 +261,9 @@
                 </p>
                 <p style="margin-top: 1rem; font-weight: 700;" data-i18n="footerShip">📍 Skickas från Sverige</p>
                 <p style="margin-top: 0.5rem;" data-i18n="footerSec">🔒 Säker betalning</p>
+                
+                <!-- NY KONTAKTKNAPP I FOOTER -->
+                <a href="mailto:contact.crafters3d@gmail.com" class="footer-contact-btn" data-i18n="contactBtn">✉️ Kontakta oss</a>
             </div>
         </div>
     </footer>
@@ -376,7 +385,7 @@
         const dict = {
             en: {
                 cartBtn: "Cart", heroH1: "Shaping the <span class='accent-text'>Future</span> <br>of Matter.", heroP: "Premium 3D prints for the modern workspace.",
-                searchPlaceholder: "Search figures...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Figures", cats_decor: "Decor",
+                searchPlaceholder: "Search artifacts...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Artifacts", cats_decor: "Decor",
                 emptyGrid: "No artifacts found...", addBtn: "Add +", soldOut: "Sold Out", onlyLeft: "Only {x} left!",
                 cartTitle: "Your Cart", subtotal: "Subtotal", discount: "Discount", shipping: "Shipping", total: "Total", checkoutBtn: "Checkout",
                 emptyCart: "Cart is empty.", payMethodTitle: "Payment Method", copyBtn: "Copy Message",
@@ -384,7 +393,7 @@
                 ppInst: "Copy the message below and paste it as a comment on PayPal.",
                 addressPlaceholder: "[NAME, STREET, ZIP, CITY, COUNTRY]", 
                 freeSh: "Free Shipping!", awaySh: "Buy for {x} SEK more to get Free Shipping!",
-                promoPlaceholder: "Promo code (e.g. BETA10)", promoBtn: "Apply",
+                promoPlaceholder: "Promo code (e.g. BETA10)", promoBtn: "Apply", contactBtn: "✉️ Contact Us",
                 
                 // --- FAQ EN ---
                 faqTitle: "FAQ / Information",
@@ -400,7 +409,7 @@
             },
             sv: {
                 cartBtn: "Varukorg", heroH1: "Formar <span class='accent-text'>Framtidens</span> <br>Materia.", heroP: "Premium 3D-utskrifter för den moderna arbetsytan.",
-                searchPlaceholder: "Sök figurer...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Figurer", cats_decor: "Inredning",
+                searchPlaceholder: "Sök artefakter...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Artefakter", cats_decor: "Inredning",
                 emptyGrid: "Inga produkter hittades...", addBtn: "Lägg till +", soldOut: "Slutsåld", onlyLeft: "Endast {x} kvar!",
                 cartTitle: "Din Varukorg", subtotal: "Delsumma", discount: "Rabatt", shipping: "Frakt", total: "Totalt", checkoutBtn: "Gå till kassan",
                 emptyCart: "Varukorgen är tom.", payMethodTitle: "Välj Betalsätt", copyBtn: "Kopiera Meddelande",
@@ -408,7 +417,7 @@
                 ppInst: "Kopiera meddelandet nedan och klistra in som kommentar på PayPal.",
                 addressPlaceholder: "[NAMN, GATA, POSTNR, ORT, LAND]", 
                 freeSh: "Du har Fri Frakt!", awaySh: "Köp för {x} SEK till för Fri Frakt!",
-                promoPlaceholder: "Rabattkod (t.ex. BETA10)", promoBtn: "Använd",
+                promoPlaceholder: "Rabattkod (t.ex. BETA10)", promoBtn: "Använd", contactBtn: "✉️ Kontakta oss",
                 
                 // --- FAQ SV ---
                 faqTitle: "FAQ / Information",
@@ -465,7 +474,6 @@
                 const visualHtml = p.image ? `<div class="product-media" style="background-image: url('${p.image}');">${badgeHtml}</div>` : `<div class="product-media" style="background: linear-gradient(135deg, transparent, rgba(0,0,0,0.05)); border-bottom: 4px solid ${p.accent};">${badgeHtml}</div>`;
                 
                 let stockWarning = '';
-                // SKICKAR MED "this" TILL ADDTOCART FÖR ATT KUNNA ANIMERA KNAPPEN
                 let btnHtml = `<button class="add-btn" onclick="addToCart('${p.id}', this)">${t('addBtn')}</button>`;
                 
                 if(p.stock === 0) {
@@ -510,7 +518,6 @@
             }
             updateCartUI();
 
-            // --- ANIMERA KNAPPEN MAN KLICKADE PÅ ---
             if(btnElement) {
                 const originalText = btnElement.innerHTML;
                 btnElement.innerHTML = '✓';
@@ -526,16 +533,13 @@
                 }, 800);
             }
 
-            // --- ANIMERA VARUKORGEN UPPE I MENYN ---
             const mainCartBtn = document.getElementById('main-cart-btn');
             const badge = document.getElementById('cart-count');
             
-            // Nollställ animationer för att kunna köra dem igen
             mainCartBtn.classList.remove('cart-bump');
             badge.classList.remove('badge-pop');
-            void mainCartBtn.offsetWidth; // Framtvingar en reflow i webbläsaren
+            void mainCartBtn.offsetWidth; 
             
-            // Starta animationerna
             mainCartBtn.classList.add('cart-bump');
             badge.classList.add('badge-pop');
         };
