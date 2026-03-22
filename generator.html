@@ -3,256 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crafters3D - Produktgenerator</title>
+    <title>Crafters3D | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #060a12;
-            --panel: rgba(12, 18, 30, 0.6);
-            --panel-solid: #0c121e;
-            --border: rgba(255, 255, 255, 0.1);
-            --text-main: #f6f2e9;
-            --text-muted: #9aa0a6;
-            --accent: #f3b23a;
+            --bg: #0f172a;
+            --panel: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #334155;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 2rem; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .header h1 { font-weight: 900; letter-spacing: -0.03em; }
+        
+        .dashboard { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; align-items: start; }
+        
+        /* Vänster: Produktlista */
+        .sidebar { background: var(--panel); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border); height: calc(100vh - 150px); overflow-y: auto; }
+        .product-item { background: var(--bg); border: 1px solid var(--border); padding: 1rem; border-radius: 12px; margin-bottom: 1rem; transition: 0.2s; }
+        .product-item:hover { border-color: var(--accent); }
+        .prod-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .prod-title { font-weight: 800; font-size: 1.1rem; }
+        .prod-stock { background: var(--border); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 800; }
+        .prod-stock.low { background: #7f1d1d; color: #fca5a5; }
+        .action-btns { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        
+        button { font-family: 'Inter', sans-serif; font-weight: 800; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .btn-edit { background: var(--accent); color: white; padding: 0.5rem 1rem; flex: 1; }
+        .btn-edit:hover { background: var(--accent-hover); }
+        .btn-del { background: transparent; color: var(--danger); border: 1px solid var(--danger); padding: 0.5rem 1rem; }
+        .btn-del:hover { background: var(--danger); color: white; }
+        .btn-new { background: var(--success); color: white; padding: 1rem; width: 100%; font-size: 1.1rem; margin-bottom: 1.5rem; }
+        .btn-new:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
 
-        body {
-            background-color: var(--bg); color: var(--text-main);
-            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-            line-height: 1.6; padding: 2rem;
-            background-image: radial-gradient(circle at 50% 0%, rgba(243, 178, 58, 0.05), transparent 60%);
-        }
-
-        .header { text-align: center; margin-bottom: 3rem; }
-        .header h1 { font-size: 2.5rem; letter-spacing: 0.05em; }
-        .header p { color: var(--text-muted); max-width: 600px; margin: 0.5rem auto 0; }
-
-        .layout {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto;
-        }
-        @media(max-width: 800px) { .layout { grid-template-columns: 1fr; } }
-
-        .panel {
-            background: var(--panel-solid); border: 1px solid var(--border);
-            border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
+        /* Höger: Formulär & Kod */
+        .main-panel { display: flex; flex-direction: column; gap: 2rem; }
+        .card { background: var(--panel); padding: 2rem; border-radius: 16px; border: 1px solid var(--border); }
+        
+        .form-title { color: var(--accent); margin-bottom: 1.5rem; font-weight: 900; font-size: 1.5rem; }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
         .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
         
-        input[type="text"], input[type="number"], textarea {
-            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
-            color: #fff; padding: 0.8rem; border-radius: 0.5rem; font-family: inherit;
-            transition: border-color 0.2s;
-        }
-        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
-        textarea { resize: vertical; min-height: 80px; }
+        input, select, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: white; padding: 0.8rem 1rem; border-radius: 8px; font-family: inherit; font-size: 1rem; outline: none; transition: 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+        input[type="color"] { padding: 0.2rem; height: 46px; cursor: pointer; }
 
-        .color-picker { display: flex; gap: 0.5rem; }
-        .color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
-        .color-btn.active { border-color: #fff; transform: scale(1.1); }
-
-        .file-upload-wrapper {
-            position: relative; border: 2px dashed var(--border); border-radius: 0.5rem;
-            padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s;
-            background: rgba(0,0,0,0.2);
-        }
-        .file-upload-wrapper:hover { border-color: var(--accent); background: rgba(243, 178, 58, 0.05); }
-        .file-upload-wrapper input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
-
-        .product-card {
-            background: rgba(12, 18, 30, 0.6); border-radius: 1.2rem; border: 1px solid var(--border);
-            padding: 1.2rem; display: flex; flex-direction: column; position: relative; margin-bottom: 2rem;
-        }
-        .product-media {
-            height: 250px; border-radius: 0.8rem; background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.2rem; position: relative; overflow: hidden; background-size: cover; background-position: center;
-        }
-        .badge {
-            position: absolute; top: 0.8rem; left: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 999px;
-            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--card-accent); color: #fff; z-index: 2;
-        }
-        .product-specs { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--card-accent); font-weight: 700; margin-bottom: 0.4rem; }
-        .product-card h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
-        .product-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
-        .product-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.2rem; }
-        .price-tag { font-size: 1.4rem; font-weight: 800; }
-        .btn-add { border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; background: transparent; color: #fff; padding: 0.6rem 1.4rem; font-weight: 600; }
-
-        .code-output {
-            width: 100%; height: 250px; background: #000; color: #58d08b; font-family: monospace;
-            padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); resize: none;
-        }
-
-        .btn-copy {
-            width: 100%; background: var(--accent); color: #000; border: none; padding: 1rem;
-            border-radius: 0.5rem; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 1rem;
-        }
-        .btn-copy:hover { transform: translateY(-2px); }
+        .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
+        .lang-box { background: var(--bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); }
+        .lang-box h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 1.1rem; }
         
-        .instructions {
-            background: rgba(125, 211, 252, 0.1); border-left: 4px solid #7dd3fc;
-            padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 2rem; font-size: 0.9rem;
-        }
+        .btn-save { background: var(--success); color: white; padding: 1.2rem; font-size: 1.2rem; width: 100%; margin-top: 2rem; }
+        .btn-save:hover { filter: brightness(1.1); }
+
+        /* Kod-område */
+        .code-area { position: relative; }
+        pre { background: #020617; color: #34d399; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; font-size: 0.9rem; line-height: 1.5; max-height: 300px; }
+        .btn-copy { position: absolute; top: 1rem; right: 1rem; background: white; color: black; padding: 0.5rem 1rem; }
+
+        @media (max-width: 1000px) { .dashboard { grid-template-columns: 1fr; } .sidebar { height: auto; max-height: 400px; } }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>🛠️ Crafters3D Studio Generator</h1>
-        <p>Bygg din produkt visuellt och kopiera koden till din index.html.</p>
+        <h1>🛠️ Crafters3D Dashboard</h1>
+        <button class="btn-del" onclick="clearAll()">⚠️ Rensa hela databasen</button>
     </div>
 
-    <div class="layout">
-        <div class="panel">
-            <h3 style="margin-bottom: 1.5rem;">Produktdetaljer</h3>
-            
-            <div class="form-group">
-                <label>Produktnamn</label>
-                <input type="text" id="p-name" placeholder="T.ex. Geometrisk Vas" oninput="updateAll()">
-            </div>
-            
-            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div>
-                    <label>Pris (kr)</label>
-                    <input type="number" id="p-price" placeholder="249" oninput="updateAll()">
-                </div>
-                <div>
-                    <label>Badge (Frivillig)</label>
-                    <input type="text" id="p-badge" placeholder="T.ex. Nyhet" oninput="updateAll()">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Specifikationer / Taggar</label>
-                <input type="text" id="p-specs" placeholder="T.ex. Matt Vit PLA · 15cm" oninput="updateAll()">
-            </div>
-
-            <div class="form-group">
-                <label>Beskrivning</label>
-                <textarea id="p-desc" placeholder="Kort beskrivning av produkten..." oninput="updateAll()"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Accentfärg</label>
-                <div class="color-picker">
-                    <div class="color-btn active" style="background: #f3b23a;" data-color="#f3b23a" onclick="selectColor(this)"></div>
-                    <div class="color-btn" style="background: #7dd3fc;" data-color="#7dd3fc" onclick="selectColor(this)"></div>
-                    <div class="color-btn" style="background: #58d08b;" data-color="#58d08b" onclick="selectColor(this)"></div>
-                    <div class="color-btn" style="background: #f87171;" data-color="#f87171" onclick="selectColor(this)"></div>
-                    <div class="color-btn" style="background: #a78bfa;" data-color="#a78bfa" onclick="selectColor(this)"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Lokal Bild (Bara för Live Preview)</label>
-                <div class="file-upload-wrapper">
-                    <input type="file" accept="image/*" onchange="handleImage(event)">
-                    <span id="file-label">Välj fil från datorn...</span>
-                </div>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
-                    Bildens filnamn används automatiskt i koden. Kom ihåg att ladda upp själva bilden till GitHub!
-                </p>
+    <div class="dashboard">
+        
+        <!-- VÄNSTER: PRODUKTLISTA -->
+        <div class="sidebar">
+            <button class="btn-new" onclick="startNew()">+ Skapa Ny Produkt</button>
+            <div id="product-list">
+                <!-- Genereras med JS -->
             </div>
         </div>
 
-        <div class="panel">
-            <h3 style="margin-bottom: 1.5rem;">Live Preview</h3>
+        <!-- HÖGER: FORMULÄR & KOD -->
+        <div class="main-panel">
             
-            <div id="preview-container"></div>
+            <div class="card" id="form-card">
+                <h2 class="form-title" id="form-title">✨ Skapar ny produkt</h2>
+                
+                <form id="prod-form">
+                    <div class="grid-3">
+                        <div class="form-group"><label>ID (Måste vara unikt!)</label><input type="text" id="p_id" placeholder="t.ex. prod_panda" required></div>
+                        <div class="form-group"><label>Pris (SEK)</label><input type="number" id="p_price" required></div>
+                        <div class="form-group"><label>Lagersaldo</label><input type="number" id="p_stock" value="5" required></div>
+                    </div>
 
-            <div class="instructions">
-                <strong>Så här gör du:</strong><br>
-                1. Klicka på "Kopiera kod".<br>
-                2. Öppna <code>index.html</code> på GitHub.<br>
-                3. Leta upp <code>const products = [ ... ]</code>.<br>
-                4. Klistra in koden inuti hakparenteserna <code>[ ]</code>.<br>
-                5. Ladda upp din bildfil till GitHub så den ligger bredvid index.html.
+                    <div class="grid-3">
+                        <div class="form-group"><label>Vikt (Gram)</label><input type="number" id="p_weight" value="100" required></div>
+                        <div class="form-group"><label>Kategori</label>
+                            <select id="p_cat">
+                                <option value="Tools">Verktyg</option>
+                                <option value="Mobs">Artefakter</option>
+                                <option value="Decor">Inredning</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Temafärg (Hex)</label><input type="color" id="p_accent" value="#3b82f6"></div>
+                    </div>
+
+                    <div class="form-group"><label>Bild URL (Lämna tom för färg-bakgrund)</label><input type="text" id="p_image" placeholder="https://..."></div>
+
+                    <div class="lang-grid">
+                        <div class="lang-box" style="border-top: 4px solid #f59e0b;">
+                            <h3>🇸🇪 Svenska</h3>
+                            <div class="form-group"><label>Namn</label><input type="text" id="sv_name" required></div>
+                            <div class="form-group"><label>Bricka (t.ex. NYHET)</label><input type="text" id="sv_badge"></div>
+                            <div class="form-group"><label>Specifikation (t.ex. Vit PLA)</label><input type="text" id="sv_specs"></div>
+                            <div class="form-group"><label>Beskrivning</label><textarea id="sv_desc" rows="3"></textarea></div>
+                        </div>
+
+                        <div class="lang-box" style="border-top: 4px solid #3b82f6;">
+                            <h3>🇬🇧 English</h3>
+                            <div class="form-group"><label>Name</label><input type="text" id="en_name" required></div>
+                            <div class="form-group"><label>Badge (t.ex. NEW)</label><input type="text" id="en_badge"></div>
+                            <div class="form-group"><label>Specs (t.ex. White PLA)</label><input type="text" id="en_specs"></div>
+                            <div class="form-group"><label>Description</label><textarea id="en_desc" rows="3"></textarea></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-save" id="btn-save">💾 Spara Produkt</button>
+                </form>
             </div>
 
-            <textarea class="code-output" id="code-output" readonly></textarea>
-            <button class="btn-copy" onclick="copyCode()">📋 Kopiera kod</button>
-            <p id="copy-msg" style="color: #58d08b; font-weight: bold; text-align: center; margin-top: 0.5rem; opacity: 0; transition: opacity 0.3s;">Kopierad till urklipp!</p>
+            <div class="card code-area">
+                <button class="btn-copy" onclick="copyCode()">Kopiera Koden 📋</button>
+                <h3 style="margin-bottom:1rem; color:var(--muted);">Klistra in detta i din index.html:</h3>
+                <pre id="code-output">// Koden genereras här...</pre>
+            </div>
+
         </div>
     </div>
 
     <script>
-        let selectedColor = '#f3b23a';
-        let imageFileName = '';
-        let imageLocalUrl = '';
+        let db = JSON.parse(localStorage.getItem('crafters_db')) || [];
+        let isEditingMode = false; // Håller koll på om vi redigerar eller skapar ny
 
-        const generateId = () => 'prod_' + Math.random().toString(36).substr(2, 6);
-
-        function selectColor(el) {
-            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            selectedColor = el.getAttribute('data-color');
-            updateAll();
-        }
-
-        function handleImage(e) {
-            const file = e.target.files;
-            if(file) {
-                imageFileName = file.name;
-                document.getElementById('file-label').innerText = file.name;
-                imageLocalUrl = URL.createObjectURL(file);
-                updateAll();
-            }
-        }
-
-        function updateAll() {
-            const name = document.getElementById('p-name').value || 'Produktnamn';
-            const price = document.getElementById('p-price').value || '0';
-            const badge = document.getElementById('p-badge').value;
-            const specs = document.getElementById('p-specs').value || 'Specifikationer';
-            const desc = document.getElementById('p-desc').value || 'Beskrivning av produkten visas här...';
+        const form = document.getElementById('prod-form');
+        
+        // --- RENDERA LISTAN TILL VÄNSTER ---
+        const renderList = () => {
+            const listEl = document.getElementById('product-list');
             
-            const badgeHtml = badge ? `<div class="badge">${badge}</div>` : '';
-            const visualHtml = imageLocalUrl 
-                ? `<div class="product-media" style="background-image: url('${imageLocalUrl}'); border-color: ${selectedColor}40;">${badgeHtml}</div>`
-                : `<div class="product-media" style="background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.5)); border-color: ${selectedColor}40;">${badgeHtml}<span style="font-size:3rem; opacity:0.5;">🖼️</span></div>`;
-
-            document.getElementById('preview-container').innerHTML = `
-                <article class="product-card" style="--card-accent: ${selectedColor};">
-                    ${visualHtml}
-                    <p class="product-specs">${specs}</p>
-                    <h3>${name}</h3>
-                    <p class="product-desc">${desc}</p>
-                    <div class="product-bottom">
-                        <span class="price-tag">${price} kr</span>
-                        <button class="btn-add">Köp Nu</button>
+            if(db.length === 0) {
+                listEl.innerHTML = `<p style="color:var(--muted); text-align:center; padding: 2rem 0;">Inga produkter än.</p>`;
+            } else {
+                listEl.innerHTML = db.map((p, i) => {
+                    const stockClass = p.stock <= 3 ? 'low' : '';
+                    return `
+                    <div class="product-item">
+                        <div class="prod-header">
+                            <div class="prod-title"><span style="color:${p.accent}">●</span> ${p.sv.name}</div>
+                            <div class="prod-stock ${stockClass}">${p.stock} st</div>
+                        </div>
+                        <div style="color:var(--muted); font-size:0.85rem; margin-bottom:0.5rem;">Pris: ${p.price} SEK | Kat: ${p.category}</div>
+                        <div class="action-btns">
+                            <button class="btn-edit" onclick="editProduct('${p.id}')">✏️ Redigera</button>
+                            <button class="btn-del" onclick="deleteProduct('${p.id}')">✕</button>
+                        </div>
                     </div>
-                </article>
-            `;
-
-            const jsObject = `{
-    id: '${generateId()}',
-    name: '${name.replace(/'/g, "\\'")}',
-    price: ${price},
-    image: '${imageFileName}', 
-    description: '${desc.replace(/'/g, "\\'")}',
-    specs: '${specs.replace(/'/g, "\\'")}',
-    accent: '${selectedColor}',
-    badge: '${badge.replace(/'/g, "\\'")}'
-},`;
+                    `;
+                }).join('');
+            }
             
-            document.getElementById('code-output').value = jsObject;
-        }
+            generateCode();
+            localStorage.setItem('crafters_db', JSON.stringify(db));
+        };
 
-        function copyCode() {
-            const textarea = document.getElementById('code-output');
-            textarea.select();
-            document.execCommand('copy');
+        // --- SKAPA NY ---
+        const startNew = () => {
+            isEditingMode = false;
+            form.reset();
+            document.getElementById('p_id').readOnly = false; // Tillåt att skriva ID
+            document.getElementById('form-title').innerHTML = "✨ Skapar ny produkt";
+            document.getElementById('form-title').style.color = "var(--success)";
+            document.getElementById('btn-save').innerHTML = "➕ Lägg till i databasen";
+        };
+
+        // --- REDIGERA EXISTERANDE ---
+        const editProduct = (id) => {
+            const prod = db.find(p => p.id === id);
+            if(!prod) return;
+
+            isEditingMode = true;
+            document.getElementById('form-title').innerHTML = "✏️ Redigerar: " + prod.sv.name;
+            document.getElementById('form-title').style.color = "var(--accent)";
+            document.getElementById('btn-save').innerHTML = "💾 Spara ändringar";
             
-            const msg = document.getElementById('copy-msg');
-            msg.style.opacity = '1';
-            setTimeout(() => msg.style.opacity = '0', 2000);
-        }
+            // Fyll formuläret
+            document.getElementById('p_id').value = prod.id;
+            document.getElementById('p_id').readOnly = true; // Lås ID så det inte ändras av misstag
+            document.getElementById('p_price').value = prod.price;
+            document.getElementById('p_stock').value = prod.stock;
+            document.getElementById('p_weight').value = prod.weight;
+            document.getElementById('p_cat').value = prod.category;
+            document.getElementById('p_accent').value = prod.accent;
+            document.getElementById('p_image').value = prod.image || '';
 
-        updateAll();
+            document.getElementById('sv_name').value = prod.sv.name;
+            document.getElementById('sv_badge').value = prod.sv.badge || '';
+            document.getElementById('sv_specs').value = prod.sv.specs || '';
+            document.getElementById('sv_desc').value = prod.sv.description || '';
+
+            document.getElementById('en_name').value = prod.en.name;
+            document.getElementById('en_badge').value = prod.en.badge || '';
+            document.getElementById('en_specs').value = prod.en.specs || '';
+            document.getElementById('en_desc').value = prod.en.description || '';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrolla upp till formuläret
+        };
+
+        // --- SPARA / UPPDATERA ---
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const prodData = {
+                id: document.getElementById('p_id').value,
+                price: Number(document.getElementById('p_price').value),
+                weight: Number(document.getElementById('p_weight').value),
+                stock: Number(document.getElementById('p_stock').value),
+                image: document.getElementById('p_image').value,
+                accent: document.getElementById('p_accent').value,
+                category: document.getElementById('p_cat').value,
+                en: {
+                    name: document.getElementById('en_name').value,
+                    badge: document.getElementById('en_badge').value,
+                    specs: document.getElementById('en_specs').value,
+                    description: document.getElementById('en_desc').value
+                },
+                sv: {
+                    name: document.getElementById('sv_name').value,
+                    badge: document.getElementById('sv_badge').value,
+                    specs: document.getElementById('sv_specs').value,
+                    description: document.getElementById('sv_desc').value
+                }
+            };
+
+            if(isEditingMode) {
+                // Hitta och ersätt
+                const index = db.findIndex(p => p.id === prodData.id);
+                if(index !== -1) db[index] = prodData;
+            } else {
+                // Kolla så ID inte redan finns
+                if(db.find(p => p.id === prodData.id)) {
+                    alert("Ett objekt med detta ID finns redan! Använd ett unikt ID.");
+                    return;
+                }
+                db.push(prodData);
+            }
+            
+            renderList();
+            startNew(); // Återställ formuläret
+        });
+
+        // --- TA BORT ---
+        const deleteProduct = (id) => {
+            if(confirm("Är du säker på att du vill ta bort denna produkt?")) {
+                db = db.filter(p => p.id !== id);
+                renderList();
+                if(document.getElementById('p_id').value === id) startNew();
+            }
+        };
+
+        // --- RENSA ALLT ---
+        const clearAll = () => {
+            if(confirm("VARNING! Detta raderar ALLA produkter från din dator. Är du 100% säker?")) {
+                db = [];
+                renderList();
+                startNew();
+            }
+        };
+
+        // --- GENERERA OCH KOPIERA KOD ---
+        const generateCode = () => {
+            const codeStr = `let products = ` + JSON.stringify(db, null, 4) + `;`;
+            document.getElementById('code-output').textContent = codeStr;
+        };
+
+        const copyCode = () => {
+            navigator.clipboard.writeText(document.getElementById('code-output').textContent);
+            alert("✅ Koden är kopierad! Öppna din index.html, markera din gamla let products = [...] och klistra in.");
+        };
+
+        // Start
+        renderList();
+        startNew();
     </script>
 </body>
 </html>
