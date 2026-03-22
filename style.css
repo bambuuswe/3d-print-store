@@ -89,16 +89,14 @@ header {
     transform: translateY(-5px);
 }
 
+/* Uppdaterad för att hantera riktiga bilder istället för färgade rutor */
 .product-image {
     width: 100%;
     height: 250px;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
     margin-bottom: 15px;
-    color: #888;
-    font-size: 1.2rem;
+    background-color: #e0e0e0; /* Visas om bilden inte hittas direkt */
 }
 
 .product-card h3 {
@@ -110,7 +108,7 @@ header {
     font-size: 0.95rem;
     color: #666;
     margin-bottom: 15px;
-    height: 60px; /* Håller korten lika höga */
+    height: 60px;
 }
 
 .price {
