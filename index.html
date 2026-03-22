@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Min 3D-Print Butik</title>
+    <title>Crafters3D</title>
     <link rel="stylesheet" href="style.css">
     
     <!-- Snipcart setup för varukorg och betalning -->
@@ -15,7 +15,7 @@
 
     <header>
         <div class="header-container">
-            <h1>PolyPrints 3D</h1> <!-- Byt ut mot ditt butiksnamn -->
+            <h1>Crafters3D</h1>
             
             <!-- Varukorgsknapp -->
             <button class="cart-btn snipcart-checkout">
@@ -32,31 +32,26 @@
         </section>
 
         <section class="product-grid">
-            <!-- Produkt 1 -->
+            <!-- Produkt 1: Blockig Panda -->
             <div class="product-card">
-                <div class="product-image" style="background-color: #e0e0e0;">
-                    <!-- Här lägger vi in riktiga bilder senare -->
-                    <span>📷 Bild på Vas</span>
-                </div>
-                <h3>Geometrisk Vas</h3>
-                <p>En snygg och modern vas med polygon-design. Perfekt för torkade blommor.</p>
-                <span class="price">199 kr</span>
+                <img class="product-image" src="block-panda.jpg" alt="Blockig Panda">
+                <h3>Blockig Panda</h3>
+                <p>En söt och detaljerad blockig panda, perfekt för skrivbordet. Utskriven i högkvalitativ PLA.</p>
+                <span class="price">149 kr</span>
                 <button class="buy-btn snipcart-add-item"
-                    data-item-id="vas-01"
-                    data-item-price="199.00"
+                    data-item-id="panda-01"
+                    data-item-price="149.00"
                     data-item-url="/"
-                    data-item-description="Geometrisk vas i vit PLA."
-                    data-item-image=""
-                    data-item-name="Geometrisk Vas">
+                    data-item-description="En blockig panda i plast."
+                    data-item-image="block-panda.jpg"
+                    data-item-name="Blockig Panda">
                     Lägg i varukorg
                 </button>
             </div>
 
-            <!-- Produkt 2 -->
+            <!-- Produkt 2: Hörlursställ -->
             <div class="product-card">
-                <div class="product-image" style="background-color: #e0e0e0;">
-                    <span>📷 Bild på Hörlursställ</span>
-                </div>
+                <img class="product-image" src="horlursstall.jpg" alt="Hörlursställ">
                 <h3>Hörlursställ</h3>
                 <p>Håll ordning på skrivbordet med detta stilrena och stabila ställ för dina hörlurar.</p>
                 <span class="price">149 kr</span>
@@ -65,17 +60,15 @@
                     data-item-price="149.00"
                     data-item-url="/"
                     data-item-description="Hörlursställ i svart PLA."
-                    data-item-image=""
+                    data-item-image="horlursstall.jpg"
                     data-item-name="Hörlursställ">
                     Lägg i varukorg
                 </button>
             </div>
 
-            <!-- Produkt 3 -->
+            <!-- Produkt 3: Flexi-drake -->
             <div class="product-card">
-                <div class="product-image" style="background-color: #e0e0e0;">
-                    <span>📷 Bild på Flexi-drake</span>
-                </div>
+                <img class="product-image" src="drake.jpg" alt="Ledad Flexi-Drake">
                 <h3>Ledad Flexi-Drake</h3>
                 <p>En rolig, fullt rörlig drake som är printad i ett enda stycke! Fantastisk leksak eller prydnad.</p>
                 <span class="price">249 kr</span>
@@ -84,7 +77,7 @@
                     data-item-price="249.00"
                     data-item-url="/"
                     data-item-description="Ledad drake i regnbågsfärg."
-                    data-item-image=""
+                    data-item-image="drake.jpg"
                     data-item-name="Ledad Flexi-Drake">
                     Lägg i varukorg
                 </button>
@@ -93,7 +86,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 PolyPrints 3D. Alla rättigheter reserverade.</p>
+        <p>&copy; 2026 Crafters3D. Alla rättigheter reserverade.</p>
     </footer>
 
     <!-- Snipcart Script (Använder en test-nyckel tills du skaffar en egen) -->
