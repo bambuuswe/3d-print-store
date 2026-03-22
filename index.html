@@ -184,7 +184,6 @@
         <div class="nav-block">
             <div class="logo">CRAFTERS</div>
             <div class="header-controls">
-                <!-- NY KONTAKTKNAPP I HEADER -->
                 <a href="mailto:contact.crafters3d@gmail.com" class="icon-btn" title="Kontakta Oss">✉️</a>
                 <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
                 <button onclick="toggleLang()" class="lang-btn"><span id="lang-en" class="active">EN</span> / <span id="lang-sv">SV</span></button>
@@ -261,8 +260,7 @@
                 </p>
                 <p style="margin-top: 1rem; font-weight: 700;" data-i18n="footerShip">📍 Skickas från Sverige</p>
                 <p style="margin-top: 0.5rem;" data-i18n="footerSec">🔒 Säker betalning</p>
-                
-                <!-- NY KONTAKTKNAPP I FOOTER -->
+
                 <a href="mailto:contact.crafters3d@gmail.com" class="footer-contact-btn" data-i18n="contactBtn">✉️ Kontakta oss</a>
             </div>
         </div>
@@ -361,23 +359,95 @@
         ];
 
         // --- PRODUKTER ---
-        let products = [
-            {
-                id: 'prod_4eclrs', price: 69, weight: 100, stock: 15, image: '', accent: '#10b981', category: 'Mobs',
-                en: { name: 'Panda Pal', badge: 'NEW', specs: 'White & Black PLA', description: 'Your new little desk buddy.' },
-                sv: { name: 'Panda Figur', badge: 'NYHET', specs: 'Svart/Vit PLA', description: 'Din nya lilla kompis på skrivbordet.' }
-            },
-            {
-                id: 'prod_diam', price: 449, weight: 600, stock: 2, image: '', accent: '#06b6d4', category: 'Tools',
-                en: { name: 'Pickaxe Stand', badge: 'Premium', specs: 'Carbon Fiber', description: 'Holds your headset with style.' },
-                sv: { name: 'Hacka Stativ', badge: 'Premium', specs: 'Kolfiber-komposit', description: 'Håller ditt headset med stil.' }
-            },
-            {
-                id: 'prod_sold', price: 199, weight: 200, stock: 0, image: '', accent: '#ef4444', category: 'Decor',
-                en: { name: 'Redstone Lamp', badge: 'Rare', specs: 'LED Included', description: 'Glowing block.' },
-                sv: { name: 'Redstone Lampa', badge: 'Sällsynt', specs: 'LED Ingår', description: 'Lyser upp mörkret.' }
-            }
-        ];
+       let products = [
+    {
+        id: "iron_sword",
+        price: 99,
+        weight: 100,
+        stock: 1,
+        image: "",
+        accent: "#8f8f8f",
+        category: "Tools",
+        en: {
+            name: "Iron Sword",
+            badge: "NEW",
+            specs: "White and Black PLA",
+            description: ""
+        },
+        sv: {
+            name: "Järn Svärd",
+            badge: "NYHET",
+            specs: "Vit och Svart PLA",
+            description: ""
+        }
+    },
+    {
+        id: "panda_figur",
+        price: 59,
+        weight: 22,
+        stock: 1,
+        image: "https://i.ibb.co/jZ3kWd2q/IMG-9332.png",
+        accent: "#000000",
+        badgeColor: "#0080c0",
+        category: "Mobs",
+        en: {
+            name: "Panda Pal",
+            badge: "NEW",
+            specs: "White and Black PLA",
+            description: "Panda Pal – your new little buddy, perfect for your desk, office, or living room to add a touch of joy to your day!"
+        },
+        sv: {
+            name: "Panda Figur",
+            badge: "NYHET",
+            specs: "Vit och Svart PLA",
+            description: "Panda Figur – din nya lilla kompis som passar perfekt på skrivbordet, kontoret eller i vardagsrummet för en extra dos glädje varje dag!"
+        }
+    },
+    {
+        id: "disc_red",
+        price: 49,
+        weight: 10,
+        stock: 1,
+        image: "https://i.ibb.co/KpVfhVqh/IMG-9336.png",
+        accent: "#ff0000",
+        badgeColor: "#0080c0",
+        category: "Decor",
+        en: {
+            name: "Music Disc Coaster - Red",
+            badge: "NEW",
+            specs: "Black and Red PLA",
+            description: "Coaster inspired by the iconic Minecraft music discs. Designed to protect your surfaces while adding a clean gaming aesthetic to your setup. Great for everyday use or as a gift for fans."
+        },
+        sv: {
+            name: "Musik Disk Underlägg - Röd",
+            badge: "NYHET",
+            specs: "Svart och Röd PLA",
+            description: "Underlägg inspirerat av Minecrafts ikoniska music discs. Perfekt för att skydda bordet samtidigt som du ger din setup en tydlig gamer-känsla. Passar utmärkt för både vardag och som present till fans."
+        }
+    },
+    {
+        id: "disc_white",
+        price: 49,
+        weight: 100,
+        stock: 1,
+        image: "https://i.ibb.co/nNWd3W7Z/IMG-9337.png",
+        accent: "#000000",
+        badgeColor: "#0080c0",
+        category: "Decor",
+        en: {
+            name: "Music Disc Coaster - White",
+            badge: "NEW",
+            specs: "White and Black PLA",
+            description: "Coaster inspired by the iconic Minecraft music discs. Perfect for protecting your surfaces while adding a clear gaming aesthetic to your setup. Great for everyday use or as a gift for fans. This white design fits perfectly in a clean setup."
+        },
+        sv: {
+            name: "Musik Disk Underlägg - Vit",
+            badge: "NYHET",
+            specs: "Vit och Svart PLA",
+            description: "Underlägg inspirerat av Minecrafts ikoniska music discs. Perfekt för att skydda bordet samtidigt som du ger din setup en tydlig gamer-känsla. Passar utmärkt för både vardag och som present till fans. Denna vita design passar perfekt för en clean setup."
+        }
+    }
+];
 
         let currentLang = 'sv'; 
         let currentCat = 'ALL';
@@ -385,7 +455,7 @@
         const dict = {
             en: {
                 cartBtn: "Cart", heroH1: "Shaping the <span class='accent-text'>Future</span> <br>of Matter.", heroP: "Premium 3D prints for the modern workspace.",
-                searchPlaceholder: "Search artifacts...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Artifacts", cats_decor: "Decor",
+                searchPlaceholder: "Search figures...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Figures", cats_decor: "Decor",
                 emptyGrid: "No artifacts found...", addBtn: "Add +", soldOut: "Sold Out", onlyLeft: "Only {x} left!",
                 cartTitle: "Your Cart", subtotal: "Subtotal", discount: "Discount", shipping: "Shipping", total: "Total", checkoutBtn: "Checkout",
                 emptyCart: "Cart is empty.", payMethodTitle: "Payment Method", copyBtn: "Copy Message",
@@ -409,7 +479,7 @@
             },
             sv: {
                 cartBtn: "Varukorg", heroH1: "Formar <span class='accent-text'>Framtidens</span> <br>Materia.", heroP: "Premium 3D-utskrifter för den moderna arbetsytan.",
-                searchPlaceholder: "Sök artefakter...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Artefakter", cats_decor: "Inredning",
+                searchPlaceholder: "Sök figurer...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Figurer", cats_decor: "Inredning",
                 emptyGrid: "Inga produkter hittades...", addBtn: "Lägg till +", soldOut: "Slutsåld", onlyLeft: "Endast {x} kvar!",
                 cartTitle: "Din Varukorg", subtotal: "Delsumma", discount: "Rabatt", shipping: "Frakt", total: "Totalt", checkoutBtn: "Gå till kassan",
                 emptyCart: "Varukorgen är tom.", payMethodTitle: "Välj Betalsätt", copyBtn: "Kopiera Meddelande",
@@ -470,7 +540,11 @@
             if (list.length === 0) { grid.innerHTML = `<p style="color:var(--text-muted); font-weight:600;">${t('emptyGrid')}</p>`; return; }
 
             grid.innerHTML = list.map((p, index) => {
-                const badgeHtml = getField(p, 'badge') ? `<div class="badge-tag">${getField(p, 'badge')}</div>` : '';
+                
+                // Om 'badgeColor' finns appliceras den direkt, annars anpassar den sig efter Dark/Light mode som vanligt
+                const badgeStyle = p.badgeColor ? `background: ${p.badgeColor}; color: #ffffff;` : ``;
+                const badgeHtml = getField(p, 'badge') ? `<div class="badge-tag" style="${badgeStyle}">${getField(p, 'badge')}</div>` : '';
+                
                 const visualHtml = p.image ? `<div class="product-media" style="background-image: url('${p.image}');">${badgeHtml}</div>` : `<div class="product-media" style="background: linear-gradient(135deg, transparent, rgba(0,0,0,0.05)); border-bottom: 4px solid ${p.accent};">${badgeHtml}</div>`;
                 
                 let stockWarning = '';
@@ -626,9 +700,14 @@
 
             btn.disabled = false; btn.style.opacity = '1';
             container.innerHTML = cart.map(i => {
+                // NY KOD: Ladda bilden i varukorgen, om ingen bild finns sätts en fallback-färg.
+                const imgStyle = i.image 
+                    ? `background-image: url('${i.image}'); background-size: cover; background-position: center; border-left: 4px solid ${i.accent};` 
+                    : `background: var(--bg-surface); border-left: 4px solid ${i.accent};`;
+
                 return `
                 <div class="cart-item">
-                    <div class="item-img" style="background: var(--bg-surface); border-left: 4px solid ${i.accent};"></div>
+                    <div class="item-img" style="${imgStyle}"></div>
                     <div class="item-info">
                         <div style="font-weight:800;">${getField(i, 'name')}</div>
                         <div style="color:var(--text-muted); font-size:0.9rem; font-weight:700;">${formatPrice(i.price)}</div>
@@ -678,7 +757,7 @@
         const closeModal = () => document.getElementById('master-modal').classList.remove('active');
         const copyMsg = (id) => { document.getElementById(id).select(); navigator.clipboard.writeText(document.getElementById(id).value).then(() => showToast("Kopierat!")); };
         
-        const openPayPalLink = () => { window.open(`https://paypal.me/DITTPAYPALNAMN/${globalFinalTotal}SEK`, '_blank'); };
+        const openPayPalLink = () => { window.open(`https://paypal.me/PelleHallqvist/${globalFinalTotal}SEK`, '_blank'); };
         
         const showToast = (msg) => { const toast = document.getElementById('toast'); toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); };
 
