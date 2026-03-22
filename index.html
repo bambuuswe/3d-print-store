@@ -1,14 +1,16 @@
+<!-- ========================================== -->
+<!-- FIL 1: index.html (Den publika webbshoppen) -->
+<!-- ========================================== -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crafters3D - Studio & Butik</title>
+    <title>Crafters3D - Premium 3D Utskrifter</title>
     <style>
         :root {
             --bg: #060a12;
             --panel: rgba(12, 18, 30, 0.6);
-            --panel-solid: #0c121e;
             --border: rgba(255, 255, 255, 0.08);
             --border-glow: rgba(255, 255, 255, 0.15);
             --text-main: #f6f2e9;
@@ -16,18 +18,15 @@
             --accent: #f3b23a;
             --accent-soft: #7dd3fc;
             --success: #58d08b;
-            --danger: #f87171;
             --blur: blur(16px);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: var(--bg); color: var(--text-main);
             font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
+            line-height: 1.6; overflow-x: hidden;
         }
 
         body::before {
@@ -40,47 +39,28 @@
         body::after {
             content: ""; position: fixed; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 100V0h100' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1'/%3E%3C/svg%3E");
-            background-size: 50px 50px; opacity: 0.5; z-index: -3; animation: gridPan 20s linear infinite; pointer-events: none;
+            background-size: 50px 50px; opacity: 0.5; z-index: -3; pointer-events: none;
         }
 
         @keyframes slowRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes gridPan { 0% { background-position: 0 0; } 100% { background-position: 50px 50px; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .container { width: min(1200px, 92%); margin: 0 auto; }
-        a { color: inherit; text-decoration: none; }
-        button { font-family: inherit; }
-        .hidden { display: none !important; }
-
-        /* --- Header --- */
+        
+        /* Header */
         header {
             position: fixed; top: 0; left: 0; right: 0; z-index: 40;
             background: rgba(6, 10, 18, 0.8); backdrop-filter: var(--blur);
             border-bottom: 1px solid var(--border);
         }
-
-        .nav {
-            display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;
-        }
-
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
         .logo {
             font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
             background: linear-gradient(to right, #fff, var(--text-muted));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-
-        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-        
-        .admin-toggle {
-            background: rgba(243, 178, 58, 0.1); border: 1px solid rgba(243, 178, 58, 0.3);
-            color: var(--accent); padding: 0.4rem 1rem; border-radius: 999px;
-            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
-        }
-        .admin-toggle:hover { background: var(--accent); color: #000; }
-
         .nav-cart {
             display: inline-flex; align-items: center; gap: 0.6rem;
-            border: 1px solid var(--border); padding: 0.4rem 1rem;
+            border: 1px solid var(--border); padding: 0.4rem 1.2rem;
             border-radius: 999px; background: rgba(255, 255, 255, 0.03);
             cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.3s;
         }
@@ -91,22 +71,21 @@
             font-size: 0.8rem; font-weight: 800;
         }
 
-        /* --- Shop View --- */
-        #shop-view { padding-top: 6rem; animation: fadeIn 0.4s ease-out; }
-        
-        .hero { text-align: center; padding: 4rem 0 3rem; }
-        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; line-height: 1.1; }
-        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; }
-        
+        /* Hero */
+        .hero { padding: 9rem 0 4rem; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1rem; line-height: 1.1; }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* Grid */
         .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem; padding-bottom: 6rem;
         }
 
         .product-card {
             background: var(--panel); border-radius: 1.2rem; border: 1px solid var(--border);
             padding: 1.2rem; display: flex; flex-direction: column; position: relative;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); backdrop-filter: blur(10px);
         }
         .product-card:hover {
             transform: translateY(-8px); border-color: var(--card-accent);
@@ -114,13 +93,11 @@
         }
 
         .product-media {
-            height: 220px; border-radius: 0.8rem; background: rgba(0, 0, 0, 0.4);
+            height: 250px; border-radius: 0.8rem; background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1rem; position: relative; overflow: hidden;
+            margin-bottom: 1.2rem; position: relative; overflow: hidden;
             background-size: cover; background-position: center;
         }
-        
-        .media-emoji { font-size: 5rem; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
         
         .badge {
             position: absolute; top: 0.8rem; left: 0.8rem; padding: 0.3rem 0.8rem;
@@ -133,113 +110,23 @@
             text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.15em;
             color: var(--card-accent); font-weight: 700; margin-bottom: 0.4rem;
         }
-        .product-card h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
-        .product-desc { color: var(--text-muted); font-size: 0.9rem; flex-grow: 1; margin-bottom: 1.2rem; }
+        .product-card h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+        .product-desc { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; margin-bottom: 1.5rem; }
 
         .product-bottom {
             display: flex; justify-content: space-between; align-items: center;
-            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.2rem;
         }
-        .price-tag { font-size: 1.3rem; font-weight: 800; }
+        .price-tag { font-size: 1.4rem; font-weight: 800; }
         
         .btn-add {
             border: 1px solid rgba(255,255,255,0.2); border-radius: 999px;
-            background: transparent; color: #fff; padding: 0.5rem 1.2rem;
+            background: transparent; color: #fff; padding: 0.6rem 1.4rem;
             font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .btn-add:hover { background: var(--card-accent); color: #000; border-color: var(--card-accent); }
 
-        /* --- Admin / Generator View --- */
-        #admin-view { padding-top: 6rem; padding-bottom: 6rem; animation: fadeIn 0.4s ease-out; }
-        
-        .admin-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border); padding-bottom: 1rem;
-        }
-        .admin-header h2 { font-size: 2rem; display: flex; align-items: center; gap: 0.5rem; }
-        
-        .admin-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        @media(max-width: 800px) { .admin-layout { grid-template-columns: 1fr; } }
-
-        .admin-panel {
-            background: var(--panel-solid); border: 1px solid var(--border);
-            border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        
-        input[type="text"], input[type="number"], textarea {
-            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
-            color: #fff; padding: 0.8rem; border-radius: 0.5rem; font-family: inherit;
-            transition: border-color 0.2s;
-        }
-        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
-        textarea { resize: vertical; min-height: 80px; }
-
-        .color-picker {
-            display: flex; gap: 0.5rem;
-        }
-        .color-btn {
-            width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;
-        }
-        .color-btn.active { border-color: #fff; transform: scale(1.1); }
-
-        .file-upload-wrapper {
-            position: relative; border: 2px dashed var(--border); border-radius: 0.5rem;
-            padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s;
-            background: rgba(0,0,0,0.2); overflow: hidden;
-        }
-        .file-upload-wrapper:hover { border-color: var(--accent); background: rgba(243, 178, 58, 0.05); }
-        .file-upload-wrapper input[type="file"] {
-            position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-        }
-        .preview-bg {
-            position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.4; z-index: 1; pointer-events: none;
-        }
-        .upload-content { position: relative; z-index: 2; }
-        
-        .btn-primary {
-            width: 100%; background: linear-gradient(135deg, var(--success), #22c55e); color: #000;
-            border: none; padding: 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 1rem;
-            cursor: pointer; transition: transform 0.2s; display: flex; justify-content: center; align-items: center; gap: 0.5rem;
-        }
-        .btn-primary:hover { transform: translateY(-2px); }
-        .btn-secondary {
-            background: transparent; color: #fff; border: 1px solid var(--border);
-            padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; transition: background 0.2s;
-        }
-        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
-        .btn-danger { color: var(--danger); border-color: rgba(248, 113, 113, 0.3); }
-        .btn-danger:hover { background: rgba(248, 113, 113, 0.1); }
-
-        .admin-product-list { display: flex; flex-direction: column; gap: 1rem; }
-        .admin-list-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            border-radius: 0.5rem;
-        }
-        .item-info { display: flex; align-items: center; gap: 1rem; }
-        .item-thumb {
-            width: 50px; height: 50px; border-radius: 0.4rem; background-size: cover; background-position: center;
-            background-color: rgba(0,0,0,0.5); display: grid; place-items: center; font-size: 1.5rem; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .item-actions { display: flex; gap: 0.5rem; }
-
-        /* Sync Overlay Simulation */
-        .sync-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-        }
-        .sync-overlay.active { opacity: 1; pointer-events: all; }
-        .spinner {
-            width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--accent);
-            border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- Cart Sidebar --- */
+        /* Cart */
         .cart-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
             opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 100;
@@ -255,11 +142,17 @@
         .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
         .cart-body { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         .cart-item { display: flex; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 0.8rem; border: 1px solid var(--border); }
-        .cart-avatar { width: 60px; height: 60px; border-radius: 0.5rem; background-size: cover; background-position: center; display: grid; place-items: center; font-size: 1.5rem; background-color: rgba(0,0,0,0.5); }
+        .cart-avatar { width: 60px; height: 60px; border-radius: 0.5rem; background-size: cover; background-position: center; background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
         .cart-meta { flex: 1; }
         .qty-controls { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; }
         .qty-btn { width: 24px; height: 24px; border-radius: 4px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; }
         .cart-footer { padding: 1.5rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.3); }
+        
+        .btn-checkout {
+            width: 100%; background: linear-gradient(135deg, var(--success), #22c55e); color: #000;
+            border: none; padding: 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 1rem;
+            cursor: pointer; transition: transform 0.2s;
+        }
 
         /* Toast */
         .toast {
@@ -272,116 +165,28 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="container nav">
             <div class="logo">Crafters3D</div>
-            <div class="nav-links">
-                <button class="admin-toggle" id="toggle-view-btn" onclick="toggleView()">⚙️ Studio Generator</button>
-                <button class="nav-cart" onclick="toggleCart(true)">
-                    🛒 Varukorg <span class="badge-count" id="cart-count">0</span>
-                </button>
-            </div>
+            <button class="nav-cart" onclick="toggleCart(true)">
+                🛒 Varukorg <span class="badge-count" id="cart-count">0</span>
+            </button>
         </div>
     </header>
 
-    <!-- SHOP VIEW -->
-    <main id="shop-view">
+    <main>
         <section class="hero container">
             <h1>Vi väcker plast till liv.</h1>
-            <p>Utforska vår kurerade kollektion av taktila, cinematiska 3D-utskrifter. Genererade och synkroniserade direkt via vår inbyggda studio.</p>
+            <p>Utforska vår kurerade kollektion av taktila, cinematiska 3D-utskrifter för din arbetsyta.</p>
         </section>
 
         <section class="container">
             <div class="product-grid" id="product-grid">
-                <!-- Shop products injected here -->
+                <!-- Produkter genereras här av JavaScript -->
             </div>
         </section>
     </main>
 
-    <!-- ADMIN / GENERATOR VIEW -->
-    <main id="admin-view" class="hidden">
-        <div class="container">
-            <div class="admin-header">
-                <h2>🛠️ Studio Dashboard</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Alla ändringar synkas live till webbshoppen via virtuell uppladdning.</p>
-            </div>
-
-            <div class="admin-layout">
-                <!-- Left: Form -->
-                <div class="admin-panel">
-                    <h3 style="margin-bottom: 1.5rem;" id="form-title">Skapa Ny Produkt</h3>
-                    <input type="hidden" id="edit-id" value="">
-                    
-                    <div class="form-group">
-                        <label>Produktnamn</label>
-                        <input type="text" id="p-name" placeholder="T.ex. Geometrisk Vas" required>
-                    </div>
-                    
-                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div>
-                            <label>Pris (kr)</label>
-                            <input type="number" id="p-price" placeholder="249" required>
-                        </div>
-                        <div>
-                            <label>Badge (Frivillig)</label>
-                            <input type="text" id="p-badge" placeholder="T.ex. Nyhet">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Specifikationer / Taggar</label>
-                        <input type="text" id="p-specs" placeholder="T.ex. Matt Vit PLA · 15cm">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Beskrivning</label>
-                        <textarea id="p-desc" placeholder="Kort beskrivning av produkten..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Accentfärg</label>
-                        <div class="color-picker" id="p-color-picker">
-                            <div class="color-btn active" style="background: #f3b23a;" data-color="#f3b23a" onclick="selectColor(this)"></div>
-                            <div class="color-btn" style="background: #7dd3fc;" data-color="#7dd3fc" onclick="selectColor(this)"></div>
-                            <div class="color-btn" style="background: #58d08b;" data-color="#58d08b" onclick="selectColor(this)"></div>
-                            <div class="color-btn" style="background: #f87171;" data-color="#f87171" onclick="selectColor(this)"></div>
-                            <div class="color-btn" style="background: #a78bfa;" data-color="#a78bfa" onclick="selectColor(this)"></div>
-                            <div class="color-btn" style="background: #94a3b8;" data-color="#94a3b8" onclick="selectColor(this)"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Produktbild (Laddas upp som in-memory Base64)</label>
-                        <div class="file-upload-wrapper">
-                            <div class="preview-bg" id="p-image-preview"></div>
-                            <input type="file" id="p-image" accept="image/*" onchange="handleImageUpload(event)">
-                            <div class="upload-content">
-                                <span style="font-size: 2rem;">📸</span>
-                                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #fff;">Klicka för att välja lokal bild</p>
-                            </div>
-                        </div>
-                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Om ingen bild väljs används en fallback emoji.</p>
-                    </div>
-
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button class="btn-primary" onclick="saveProduct()">☁️ Ladda upp & Synka till Butik</button>
-                        <button class="btn-secondary" onclick="resetForm()">Rensa</button>
-                    </div>
-                </div>
-
-                <!-- Right: Product List -->
-                <div class="admin-panel">
-                    <h3 style="margin-bottom: 1.5rem;">Aktiva Produkter</h3>
-                    <div class="admin-product-list" id="admin-product-list">
-                        <!-- Admin items injected here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Cart UI -->
     <div class="cart-overlay" id="cart-overlay" onclick="toggleCart(false)"></div>
     <aside class="cart-panel" id="cart-panel">
         <div class="cart-header">
@@ -394,93 +199,61 @@
                 <span>Totalt</span>
                 <strong id="cart-total">0 kr</strong>
             </div>
-            <button class="btn-primary" id="checkout-btn" style="width: 100%;" onclick="checkout()">Till Kassan</button>
+            <button class="btn-checkout" id="checkout-btn" onclick="checkout()">Till Kassan</button>
         </div>
     </aside>
 
-    <!-- Sync Simulation Overlay -->
-    <div class="sync-overlay" id="sync-overlay">
-        <div class="spinner"></div>
-        <h3 id="sync-text">Laddar upp till GitHub Repository...</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Kompilerar assets & uppdaterar index.html</p>
-    </div>
-
-    <div class="toast" id="toast">Klart!</div>
+    <div class="toast" id="toast">Tillagd i varukorgen</div>
 
     <script>
-        // --- State Management ---
-        // Shared array acts as the "Database" for both Generator and Shop
-        let products = [
+        // =================================================================
+        // KLISTRA IN KODEN FRÅN DIN GENERATOR.HTML HÄR INUTI ARRAYEN:
+        // =================================================================
+        const products = [
             {
-                id: 'p1', name: 'Lunar Bordslampa', price: 499,
-                image: '', emoji: '🌕',
-                description: 'Detaljerad yta baserad på NASA-skanningar. Sprider ett varmt, cinematiskt ljus.',
-                specs: 'Glow-in-dark PLA', accent: '#f3b23a', badge: 'Limiterad'
+                id: 'prod_exempel1',
+                name: 'Lunar Bordslampa',
+                price: 499,
+                image: '', // Lägg in filnamn här, t.ex. 'lampa.jpg'
+                description: 'Otroligt detaljerad yta baserad på NASA-skanningar.',
+                specs: 'Glow-in-dark PLA',
+                accent: '#f3b23a',
+                badge: 'Limiterad'
             },
             {
-                id: 'p2', name: 'Hörlursställ Monolith', price: 299,
-                image: '', emoji: '🎧',
-                description: 'Tungt, stabilt och minimalistiskt. Håller premiumhörlurarna säkra i en skulptural form.',
-                specs: 'Kolfiber-PLA · 25cm', accent: '#a78bfa', badge: ''
+                id: 'prod_exempel2',
+                name: 'Hörlursställ Monolith',
+                price: 299,
+                image: '', 
+                description: 'Tungt, stabilt och minimalistiskt designat.',
+                specs: 'Kolfiber-PLA · 25cm',
+                accent: '#a78bfa',
+                badge: ''
             }
         ];
-        
+        // =================================================================
+
         let cart = [];
-        let currentBase64Image = '';
-        let selectedAccent = '#f3b23a';
 
-        // --- View Switching ---
-        let isShopView = true;
-        const toggleView = () => {
-            isShopView = !isShopView;
-            const toggleBtn = document.getElementById('toggle-view-btn');
-            
-            if (isShopView) {
-                document.getElementById('shop-view').classList.remove('hidden');
-                document.getElementById('admin-view').classList.add('hidden');
-                toggleBtn.innerHTML = '⚙️ Studio Generator';
-                renderShop(); // Refresh shop data
-            } else {
-                document.getElementById('shop-view').classList.add('hidden');
-                document.getElementById('admin-view').classList.remove('hidden');
-                toggleBtn.innerHTML = '⬅ Tillbaka till Butik';
-                renderAdminList();
-            }
-        };
-
-        // --- Utility ---
         const formatPrice = (price) => new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 }).format(price);
-        
         const hexToRgba = (hex, alpha) => {
             const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
             return `rgba(${r}, ${g}, ${b}, ${alpha})`;
         };
 
-        const showToast = (msg) => {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        };
-
-        const generateId = () => 'prod_' + Math.random().toString(36).substr(2, 9);
-
-        const fallbackEmojis = ['🏺', '🐉', '🐼', '💠', '🪴', '⚙️', '🎮', '🧩'];
-        const getRandomEmoji = () => fallbackEmojis[Math.floor(Math.random() * fallbackEmojis.length)];
-
-        // --- Shop Render Logic ---
-        const renderShop = () => {
+        const renderProducts = () => {
             const grid = document.getElementById('product-grid');
             if (products.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 4rem 0;">Kollektionen är tom. Gå till Studio Generatorn för att lägga till produkter.</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted);">Kollektionen är tom. Använd generator.html för att skapa produkter.</p>';
                 return;
             }
 
             grid.innerHTML = products.map(p => {
                 const badgeHtml = p.badge ? `<div class="badge">${p.badge}</div>` : '';
+                // Om bilden saknas visas en snygg grå gradient
                 const visualHtml = p.image 
                     ? `<div class="product-media" style="background-image: url('${p.image}'); border-color: ${p.accent}40;">${badgeHtml}</div>`
-                    : `<div class="product-media" style="border-color: ${p.accent}40;">${badgeHtml}<span class="media-emoji">${p.emoji}</span></div>`;
+                    : `<div class="product-media" style="background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.5)); border-color: ${p.accent}40;">${badgeHtml}<span style="font-size:3rem; opacity:0.5;">📦</span></div>`;
 
                 return `
                     <article class="product-card" style="--card-accent: ${p.accent}; --card-accent-alpha: ${hexToRgba(p.accent, 0.15)};">
@@ -497,149 +270,6 @@
             }).join('');
         };
 
-        // --- Admin / Generator Logic ---
-        const renderAdminList = () => {
-            const list = document.getElementById('admin-product-list');
-            if (products.length === 0) {
-                list.innerHTML = '<p style="color: var(--text-muted); text-align: center;">Inga produkter. Skapa din första!</p>';
-                return;
-            }
-
-            list.innerHTML = products.map(p => {
-                const thumbStyle = p.image ? `background-image: url('${p.image}')` : '';
-                const thumbContent = p.image ? '' : p.emoji;
-                
-                return `
-                    <div class="admin-list-item" style="border-left: 4px solid ${p.accent}">
-                        <div class="item-info">
-                            <div class="item-thumb" style="${thumbStyle}">${thumbContent}</div>
-                            <div>
-                                <strong>${p.name}</strong><br>
-                                <small style="color: var(--text-muted)">${formatPrice(p.price)}</small>
-                            </div>
-                        </div>
-                        <div class="item-actions">
-                            <button class="btn-secondary" onclick="editProduct('${p.id}')">✏️</button>
-                            <button class="btn-secondary btn-danger" onclick="deleteProduct('${p.id}')">🗑️</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        const handleImageUpload = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                // Read local file entirely within sandbox without external network calls
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    currentBase64Image = e.target.result;
-                    document.getElementById('p-image-preview').style.backgroundImage = `url(${currentBase64Image})`;
-                    document.getElementById('p-image-preview').style.opacity = '0.8';
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-
-        const selectColor = (element) => {
-            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-            selectedAccent = element.getAttribute('data-color');
-        };
-
-        const saveProduct = () => {
-            const id = document.getElementById('edit-id').value;
-            const name = document.getElementById('p-name').value.trim();
-            const price = parseFloat(document.getElementById('p-price').value);
-            const badge = document.getElementById('p-badge').value.trim();
-            const specs = document.getElementById('p-specs').value.trim();
-            const desc = document.getElementById('p-desc').value.trim();
-
-            if (!name || isNaN(price)) {
-                alert('Vänligen fyll i namn och ett giltigt pris.'); return;
-            }
-
-            // Simulate the GitHub build/sync process for cinematic effect
-            const syncOverlay = document.getElementById('sync-overlay');
-            syncOverlay.classList.add('active');
-
-            setTimeout(() => {
-                const productData = {
-                    id: id || generateId(),
-                    name, price, badge, specs, description: desc,
-                    accent: selectedAccent,
-                    image: currentBase64Image,
-                    emoji: id ? (products.find(p => p.id === id).emoji) : getRandomEmoji()
-                };
-
-                if (id) {
-                    const idx = products.findIndex(p => p.id === id);
-                    products[idx] = productData;
-                } else {
-                    products.push(productData);
-                }
-
-                resetForm();
-                renderAdminList();
-                syncOverlay.classList.remove('active');
-                showToast('✅ Produkt synkroniserad till webbshoppen!');
-            }, 1500); // 1.5s simulated upload delay
-        };
-
-        const editProduct = (id) => {
-            const p = products.find(p => p.id === id);
-            if (!p) return;
-
-            document.getElementById('form-title').innerText = 'Redigera Produkt';
-            document.getElementById('edit-id').value = p.id;
-            document.getElementById('p-name').value = p.name;
-            document.getElementById('p-price').value = p.price;
-            document.getElementById('p-badge').value = p.badge || '';
-            document.getElementById('p-specs').value = p.specs || '';
-            document.getElementById('p-desc').value = p.description || '';
-            
-            // Set Color
-            document.querySelectorAll('.color-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-color') === p.accent) btn.classList.add('active');
-            });
-            selectedAccent = p.accent;
-
-            // Set Image
-            currentBase64Image = p.image;
-            if (p.image) {
-                document.getElementById('p-image-preview').style.backgroundImage = `url(${p.image})`;
-                document.getElementById('p-image-preview').style.opacity = '0.8';
-            } else {
-                document.getElementById('p-image-preview').style.backgroundImage = 'none';
-                document.getElementById('p-image-preview').style.opacity = '0.4';
-            }
-        };
-
-        const deleteProduct = (id) => {
-            if(confirm('Är du säker på att du vill ta bort denna produkt?')) {
-                products = products.filter(p => p.id !== id);
-                renderAdminList();
-                showToast('🗑️ Produkt borttagen.');
-            }
-        };
-
-        const resetForm = () => {
-            document.getElementById('form-title').innerText = 'Skapa Ny Produkt';
-            document.getElementById('edit-id').value = '';
-            document.getElementById('p-name').value = '';
-            document.getElementById('p-price').value = '';
-            document.getElementById('p-badge').value = '';
-            document.getElementById('p-specs').value = '';
-            document.getElementById('p-desc').value = '';
-            document.getElementById('p-image').value = '';
-            currentBase64Image = '';
-            document.getElementById('p-image-preview').style.backgroundImage = 'none';
-            document.getElementById('p-image-preview').style.opacity = '0.4';
-            selectColor(document.querySelector('.color-btn')); // Select first
-        };
-
-        // --- Cart Logic ---
         const addToCart = (id) => {
             const product = products.find(p => p.id === id);
             const existing = cart.find(item => item.id === id);
@@ -647,7 +277,11 @@
             else cart.push({ ...product, quantity: 1 });
             
             updateCartUI();
-            showToast(`🛒 ${product.name} i varukorgen`);
+            
+            const toast = document.getElementById('toast');
+            toast.textContent = `🛒 ${product.name} lades till`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
         };
 
         const updateCartQty = (id, delta) => {
@@ -671,21 +305,18 @@
             totalEl.textContent = formatPrice(totalSum);
 
             if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:2rem;">Tom varukorg</p>';
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:2rem;">Varukorgen är tom</p>';
+                btn.disabled = true; btn.style.opacity = '0.5';
                 return;
             }
 
-            btn.disabled = false;
-            btn.style.opacity = '1';
+            btn.disabled = false; btn.style.opacity = '1';
             
             container.innerHTML = cart.map(i => {
-                const thumbStyle = i.image ? `background-image: url('${i.image}')` : '';
-                const thumbContent = i.image ? '' : i.emoji;
+                const thumbStyle = i.image ? `background-image: url('${i.image}')` : `background: linear-gradient(135deg, #222, #111)`;
                 return `
                 <div class="cart-item">
-                    <div class="cart-avatar" style="${thumbStyle}; border-color:${i.accent}40;">${thumbContent}</div>
+                    <div class="cart-avatar" style="${thumbStyle}; border-color:${i.accent}40;"></div>
                     <div class="cart-meta">
                         <strong>${i.name}</strong><br>
                         <small style="color:var(--text-muted)">${formatPrice(i.price)}</small>
@@ -711,16 +342,286 @@
         };
 
         const checkout = () => {
-            alert('Detta är en sandbox-simulation. Beställning på ' + document.getElementById('cart-total').textContent + ' registrerad!');
-            cart = [];
-            updateCartUI();
-            toggleCart(false);
+            alert('Detta är en simulation. Kassan öppnas!');
         };
 
-        // Initialize
-        renderShop();
+        renderProducts();
         updateCartUI();
+    </script>
+</body>
+</html>
 
+<!-- ========================================== -->
+<!-- FIL 2: generator.html (Din privata studio) -->
+<!-- ========================================== -->
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crafters3D - Produktgenerator</title>
+    <style>
+        :root {
+            --bg: #060a12;
+            --panel: rgba(12, 18, 30, 0.6);
+            --panel-solid: #0c121e;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f6f2e9;
+            --text-muted: #9aa0a6;
+            --accent: #f3b23a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg); color: var(--text-main);
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            line-height: 1.6; padding: 2rem;
+            background-image: radial-gradient(circle at 50% 0%, rgba(243, 178, 58, 0.05), transparent 60%);
+        }
+
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 2.5rem; letter-spacing: 0.05em; }
+        .header p { color: var(--text-muted); max-width: 600px; margin: 0.5rem auto 0; }
+
+        .layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto;
+        }
+        @media(max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+
+        .panel {
+            background: var(--panel-solid); border: 1px solid var(--border);
+            border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        input[type="text"], input[type="number"], textarea {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            color: #fff; padding: 0.8rem; border-radius: 0.5rem; font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 80px; }
+
+        .color-picker { display: flex; gap: 0.5rem; }
+        .color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+        .color-btn.active { border-color: #fff; transform: scale(1.1); }
+
+        .file-upload-wrapper {
+            position: relative; border: 2px dashed var(--border); border-radius: 0.5rem;
+            padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s;
+            background: rgba(0,0,0,0.2);
+        }
+        .file-upload-wrapper:hover { border-color: var(--accent); background: rgba(243, 178, 58, 0.05); }
+        .file-upload-wrapper input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+
+        /* Preview Card Styles (Copied from index.html) */
+        .product-card {
+            background: rgba(12, 18, 30, 0.6); border-radius: 1.2rem; border: 1px solid var(--border);
+            padding: 1.2rem; display: flex; flex-direction: column; position: relative; margin-bottom: 2rem;
+        }
+        .product-media {
+            height: 250px; border-radius: 0.8rem; background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.2rem; position: relative; overflow: hidden; background-size: cover; background-position: center;
+        }
+        .badge {
+            position: absolute; top: 0.8rem; left: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 999px;
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--card-accent); color: #fff; z-index: 2;
+        }
+        .product-specs { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--card-accent); font-weight: 700; margin-bottom: 0.4rem; }
+        .product-card h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+        .product-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .product-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.2rem; }
+        .price-tag { font-size: 1.4rem; font-weight: 800; }
+        .btn-add { border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; background: transparent; color: #fff; padding: 0.6rem 1.4rem; font-weight: 600; }
+
+        .code-output {
+            width: 100%; height: 250px; background: #000; color: #58d08b; font-family: monospace;
+            padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); resize: none;
+        }
+
+        .btn-copy {
+            width: 100%; background: var(--accent); color: #000; border: none; padding: 1rem;
+            border-radius: 0.5rem; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 1rem;
+        }
+        .btn-copy:hover { transform: translateY(-2px); }
+        
+        .instructions {
+            background: rgba(125, 211, 252, 0.1); border-left: 4px solid #7dd3fc;
+            padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 2rem; font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🛠️ Crafters3D Studio Generator</h1>
+        <p>Bygg din produkt visuellt och kopiera koden till din index.html.</p>
+    </div>
+
+    <div class="layout">
+        <!-- Form Panel -->
+        <div class="panel">
+            <h3 style="margin-bottom: 1.5rem;">Produktdetaljer</h3>
+            
+            <div class="form-group">
+                <label>Produktnamn</label>
+                <input type="text" id="p-name" placeholder="T.ex. Geometrisk Vas" oninput="updateAll()">
+            </div>
+            
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <label>Pris (kr)</label>
+                    <input type="number" id="p-price" placeholder="249" oninput="updateAll()">
+                </div>
+                <div>
+                    <label>Badge (Frivillig)</label>
+                    <input type="text" id="p-badge" placeholder="T.ex. Nyhet" oninput="updateAll()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Specifikationer / Taggar</label>
+                <input type="text" id="p-specs" placeholder="T.ex. Matt Vit PLA · 15cm" oninput="updateAll()">
+            </div>
+
+            <div class="form-group">
+                <label>Beskrivning</label>
+                <textarea id="p-desc" placeholder="Kort beskrivning av produkten..." oninput="updateAll()"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Accentfärg</label>
+                <div class="color-picker">
+                    <div class="color-btn active" style="background: #f3b23a;" data-color="#f3b23a" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #7dd3fc;" data-color="#7dd3fc" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #58d08b;" data-color="#58d08b" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #f87171;" data-color="#f87171" onclick="selectColor(this)"></div>
+                    <div class="color-btn" style="background: #a78bfa;" data-color="#a78bfa" onclick="selectColor(this)"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Lokal Bild (Bara för Live Preview)</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" accept="image/*" onchange="handleImage(event)">
+                    <span id="file-label">Välj fil från datorn...</span>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    Bildens filnamn används automatiskt i koden. Kom ihåg att ladda upp själva bilden till GitHub!
+                </p>
+            </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="panel">
+            <h3 style="margin-bottom: 1.5rem;">Live Preview</h3>
+            
+            <div id="preview-container">
+                <!-- Live Preview Card Injected Here -->
+            </div>
+
+            <div class="instructions">
+                <strong>Så här gör du:</strong><br>
+                1. Klicka på "Kopiera kod".<br>
+                2. Öppna <code>index.html</code> på GitHub.<br>
+                3. Leta upp <code>const products = [ ... ]</code>.<br>
+                4. Klistra in koden inuti hakparenteserna <code>[ ]</code>.<br>
+                5. Ladda upp din bildfil till GitHub så den ligger bredvid index.html.
+            </div>
+
+            <textarea class="code-output" id="code-output" readonly></textarea>
+            <button class="btn-copy" onclick="copyCode()">📋 Kopiera kod</button>
+            <p id="copy-msg" style="color: #58d08b; font-weight: bold; text-align: center; margin-top: 0.5rem; opacity: 0; transition: opacity 0.3s;">Kopierad till urklipp!</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedColor = '#f3b23a';
+        let imageFileName = '';
+        let imageLocalUrl = '';
+
+        const generateId = () => 'prod_' + Math.random().toString(36).substr(2, 6);
+
+        function selectColor(el) {
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            selectedColor = el.getAttribute('data-color');
+            updateAll();
+        }
+
+        function handleImage(e) {
+            const file = e.target.files[0];
+            if(file) {
+                imageFileName = file.name;
+                document.getElementById('file-label').innerText = file.name;
+                imageLocalUrl = URL.createObjectURL(file);
+                updateAll();
+            }
+        }
+
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function updateAll() {
+            const name = document.getElementById('p-name').value || 'Produktnamn';
+            const price = document.getElementById('p-price').value || '0';
+            const badge = document.getElementById('p-badge').value;
+            const specs = document.getElementById('p-specs').value || 'Specifikationer';
+            const desc = document.getElementById('p-desc').value || 'Beskrivning av produkten visas här...';
+            
+            // --- Update Preview Card ---
+            const badgeHtml = badge ? `<div class="badge">${badge}</div>` : '';
+            const visualHtml = imageLocalUrl 
+                ? `<div class="product-media" style="background-image: url('${imageLocalUrl}'); border-color: ${selectedColor}40;">${badgeHtml}</div>`
+                : `<div class="product-media" style="background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.5)); border-color: ${selectedColor}40;">${badgeHtml}<span style="font-size:3rem; opacity:0.5;">🖼️</span></div>`;
+
+            document.getElementById('preview-container').innerHTML = `
+                <article class="product-card" style="--card-accent: ${selectedColor};">
+                    ${visualHtml}
+                    <p class="product-specs">${specs}</p>
+                    <h3>${name}</h3>
+                    <p class="product-desc">${desc}</p>
+                    <div class="product-bottom">
+                        <span class="price-tag">${price} kr</span>
+                        <button class="btn-add">Köp Nu</button>
+                    </div>
+                </article>
+            `;
+
+            // --- Update Code Output ---
+            const jsObject = `{
+    id: '${generateId()}',
+    name: '${name.replace(/'/g, "\\'")}',
+    price: ${price},
+    image: '${imageFileName}', 
+    description: '${desc.replace(/'/g, "\\'")}',
+    specs: '${specs.replace(/'/g, "\\'")}',
+    accent: '${selectedColor}',
+    badge: '${badge.replace(/'/g, "\\'")}'
+},`;
+            
+            document.getElementById('code-output').value = jsObject;
+        }
+
+        function copyCode() {
+            const textarea = document.getElementById('code-output');
+            textarea.select();
+            document.execCommand('copy');
+            
+            const msg = document.getElementById('copy-msg');
+            msg.style.opacity = '1';
+            setTimeout(() => msg.style.opacity = '0', 2000);
+        }
+
+        // Init initial state
+        updateAll();
     </script>
 </body>
 </html>
