@@ -3,625 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crafters3D | NEXT-GEN ATELIER</title>
+    <title>CRAFTERS 3D | Block-Print Atelier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
-        /* --- 2026 Design System --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:ital@1&display=swap');
-
+        /* --- MINECRAFT DESIGN SYSTEM --- */
         :root {
-            --bg-base: #030305;
-            --bg-surface: rgba(15, 15, 20, 0.4);
-            --border-glass: rgba(255, 255, 255, 0.06);
-            --border-highlight: rgba(255, 255, 255, 0.15);
-            --text-primary: #ffffff;
-            --text-secondary: #8a8a93;
-            --accent-brand: #e0ff4f; /* Cyber-organic neon */
-            --accent-glow: rgba(224, 255, 79, 0.4);
-            --radius-sm: 12px;
-            --radius-md: 24px;
-            --radius-pill: 999px;
-            --blur-heavy: blur(40px);
-            --blur-light: blur(12px);
-            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+            --mc-stone: #7D7D7D;
+            --mc-stone-light: #9E9E9E;
+            --mc-stone-dark: #555555;
+            --mc-gui-bg: #C6C6C6;
+            --mc-gui-border-light: #FFFFFF;
+            --mc-gui-border-dark: #555555;
+            --mc-slot-bg: #8B8B8B;
+            --mc-slot-dark: #373737;
+            --mc-text: #3F3F3F;
+            --mc-text-shadow: #222222;
+            --mc-yellow: #FFFF55;
+            --mc-green: #55FF55;
+            --mc-red: #FF5555;
+            --mc-blue: #5555FF;
+            --mc-hover: #7BA4FF;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
         body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.5;
+            /* Stone texture simulation */
+            background-color: var(--mc-stone);
+            background-image: 
+                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%, rgba(0,0,0,0.05)),
+                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%, rgba(0,0,0,0.05));
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+            color: #FFFFFF;
+            font-family: 'VT323', monospace; /* Blocky but readable */
+            line-height: 1.4;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.7);
         }
 
-        /* --- Immersive Ambient Background --- */
-        .ambient-void {
-            position: fixed; inset: 0; z-index: -10; pointer-events: none;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.1), transparent 40%),
-                radial-gradient(circle at 50% 100%, var(--accent-glow), transparent 50%);
-            filter: blur(60px);
-            animation: breathe 10s ease-in-out infinite alternate;
+        h1, h2, h3, .btn, .mc-font {
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
         }
 
-        .noise-overlay {
-            position: fixed; inset: 0; z-index: -9; pointer-events: none; opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        .container { width: min(1200px, 92vw); margin: 0 auto; }
+
+        /* --- GUI MIXINS --- */
+        .gui-panel {
+            background-color: var(--mc-gui-bg);
+            border: 4px solid #000;
+            box-shadow: inset 4px 4px 0px var(--mc-gui-border-light), 
+                        inset -4px -4px 0px var(--mc-gui-border-dark);
+            color: var(--mc-text);
+            text-shadow: none;
         }
 
-        @keyframes breathe {
-            0% { transform: scale(1) translateY(0); opacity: 0.8; }
-            100% { transform: scale(1.05) translateY(-2%); opacity: 1; }
+        .gui-slot {
+            background-color: var(--mc-slot-bg);
+            box-shadow: inset 4px 4px 0px var(--mc-slot-dark), 
+                        inset -4px -4px 0px var(--mc-gui-border-light);
+            display: grid; place-items: center;
         }
 
-        .container { width: min(1400px, 92vw); margin: 0 auto; }
+        .mc-button {
+            background-color: var(--mc-slot-bg);
+            border: 4px solid #000;
+            box-shadow: inset 4px 4px 0px var(--mc-gui-border-light), 
+                        inset -4px -4px 0px var(--mc-gui-border-dark);
+            color: #FFF;
+            text-shadow: 2px 2px 0px var(--mc-text-shadow);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            padding: 1rem 2rem;
+            display: inline-block;
+            text-align: center;
+        }
 
-        /* --- Floating Nav 2026 --- */
+        .mc-button:hover {
+            background-color: var(--mc-hover);
+            color: var(--mc-yellow);
+            box-shadow: inset 4px 4px 0px #AACCFF, 
+                        inset -4px -4px 0px #3355AA;
+        }
+        
+        .mc-button:active {
+            box-shadow: inset 4px 4px 0px var(--mc-gui-border-dark), 
+                        inset -4px -4px 0px var(--mc-gui-border-light);
+            padding: 1.1rem 1.9rem 0.9rem 2.1rem; /* Simulate press */
+        }
+
+        /* --- HEADER / HOTBAR --- */
         header {
-            position: fixed; top: 2rem; left: 50%; transform: translateX(-50%);
-            z-index: 50; width: min(800px, 90vw);
-            transition: all 0.4s var(--ease-out);
+            position: fixed; top: 0; width: 100%; z-index: 50;
+            padding: 1rem 0; display: flex; justify-content: center;
+            pointer-events: none;
         }
 
-        .nav-pill {
-            background: rgba(20, 20, 25, 0.6);
-            backdrop-filter: var(--blur-heavy);
-            -webkit-backdrop-filter: var(--blur-heavy);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-pill);
-            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+        .hotbar {
+            display: flex; gap: 4px; pointer-events: auto;
+            background: rgba(0,0,0,0.5); padding: 4px;
+            border: 4px solid #000;
+            box-shadow: inset 4px 4px 0px rgba(255,255,255,0.2),
+                        inset -4px -4px 0px rgba(0,0,0,0.5);
         }
 
-        .logo {
-            font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em;
-            background: linear-gradient(to right, #fff, #71717a);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .hotbar-slot {
+            width: 50px; height: 50px;
+            background-color: var(--mc-slot-bg);
+            box-shadow: inset 4px 4px 0px var(--mc-slot-dark), 
+                        inset -4px -4px 0px var(--mc-gui-border-light);
+            display: grid; place-items: center;
+            font-size: 1.5rem; position: relative;
+            cursor: crosshair; transition: all 0.1s;
         }
 
-        .cart-btn {
-            background: #fff; color: #000; border: none;
-            padding: 0.8rem 1.5rem; border-radius: var(--radius-pill);
-            font-weight: 700; font-size: 0.9rem; cursor: pointer;
-            display: flex; align-items: center; gap: 0.5rem;
-            transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
+        .hotbar-slot.active {
+            border: 4px solid #FFF;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            transform: scale(1.1); z-index: 2;
         }
 
-        .cart-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        .hotbar-slot:hover { background-color: var(--mc-stone-light); }
+
+        .hotbar-count {
+            position: absolute; bottom: 0; right: 4px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem; text-shadow: 2px 2px 0px #000;
         }
 
-        .badge-count {
-            background: #000; color: #fff; width: 22px; height: 22px;
-            display: grid; place-items: center; border-radius: 50%;
-            font-size: 0.75rem;
-        }
-
-        /* --- Hero Section --- */
+        /* --- HERO --- */
         .hero {
-            min-height: 90vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            padding-top: 8rem; position: relative;
+            min-height: 70vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding-top: 6rem;
         }
 
-        .pill-badge {
-            border: 1px solid var(--border-highlight);
-            background: rgba(255,255,255,0.03); backdrop-filter: var(--blur-light);
-            padding: 0.5rem 1.2rem; border-radius: var(--radius-pill);
-            font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
-            text-transform: uppercase; margin-bottom: 2rem; color: var(--text-secondary);
+        .mc-title {
+            font-size: clamp(2rem, 6vw, 5rem);
+            color: var(--mc-stone-light);
+            text-shadow: 
+                4px 4px 0 #000,
+                -2px -2px 0 var(--mc-gui-border-light),
+                0 6px 0px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
         }
 
-        .hero h1 {
-            font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900;
-            line-height: 1; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+        .mc-subtitle {
+            font-size: 1.8rem; color: var(--mc-yellow);
+            text-shadow: 2px 2px 0px #000;
         }
 
-        .font-serif {
-            font-family: 'Playfair Display', serif; font-style: italic;
-            font-weight: 400; color: var(--accent-brand);
-        }
-
-        .hero p {
-            font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text-secondary);
-            max-width: 600px; font-weight: 300;
-        }
-
-        /* Infinite Marquee */
-        .marquee-wrapper {
-            width: 100%; overflow: hidden; border-top: 1px solid var(--border-glass);
-            border-bottom: 1px solid var(--border-glass); background: rgba(0,0,0,0.2);
-            padding: 1rem 0; margin-bottom: 6rem; backdrop-filter: var(--blur-light);
-        }
-        
-        .marquee {
-            display: flex; width: max-content;
-            animation: marquee 30s linear infinite;
-        }
-        
-        .marquee span {
-            font-size: 0.9rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.1em; padding: 0 2rem; display: flex; align-items: center; gap: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .marquee span::after {
-            content: "✦"; color: var(--accent-brand); opacity: 0.5;
-        }
-
-        @keyframes marquee {
-            to { transform: translateX(-50%); }
-        }
-
-        /* --- Bento Product Grid --- */
-        .collection-header {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 3rem;
-        }
-
-        .collection-header h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; }
-
+        /* --- PRODUCT GRID --- */
         .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem; padding-bottom: 8rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem; padding: 4rem 0 8rem;
         }
 
-        /* Next-Gen Card Design */
-        .product-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            padding: 1rem; position: relative; overflow: hidden;
-            backdrop-filter: var(--blur-heavy);
-            -webkit-backdrop-filter: var(--blur-heavy);
-            transition: transform 0.5s var(--ease-spring), border-color 0.4s;
-            cursor: pointer;
+        .product-block {
+            background-color: var(--mc-stone-dark);
+            border: 4px solid #000;
+            padding: 4px;
+            position: relative; transition: transform 0.2s;
         }
 
-        /* Mouse Tracking Glow Effect */
-        .product-card::before {
-            content: ''; position: absolute; inset: 0; z-index: 0;
-            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), 
-                        rgba(255,255,255,0.06), transparent 40%);
-            opacity: 0; transition: opacity 0.5s; pointer-events: none;
+        /* Simulate Minecraft block outline on hover */
+        .product-block::after {
+            content: ''; position: absolute; inset: -4px;
+            border: 4px solid transparent; z-index: 10; pointer-events: none;
+        }
+        .product-block:hover::after { border-color: rgba(0, 0, 0, 0.8); }
+        .product-block:hover { transform: translateY(-4px); }
+
+        .product-visual {
+            background-color: var(--mc-gui-bg);
+            height: 200px; display: grid; place-items: center;
+            box-shadow: inset 4px 4px 0px var(--mc-gui-border-light), 
+                        inset -4px -4px 0px var(--mc-gui-border-dark);
+            margin-bottom: 4px; position: relative; overflow: hidden;
         }
 
-        .product-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: color-mix(in srgb, var(--card-accent, #fff) 40%, transparent);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 
-                        inset 0 0 0 1px color-mix(in srgb, var(--card-accent, #fff) 10%, transparent);
+        .floating-item {
+            font-size: 5rem; text-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+            animation: float 3s ease-in-out infinite;
         }
 
-        .product-card:hover::before { opacity: 1; }
-
-        .product-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
-
-        .product-media {
-            height: 280px; border-radius: var(--radius-sm);
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.03);
-            margin-bottom: 1.5rem; position: relative; overflow: hidden;
-            background-size: cover; background-position: center;
-            display: flex; align-items: center; justify-content: center;
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        .badge-tag {
-            position: absolute; top: 1rem; left: 1rem; z-index: 2;
-            background: rgba(0,0,0,0.6); backdrop-filter: var(--blur-light);
-            border: 1px solid var(--card-accent, var(--border-highlight));
-            color: #fff; padding: 0.4rem 1rem; border-radius: var(--radius-pill);
-            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+        .badge-mc {
+            position: absolute; top: 8px; left: 8px;
+            background: #000; color: var(--mc-yellow);
+            font-family: 'Press Start 2P', cursive; font-size: 0.5rem;
+            padding: 4px 8px; border: 2px solid var(--mc-gui-border-dark);
         }
 
-        .product-meta { flex-grow: 1; }
-        
-        .product-specs {
-            color: var(--card-accent, var(--text-secondary));
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
-            font-weight: 700; margin-bottom: 0.5rem;
+        .product-info {
+            background-color: rgba(0,0,0,0.7);
+            padding: 1rem; border: 2px solid #000;
         }
 
-        .product-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-        
-        .product-desc {
-            color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;
-            margin-bottom: 1.5rem; font-weight: 300;
+        .product-name {
+            font-size: 0.9rem; color: var(--mc-green); margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .product-lore {
+            font-size: 1.2rem; color: #AAAAAA; margin-bottom: 1rem;
         }
 
         .product-bottom {
             display: flex; justify-content: space-between; align-items: center;
-            padding-top: 1rem; border-top: 1px solid var(--border-glass);
+            border-top: 2px solid #333; padding-top: 1rem;
         }
 
-        .price { font-size: 1.5rem; font-weight: 500; font-family: 'Playfair Display', serif; }
-
-        .add-btn {
-            background: transparent; color: #fff;
-            border: 1px solid var(--border-highlight);
-            padding: 0.6rem 1.2rem; border-radius: var(--radius-pill);
-            font-weight: 600; cursor: pointer; transition: all 0.3s;
+        .emerald-price {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'Press Start 2P', cursive; font-size: 0.8rem;
+            color: #FFF;
         }
 
-        .product-card:hover .add-btn {
-            background: #fff; color: #000; border-color: #fff;
-        }
-
-        /* --- 2026 Cart UI --- */
+        /* --- INVENTORY (CART) --- */
         .cart-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-            backdrop-filter: var(--blur-light); z-index: 100;
-            opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease-out);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            z-index: 100; opacity: 0; pointer-events: none;
+            display: grid; place-items: center;
+        }
+        .cart-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .chest-gui {
+            width: min(500px, 95vw); max-height: 90vh;
+            display: flex; flex-direction: column;
+            transform: scale(0.9); transition: transform 0.2s;
+        }
+        .cart-overlay.active .chest-gui { transform: scale(1); }
+
+        .gui-header {
+            display: flex; justify-content: space-between; padding: 1rem;
+            border-bottom: 4px solid var(--mc-gui-border-dark);
         }
 
-        .cart-overlay.active { opacity: 1; pointer-events: all; }
-
-        .cart-panel {
-            position: fixed; top: 1rem; right: -100%; bottom: 1rem;
-            width: min(440px, calc(100vw - 2rem));
-            background: rgba(15, 15, 20, 0.7); backdrop-filter: var(--blur-heavy);
-            border: 1px solid var(--border-highlight); border-radius: var(--radius-md);
-            z-index: 101; display: flex; flex-direction: column;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-            transition: right 0.6s var(--ease-spring);
+        .gui-title {
+            font-family: 'VT323', monospace; font-size: 2rem; color: var(--mc-text); text-shadow: none;
         }
 
-        .cart-panel.active { right: 1rem; }
-
-        .cart-header {
-            padding: 2rem; border-bottom: 1px solid var(--border-glass);
-            display: flex; justify-content: space-between; align-items: center;
+        .gui-close {
+            background: none; border: none; color: var(--mc-text);
+            font-family: 'Press Start 2P', cursive; font-size: 1.2rem;
+            text-shadow: 2px 2px 0px var(--mc-gui-border-light);
         }
 
-        .close-cart {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass);
-            width: 36px; height: 36px; border-radius: 50%; color: #fff;
-            cursor: pointer; transition: background 0.3s; display: grid; place-items: center;
-        }
-        .close-cart:hover { background: rgba(255,255,255,0.1); }
-
-        .cart-body { flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
-
-        /* Smooth item entry */
-        .cart-item {
-            display: flex; gap: 1.2rem; padding: 1rem;
-            background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass);
-            border-radius: var(--radius-sm);
-            animation: slideIn 0.4s var(--ease-spring) forwards;
+        .gui-body {
+            padding: 1rem; flex: 1; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 8px;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .inv-row {
+            display: flex; gap: 8px; align-items: center;
         }
 
-        .item-img {
-            width: 70px; height: 70px; border-radius: 8px; background-size: cover;
-            background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+        .inv-slot { width: 48px; height: 48px; flex-shrink: 0; font-size: 1.5rem; text-shadow: 2px 2px 0px rgba(0,0,0,0.5); }
+        
+        .inv-details {
+            flex: 1; color: var(--mc-text); text-shadow: none; font-size: 1.4rem; line-height: 1;
         }
+        .inv-details strong { font-family: 'Press Start 2P', cursive; font-size: 0.6rem; display: block; margin-bottom: 4px; color: #000; }
 
-        .item-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .item-title { font-weight: 700; margin-bottom: 0.2rem; }
-        .item-price { color: var(--text-secondary); font-size: 0.9rem; }
-
-        .qty-box {
-            display: flex; align-items: center; gap: 0.8rem; margin-top: 0.5rem;
-            background: rgba(0,0,0,0.3); width: fit-content; padding: 0.2rem; border-radius: var(--radius-pill);
-        }
-
+        .qty-controls { display: flex; gap: 4px; }
         .qty-btn {
-            background: transparent; border: none; color: #fff; width: 24px; height: 24px;
-            cursor: pointer; border-radius: 50%; transition: background 0.2s;
+            width: 24px; height: 24px; font-family: 'Press Start 2P', cursive; font-size: 0.6rem;
+            padding: 0; display: grid; place-items: center;
         }
-        .qty-btn:hover { background: rgba(255,255,255,0.1); }
 
-        .cart-footer { padding: 2rem; border-top: 1px solid var(--border-glass); background: rgba(0,0,0,0.2); }
-
-        .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 1.2rem; }
-        .total-price { font-size: 2rem; font-family: 'Playfair Display', serif; }
-
-        .checkout-btn {
-            width: 100%; background: #fff; color: #000; border: none;
-            padding: 1.2rem; border-radius: var(--radius-pill);
-            font-weight: 700; font-size: 1rem; cursor: pointer;
-            transition: transform 0.3s var(--ease-spring);
+        .gui-footer {
+            padding: 1rem; border-top: 4px solid var(--mc-gui-border-light);
+            display: flex; flex-direction: column; gap: 1rem;
         }
-        .checkout-btn:hover:not(:disabled) { transform: scale(1.02); }
-        .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Toast 2026 */
-        .toast {
-            position: fixed; bottom: 2rem; left: 50%; transform: translate(-50%, 100px);
-            background: rgba(255,255,255,0.1); backdrop-filter: var(--blur-heavy);
-            border: 1px solid var(--border-highlight); color: #fff;
-            padding: 1rem 2rem; border-radius: var(--radius-pill);
-            font-weight: 500; opacity: 0; pointer-events: none;
-            transition: all 0.5s var(--ease-spring); z-index: 200;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        .xp-bar-container {
+            width: 100%; height: 16px; background: #000;
+            border: 2px solid #000; position: relative;
         }
-        .toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-        /* Scroll Reveal */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease-out); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            header { width: 95vw; top: 1rem; }
-            .cart-panel { top: 0; bottom: 0; width: 100vw; border-radius: 0; border: none; }
+        .xp-bar-fill {
+            height: 100%; background: #55FF55; width: 0%;
+            border-top: 2px solid #AFFFFA; border-bottom: 2px solid #00AA00;
+            transition: width 0.3s;
         }
+        .xp-level {
+            position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+            font-family: 'Press Start 2P', cursive; font-size: 1rem;
+            color: #55FF55; text-shadow: 2px 2px 0px #000;
+        }
+
+        .total-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Press Start 2P', cursive; font-size: 0.8rem; color: #000; text-shadow: none;
+        }
+
+        /* --- TOAST --- */
+        .toast-advancement {
+            position: fixed; top: -100px; right: 20px; z-index: 200;
+            background-color: #212121; border: 4px solid #555555;
+            box-shadow: inset 4px 4px 0px #7D7D7D, inset -4px -4px 0px #111111;
+            padding: 1rem; display: flex; gap: 1rem; align-items: center;
+            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .toast-advancement.show { top: 20px; }
+        
+        .adv-icon { font-size: 2rem; text-shadow: 2px 2px 0px #000; }
+        .adv-text { font-family: 'VT323', monospace; }
+        .adv-title { color: #FFFF55; font-size: 1.4rem; line-height: 1; }
+        .adv-desc { color: #FFFFFF; font-size: 1.2rem; text-shadow: 2px 2px 0px #000; }
+
     </style>
 </head>
 <body>
 
-    <div class="ambient-void"></div>
-    <div class="noise-overlay"></div>
-
+    <!-- HOTBAR (Navigation) -->
     <header>
-        <div class="nav-pill">
-            <div class="logo">CRAFTERS.</div>
-            <button class="cart-btn" onclick="toggleCart(true)">
-                Cart <span class="badge-count" id="cart-count">0</span>
-            </button>
+        <div class="hotbar" id="hotbar">
+            <!-- Logo Slot -->
+            <div class="hotbar-slot" title="Hemsida" onclick="window.scrollTo(0,0)">
+                <span style="font-size: 1rem; font-family: 'Press Start 2P'; color:#55FF55;">C3D</span>
+            </div>
+            <div class="hotbar-slot"></div>
+            <div class="hotbar-slot"></div>
+            <div class="hotbar-slot"></div>
+            <div class="hotbar-slot"></div>
+            <div class="hotbar-slot"></div>
+            <div class="hotbar-slot"></div>
+            <!-- Cart Slot -->
+            <div class="hotbar-slot active" title="Öppna Kista (Varukorg)" onclick="toggleInventory(true)">
+                🧰
+                <span class="hotbar-count" id="hotbar-qty">0</span>
+            </div>
         </div>
     </header>
 
     <main>
-        <section class="hero container reveal">
-            <div class="pill-badge">Studio Collection 2026</div>
-            <h1>Shaping the Future <br>of <span class="font-serif">Matter.</span></h1>
-            <p>We transform raw biomaterials into cinematic, tactile artifacts. Designed for the modern aesthetic, printed layer by layer.</p>
+        <section class="hero container">
+            <h1 class="mc-title">CRAFTERS 3D</h1>
+            <p class="mc-subtitle">Premium block-prints for your base.</p>
+            <div style="margin-top: 3rem;">
+                <button class="mc-button" onclick="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})">
+                    Start Crafting
+                </button>
+            </div>
         </section>
 
-        <div class="marquee-wrapper reveal">
-            <div class="marquee">
-                <span>Next-Gen PLA</span><span>Zero Waste</span><span>Cinematic Finish</span><span>Hand Polished</span>
-                <span>Next-Gen PLA</span><span>Zero Waste</span><span>Cinematic Finish</span><span>Hand Polished</span>
-                <span>Next-Gen PLA</span><span>Zero Waste</span><span>Cinematic Finish</span><span>Hand Polished</span>
-            </div>
-        </div>
-
-        <section class="container">
-            <div class="collection-header reveal">
-                <h2>Artifacts</h2>
-            </div>
+        <section class="container" id="shop">
+            <h2 class="mc-font" style="color:#FFF; border-bottom: 4px solid var(--mc-stone-light); padding-bottom:1rem; margin-bottom: 1rem;">Recipe Book</h2>
             <div class="product-grid" id="product-grid">
-                <!-- Products Injected Here -->
+                <!-- Products injected via JS -->
             </div>
         </section>
     </main>
 
-    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart(false)"></div>
-    <aside class="cart-panel" id="cart-panel">
-        <div class="cart-header">
-            <h3>Your Selection</h3>
-            <button class="close-cart" onclick="toggleCart(false)">✕</button>
-        </div>
-        <div class="cart-body" id="cart-items"></div>
-        <div class="cart-footer">
-            <div class="total-row">
-                <span>Subtotal</span>
-                <span class="total-price" id="cart-total">0 SEK</span>
+    <!-- INVENTORY GUI (Cart) -->
+    <div class="cart-overlay" id="inv-overlay" onclick="if(event.target===this) toggleInventory(false)">
+        <div class="gui-panel chest-gui">
+            <div class="gui-header">
+                <h3 class="gui-title">Inventory (Chest)</h3>
+                <button class="gui-close" onclick="toggleInventory(false)">X</button>
             </div>
-            <button class="checkout-btn" id="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
-        </div>
-    </aside>
+            
+            <div class="gui-body" id="inv-items">
+                <!-- Cart items -->
+            </div>
 
-    <div class="toast" id="toast">Added to collection</div>
+            <div class="gui-footer">
+                <div style="position: relative; margin-bottom: 1rem;">
+                    <div class="xp-level" id="xp-level">0</div>
+                    <div class="xp-bar-container">
+                        <div class="xp-bar-fill" id="xp-bar"></div>
+                    </div>
+                </div>
+
+                <div class="total-row">
+                    <span>TOTAL COST:</span>
+                    <span style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:1.5rem; text-shadow:2px 2px 0px rgba(0,0,0,0.3)">💎</span> 
+                        <span id="inv-total">0</span>
+                    </span>
+                </div>
+                
+                <button class="mc-button" id="checkout-btn" style="width:100%; margin-top:0.5rem;" onclick="checkout()">
+                    TRADE ITEMS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADVANCEMENT TOAST -->
+    <div class="toast-advancement" id="toast">
+        <div class="adv-icon">⭐</div>
+        <div class="adv-text">
+            <div class="adv-title">Advancement Made!</div>
+            <div class="adv-desc" id="toast-desc">Item added to inventory.</div>
+        </div>
+    </div>
 
     <script>
-        // =================================================================
-        // KLISTRA IN KODEN FRÅN DIN GENERATOR.HTML HÄR INUTI ARRAYEN:
-        // =================================================================
+        // --- DATA ---
         const products = [
             {
-                id: 'prod_vrtx',
-                name: 'Vortex Vessel',
-                price: 549,
-                image: '', // Typ 'vessel.jpg'
-                description: 'A spiraling parametric vase that captures ambient light perfectly. Designed algorithmically.',
-                specs: 'Matte Obsidian PLA · 20cm',
-                accent: '#8b5cf6', // Deep purple
-                badge: 'Signature'
+                id: 'blk_vessel',
+                name: 'Vortex Vessel Block',
+                price: 12,
+                emoji: '🏺',
+                lore: 'A spiraling vase crafted from rare Obsidian PLA. Holds water and flowers.',
+                rarity: 'Epic',
+                rarityColor: '#AA00AA' // Purple
             },
             {
-                id: 'prod_lnr',
+                id: 'blk_lunar',
                 name: 'Lunar Monolith',
-                price: 899,
-                image: '', 
-                description: 'Topological desk light based on actual Apollo 11 surface scans. Projects a cinematic aura.',
-                specs: 'Glow-Core Composite',
-                accent: '#e0ff4f', // Cyber neon
-                badge: 'Limited'
+                price: 24,
+                emoji: '🌕',
+                lore: 'Emits a light level of 15. Powered by Glow-Core Composite material.',
+                rarity: 'Legendary',
+                rarityColor: '#FFAA00' // Gold
             },
             {
-                id: 'prod_orb',
-                name: 'Kinetic Orb',
-                price: 349,
-                image: '', 
-                description: 'Print-in-place moving gears inside a perfect sphere. The ultimate desk companion.',
-                specs: 'Titanium-Infused PETG',
-                accent: '#0ea5e9', // Sky blue
-                badge: ''
+                id: 'blk_orb',
+                name: 'Kinetic Redstone Orb',
+                price: 8,
+                emoji: '⚙️',
+                lore: 'Print-in-place mechanical gears. Good for testing redstone ticks.',
+                rarity: 'Uncommon',
+                rarityColor: '#55FF55' // Green
+            },
+            {
+                id: 'blk_panda',
+                name: 'Slime Panda',
+                price: 5,
+                emoji: '🐼',
+                lore: 'A low-poly companion entity. Does not require bamboo to survive.',
+                rarity: 'Common',
+                rarityColor: '#FFFFFF' // White
+            },
+            {
+                id: 'blk_stand',
+                name: 'Bedrock Headset Stand',
+                price: 15,
+                emoji: '🎧',
+                lore: 'Indestructible mount for your communication devices.',
+                rarity: 'Rare',
+                rarityColor: '#5555FF' // Blue
             }
         ];
-        // =================================================================
 
-        let cart = [];
+        let inventory = [];
 
-        // Formatting
-        const formatPrice = (price) => price + ' SEK';
-        const hexToRgba = (hex, alpha) => {
-            const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        };
-
-        // Render Shop
-        const renderProducts = () => {
+        // --- RENDER SHOP ---
+        const renderShop = () => {
             const grid = document.getElementById('product-grid');
-            if (products.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--text-secondary);">The atelier is currently empty.</p>';
-                return;
-            }
-
-            grid.innerHTML = products.map((p, index) => {
-                const badgeHtml = p.badge ? `<div class="badge-tag">${p.badge}</div>` : '';
+            
+            grid.innerHTML = products.map((p) => {
+                const badge = `<div class="badge-mc" style="color:${p.rarityColor}; border-color:${p.rarityColor}">${p.rarity}</div>`;
                 
-                // 2026 Fallback Image (Gradient mesh vibe)
-                const visualHtml = p.image 
-                    ? `<div class="product-media" style="background-image: url('${p.image}'); border-color: ${p.accent}40;">${badgeHtml}</div>`
-                    : `<div class="product-media" style="background: radial-gradient(circle at 50% 50%, ${p.accent}20, transparent 70%), rgba(255,255,255,0.02);">${badgeHtml}<span style="font-size:4rem; filter:drop-shadow(0 0 20px ${p.accent});">✦</span></div>`;
-
                 return `
-                    <article class="product-card reveal" style="transition-delay: ${index * 0.1}s; --card-accent: ${p.accent};">
-                        <div class="product-content">
-                            ${visualHtml}
-                            <div class="product-meta">
-                                <p class="product-specs">${p.specs}</p>
-                                <h3>${p.name}</h3>
-                                <p class="product-desc">${p.description}</p>
-                            </div>
+                    <article class="product-block">
+                        <div class="product-visual">
+                            ${badge}
+                            <div class="floating-item">${p.emoji}</div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="mc-font product-name" style="color:${p.rarityColor}">${p.name}</h3>
+                            <p class="product-lore">"${p.lore}"</p>
                             <div class="product-bottom">
-                                <span class="price">${formatPrice(p.price)}</span>
-                                <button class="add-btn" onclick="addToCart('${p.id}')">Add +</button>
+                                <span class="emerald-price">
+                                    <span style="font-size:1.2rem; text-shadow:2px 2px 0px #000">💎</span> ${p.price}
+                                </span>
+                                <button class="mc-button" style="padding: 0.8rem 1rem; font-size:0.6rem;" onclick="addToInventory('${p.id}')">
+                                    MINE
+                                </button>
                             </div>
                         </div>
                     </article>
                 `;
             }).join('');
-
-            initCardMouseTracking();
         };
 
-        // 2026 Micro-interaction: Mouse Tracking Glow
-        const initCardMouseTracking = () => {
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                });
-            });
-        };
-
-        // Scroll Animation Observer
-        const initScrollReveal = () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        };
-
-        // Cart Logic
-        const addToCart = (id) => {
+        // --- INVENTORY LOGIC ---
+        const addToInventory = (id) => {
             const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
-            if (existing) existing.quantity++;
-            else cart.push({ ...product, quantity: 1 });
+            const existing = inventory.find(item => item.id === id);
             
-            updateCartUI();
+            if (existing) {
+                if(existing.quantity < 64) existing.quantity++;
+                else { showToast('Stack limit (64) reached!'); return; }
+            } else {
+                inventory.push({ ...product, quantity: 1 });
+            }
             
-            const toast = document.getElementById('toast');
-            toast.textContent = `✦ ${product.name} added`;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+            updateInventoryUI();
+            showToast(`${product.name} acquired!`);
         };
 
-        const updateCartQty = (id, delta) => {
-            const item = cart.find(i => i.id === id);
+        const updateQty = (id, delta) => {
+            const item = inventory.find(i => i.id === id);
             if (!item) return;
+            
             item.quantity += delta;
-            if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
-            updateCartUI();
+            if (item.quantity <= 0) inventory = inventory.filter(i => i.id !== id);
+            if (item.quantity > 64) item.quantity = 64;
+            
+            updateInventoryUI();
         };
 
-        const updateCartUI = () => {
-            const container = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            const badge = document.getElementById('cart-count');
+        const updateInventoryUI = () => {
+            const container = document.getElementById('inv-items');
+            const totalEl = document.getElementById('inv-total');
+            const hotbarQty = document.getElementById('hotbar-qty');
             const btn = document.getElementById('checkout-btn');
+            const xpBar = document.getElementById('xp-bar');
+            const xpLevel = document.getElementById('xp-level');
 
-            const totalQty = cart.reduce((s, i) => s + i.quantity, 0);
-            const totalSum = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            const totalItems = inventory.reduce((s, i) => s + i.quantity, 0);
+            const totalCost = inventory.reduce((s, i) => s + (i.price * i.quantity), 0);
 
-            badge.textContent = totalQty;
-            totalEl.textContent = formatPrice(totalSum);
+            hotbarQty.textContent = totalItems;
+            totalEl.textContent = totalCost;
+            
+            // XP Bar logic (just for fun visuals)
+            xpLevel.textContent = totalCost;
+            const xpPercent = Math.min((totalCost % 64) / 64 * 100, 100);
+            xpBar.style.width = `${xpPercent}%`;
 
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-secondary); margin-top:3rem;">Your selection is empty.</p>';
-                btn.disabled = true;
+            if (inventory.length === 0) {
+                container.innerHTML = '<p style="text-align:center; padding: 2rem 0;">Chest is empty.</p>';
+                btn.style.opacity = '0.5';
+                btn.style.pointerEvents = 'none';
                 return;
             }
 
-            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
             
-            container.innerHTML = cart.map(i => {
-                const thumbStyle = i.image 
-                    ? `background-image: url('${i.image}')` 
-                    : `background: radial-gradient(circle at top left, ${i.accent}40, transparent)`;
-                
-                return `
-                <div class="cart-item">
-                    <div class="item-img" style="${thumbStyle}; border-color:${i.accent}40;"></div>
-                    <div class="item-info">
-                        <div class="item-title">${i.name}</div>
-                        <div class="item-price">${formatPrice(i.price)}</div>
-                        <div class="qty-box">
-                            <button class="qty-btn" onclick="updateCartQty('${i.id}', -1)">-</button>
-                            <span style="font-size:0.9rem; font-weight:700;">${i.quantity}</span>
-                            <button class="qty-btn" onclick="updateCartQty('${i.id}', 1)">+</button>
+            container.innerHTML = inventory.map(i => `
+                <div class="inv-row">
+                    <div class="gui-slot inv-slot">
+                        <div style="position:relative;">
+                            ${i.emoji}
+                            <span style="position:absolute; bottom:-10px; right:-10px; font-family:'Press Start 2P'; font-size:0.6rem; color:#FFF; text-shadow:2px 2px 0px #000;">
+                                ${i.quantity}
+                            </span>
                         </div>
                     </div>
-                    <div style="font-weight:700; font-family:'Playfair Display',serif; font-size:1.2rem; display:flex; align-items:center;">
-                        ${formatPrice(i.price * i.quantity)}
+                    <div class="inv-details">
+                        <strong style="color:${i.rarityColor}">${i.name}</strong>
+                        <span style="font-size:1.2rem;">Cost: 💎 ${i.price * i.quantity}</span>
+                    </div>
+                    <div class="qty-controls">
+                        <button class="mc-button qty-btn" onclick="updateQty('${i.id}', -1)">-</button>
+                        <button class="mc-button qty-btn" onclick="updateQty('${i.id}', 1)">+</button>
                     </div>
                 </div>
-            `}).join('');
+            `).join('');
         };
 
-        const toggleCart = (state) => {
-            const panel = document.getElementById('cart-panel');
-            const overlay = document.getElementById('cart-overlay');
-            const isOpen = panel.classList.contains('active');
-            const shouldOpen = typeof state === 'boolean' ? state : !isOpen;
-            
-            if(shouldOpen) {
-                panel.classList.add('active');
+        const toggleInventory = (state) => {
+            const overlay = document.getElementById('inv-overlay');
+            if (state) {
                 overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             } else {
-                panel.classList.remove('active');
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
             }
         };
 
         const checkout = () => {
-            alert('Initiating secure checkout protocol...');
-            cart = []; updateCartUI(); toggleCart(false);
+            alert('Villagers are pleased with this trade. Connecting to server...');
+            inventory = [];
+            updateInventoryUI();
+            toggleInventory(false);
         };
 
-        // Init
+        const showToast = (desc) => {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-desc').textContent = desc;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        };
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartUI();
-            setTimeout(initScrollReveal, 100);
+            renderShop();
+            updateInventoryUI();
         });
     </script>
 </body>
