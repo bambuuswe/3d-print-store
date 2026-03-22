@@ -1,603 +1,684 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRAFTERS 3D | Block-Print Atelier</title>
+    <title>Crafters3D | Modern Atelier</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- MINECRAFT DESIGN SYSTEM --- */
         :root {
-            --mc-stone: #7D7D7D;
-            --mc-stone-light: #9E9E9E;
-            --mc-stone-dark: #555555;
-            --mc-gui-bg: #C6C6C6;
-            --mc-gui-border-light: #FFFFFF;
-            --mc-gui-border-dark: #555555;
-            --mc-slot-bg: #8B8B8B;
-            --mc-slot-dark: #373737;
-            --mc-text: #3F3F3F;
-            --mc-text-shadow: #222222;
-            --mc-yellow: #FFFF55;
-            --mc-green: #55FF55;
-            --mc-red: #FF5555;
-            --mc-blue: #5555FF;
-            --mc-hover: #7BA4FF;
+            /* Ljust tema (Standard) */
+            --bg-base: #e2e8f0;      
+            --bg-surface: #ffffff;   
+            --text-main: #020617;    
+            --text-muted: #475569;   
+            --border-light: rgba(0, 0, 0, 0.1); 
+            --accent-swish: #16a34a; 
+            --accent-paypal: #0070ba;
+            --font-modern: 'Inter', sans-serif;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 30px 60px -12px rgba(0, 0, 0, 0.3);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-
-        body {
-            /* Stone texture simulation */
-            background-color: var(--mc-stone);
-            background-image: 
-                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%, rgba(0,0,0,0.05)),
-                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%, rgba(0,0,0,0.05));
-            background-size: 32px 32px;
-            background-position: 0 0, 16px 16px;
-            color: #FFFFFF;
-            font-family: 'VT323', monospace; /* Blocky but readable */
-            line-height: 1.4;
-            overflow-x: hidden;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.7);
+        /* Mörkt tema (Dark Mode) */
+        [data-theme="dark"] {
+            --bg-base: #020617;
+            --bg-surface: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-md: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 30px 60px -12px rgba(255, 255, 255, 0.1);
         }
 
-        h1, h2, h3, .btn, .mc-font {
-            font-family: 'Press Start 2P', cursive;
-            text-transform: uppercase;
-        }
-
-        .container { width: min(1200px, 92vw); margin: 0 auto; }
-
-        /* --- GUI MIXINS --- */
-        .gui-panel {
-            background-color: var(--mc-gui-bg);
-            border: 4px solid #000;
-            box-shadow: inset 4px 4px 0px var(--mc-gui-border-light), 
-                        inset -4px -4px 0px var(--mc-gui-border-dark);
-            color: var(--mc-text);
-            text-shadow: none;
-        }
-
-        .gui-slot {
-            background-color: var(--mc-slot-bg);
-            box-shadow: inset 4px 4px 0px var(--mc-slot-dark), 
-                        inset -4px -4px 0px var(--mc-gui-border-light);
-            display: grid; place-items: center;
-        }
-
-        .mc-button {
-            background-color: var(--mc-slot-bg);
-            border: 4px solid #000;
-            box-shadow: inset 4px 4px 0px var(--mc-gui-border-light), 
-                        inset -4px -4px 0px var(--mc-gui-border-dark);
-            color: #FFF;
-            text-shadow: 2px 2px 0px var(--mc-text-shadow);
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.8rem;
-            padding: 1rem 2rem;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .mc-button:hover {
-            background-color: var(--mc-hover);
-            color: var(--mc-yellow);
-            box-shadow: inset 4px 4px 0px #AACCFF, 
-                        inset -4px -4px 0px #3355AA;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-base); color: var(--text-main); font-family: var(--font-modern); line-height: 1.6; overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
         
-        .mc-button:active {
-            box-shadow: inset 4px 4px 0px var(--mc-gui-border-dark), 
-                        inset -4px -4px 0px var(--mc-gui-border-light);
-            padding: 1.1rem 1.9rem 0.9rem 2.1rem; /* Simulate press */
+        /* Animerad Bakgrund */
+        @keyframes drift { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+        body::after { content: ""; position: fixed; inset: -100px; z-index: -11; opacity: 0.4; background-image: linear-gradient(var(--border-light) 1px, transparent 1px), linear-gradient(90deg, var(--border-light) 1px, transparent 1px); background-size: 60px 60px; animation: drift 30s linear infinite; pointer-events: none; transition: opacity 0.4s; }
+        [data-theme="dark"] body::after { opacity: 0.15; }
+
+        .container { width: min(1400px, 92vw); margin: 0 auto; }
+
+        /* --- Header --- */
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: var(--bg-surface); opacity: 0.95; backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); box-shadow: 0 4px 30px rgba(0,0,0,0.05); transition: background 0.4s ease; }
+        .nav-block { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; width: min(1400px, 92vw); margin: 0 auto; }
+        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.04em; color: var(--text-main); }
+        .header-controls { display: flex; gap: 0.8rem; align-items: center; }
+
+        .icon-btn { background: transparent; border: 1px solid var(--border-light); border-radius: 8px; padding: 0.5rem; font-size: 1.2rem; cursor: pointer; color: var(--text-main); transition: all 0.2s; }
+        .icon-btn:hover { background: var(--text-main); color: var(--bg-surface); }
+        .lang-btn { background: transparent; border: 1px solid var(--border-light); border-radius: 8px; padding: 0.5rem 0.8rem; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+        .lang-btn span.active { color: var(--text-main); }
+
+        .cart-btn { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 10px; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; transition: all 0.3s var(--ease-spring); }
+        .cart-btn:hover { transform: scale(1.05); }
+        .badge-count { background: var(--bg-surface); color: var(--text-main); padding: 0.1rem 0.6rem; border-radius: 12px; font-weight: 800; transition: 0.2s; }
+
+        /* --- Nya Animationer --- */
+        @keyframes cartBump {
+            0% { transform: scale(1); }
+            25% { transform: scale(0.9); }
+            50% { transform: scale(1.1) translateY(-2px); }
+            75% { transform: scale(1.05) translateY(1px); }
+            100% { transform: scale(1); }
         }
+        .cart-bump { animation: cartBump 0.4s var(--ease-spring); }
 
-        /* --- HEADER / HOTBAR --- */
-        header {
-            position: fixed; top: 0; width: 100%; z-index: 50;
-            padding: 1rem 0; display: flex; justify-content: center;
-            pointer-events: none;
+        @keyframes badgePop {
+            0% { transform: scale(1); background: var(--bg-surface); color: var(--text-main); }
+            50% { transform: scale(1.6); background: #10b981; color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+            100% { transform: scale(1); background: var(--bg-surface); color: var(--text-main); }
         }
+        .badge-pop { animation: badgePop 0.5s var(--ease-spring); }
 
-        .hotbar {
-            display: flex; gap: 4px; pointer-events: auto;
-            background: rgba(0,0,0,0.5); padding: 4px;
-            border: 4px solid #000;
-            box-shadow: inset 4px 4px 0px rgba(255,255,255,0.2),
-                        inset -4px -4px 0px rgba(0,0,0,0.5);
-        }
+        /* --- Hero --- */
+        .hero { padding: 10rem 0 4rem; text-align: center; }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.04em; color: var(--text-main); }
+        .hero .accent-text { color: #64748b; font-weight: 300; font-style: italic; }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; font-weight: 500; }
 
-        .hotbar-slot {
-            width: 50px; height: 50px;
-            background-color: var(--mc-slot-bg);
-            box-shadow: inset 4px 4px 0px var(--mc-slot-dark), 
-                        inset -4px -4px 0px var(--mc-gui-border-light);
-            display: grid; place-items: center;
-            font-size: 1.5rem; position: relative;
-            cursor: crosshair; transition: all 0.1s;
-        }
-
-        .hotbar-slot.active {
-            border: 4px solid #FFF;
-            box-shadow: 0 0 10px rgba(255,255,255,0.8);
-            transform: scale(1.1); z-index: 2;
-        }
-
-        .hotbar-slot:hover { background-color: var(--mc-stone-light); }
-
-        .hotbar-count {
-            position: absolute; bottom: 0; right: 4px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem; text-shadow: 2px 2px 0px #000;
-        }
-
-        /* --- HERO --- */
-        .hero {
-            min-height: 70vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-            padding-top: 6rem;
-        }
-
-        .mc-title {
-            font-size: clamp(2rem, 6vw, 5rem);
-            color: var(--mc-stone-light);
-            text-shadow: 
-                4px 4px 0 #000,
-                -2px -2px 0 var(--mc-gui-border-light),
-                0 6px 0px rgba(0,0,0,0.5);
-            margin-bottom: 1rem;
-            letter-spacing: -2px;
-        }
-
-        .mc-subtitle {
-            font-size: 1.8rem; color: var(--mc-yellow);
-            text-shadow: 2px 2px 0px #000;
-        }
-
-        /* --- PRODUCT GRID --- */
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem; padding: 4rem 0 8rem;
-        }
-
-        .product-block {
-            background-color: var(--mc-stone-dark);
-            border: 4px solid #000;
-            padding: 4px;
-            position: relative; transition: transform 0.2s;
-        }
-
-        /* Simulate Minecraft block outline on hover */
-        .product-block::after {
-            content: ''; position: absolute; inset: -4px;
-            border: 4px solid transparent; z-index: 10; pointer-events: none;
-        }
-        .product-block:hover::after { border-color: rgba(0, 0, 0, 0.8); }
-        .product-block:hover { transform: translateY(-4px); }
-
-        .product-visual {
-            background-color: var(--mc-gui-bg);
-            height: 200px; display: grid; place-items: center;
-            box-shadow: inset 4px 4px 0px var(--mc-gui-border-light), 
-                        inset -4px -4px 0px var(--mc-gui-border-dark);
-            margin-bottom: 4px; position: relative; overflow: hidden;
-        }
-
-        .floating-item {
-            font-size: 5rem; text-shadow: 4px 4px 0px rgba(0,0,0,0.4);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        .badge-mc {
-            position: absolute; top: 8px; left: 8px;
-            background: #000; color: var(--mc-yellow);
-            font-family: 'Press Start 2P', cursive; font-size: 0.5rem;
-            padding: 4px 8px; border: 2px solid var(--mc-gui-border-dark);
-        }
-
-        .product-info {
-            background-color: rgba(0,0,0,0.7);
-            padding: 1rem; border: 2px solid #000;
-        }
-
-        .product-name {
-            font-size: 0.9rem; color: var(--mc-green); margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        .product-lore {
-            font-size: 1.2rem; color: #AAAAAA; margin-bottom: 1rem;
-        }
-
-        .product-bottom {
-            display: flex; justify-content: space-between; align-items: center;
-            border-top: 2px solid #333; padding-top: 1rem;
-        }
-
-        .emerald-price {
-            display: flex; align-items: center; gap: 8px;
-            font-family: 'Press Start 2P', cursive; font-size: 0.8rem;
-            color: #FFF;
-        }
-
-        /* --- INVENTORY (CART) --- */
-        .cart-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            z-index: 100; opacity: 0; pointer-events: none;
-            display: grid; place-items: center;
-        }
-        .cart-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .chest-gui {
-            width: min(500px, 95vw); max-height: 90vh;
-            display: flex; flex-direction: column;
-            transform: scale(0.9); transition: transform 0.2s;
-        }
-        .cart-overlay.active .chest-gui { transform: scale(1); }
-
-        .gui-header {
-            display: flex; justify-content: space-between; padding: 1rem;
-            border-bottom: 4px solid var(--mc-gui-border-dark);
-        }
-
-        .gui-title {
-            font-family: 'VT323', monospace; font-size: 2rem; color: var(--mc-text); text-shadow: none;
-        }
-
-        .gui-close {
-            background: none; border: none; color: var(--mc-text);
-            font-family: 'Press Start 2P', cursive; font-size: 1.2rem;
-            text-shadow: 2px 2px 0px var(--mc-gui-border-light);
-        }
-
-        .gui-body {
-            padding: 1rem; flex: 1; overflow-y: auto;
-            display: flex; flex-direction: column; gap: 8px;
-        }
-
-        .inv-row {
-            display: flex; gap: 8px; align-items: center;
-        }
-
-        .inv-slot { width: 48px; height: 48px; flex-shrink: 0; font-size: 1.5rem; text-shadow: 2px 2px 0px rgba(0,0,0,0.5); }
+        /* --- Shop Controls (Chips) --- */
+        .shop-controls { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border-light); }
+        .search-bar { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 12px; padding: 0.8rem 1.2rem; display: flex; align-items: center; gap: 0.5rem; max-width: 100%; transition: all 0.3s; }
+        .search-input { background: transparent; border: none; color: var(--text-main); width: 100%; outline: none; font-weight: 600; font-size: 1rem; }
         
-        .inv-details {
-            flex: 1; color: var(--mc-text); text-shadow: none; font-size: 1.4rem; line-height: 1;
-        }
-        .inv-details strong { font-family: 'Press Start 2P', cursive; font-size: 0.6rem; display: block; margin-bottom: 4px; color: #000; }
+        .category-chips { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+        .chip { background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-muted); padding: 0.6rem 1.5rem; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; }
+        .chip:hover { border-color: var(--text-main); color: var(--text-main); transform: translateY(-2px); }
+        .chip.active { background: var(--text-main); color: var(--bg-surface); border-color: var(--text-main); }
 
-        .qty-controls { display: flex; gap: 4px; }
-        .qty-btn {
-            width: 24px; height: 24px; font-family: 'Press Start 2P', cursive; font-size: 0.6rem;
-            padding: 0; display: grid; place-items: center;
-        }
-
-        .gui-footer {
-            padding: 1rem; border-top: 4px solid var(--mc-gui-border-light);
-            display: flex; flex-direction: column; gap: 1rem;
-        }
-
-        .xp-bar-container {
-            width: 100%; height: 16px; background: #000;
-            border: 2px solid #000; position: relative;
-        }
-        .xp-bar-fill {
-            height: 100%; background: #55FF55; width: 0%;
-            border-top: 2px solid #AFFFFA; border-bottom: 2px solid #00AA00;
-            transition: width 0.3s;
-        }
-        .xp-level {
-            position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-            font-family: 'Press Start 2P', cursive; font-size: 1rem;
-            color: #55FF55; text-shadow: 2px 2px 0px #000;
-        }
-
-        .total-row {
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Press Start 2P', cursive; font-size: 0.8rem; color: #000; text-shadow: none;
-        }
-
-        /* --- TOAST --- */
-        .toast-advancement {
-            position: fixed; top: -100px; right: 20px; z-index: 200;
-            background-color: #212121; border: 4px solid #555555;
-            box-shadow: inset 4px 4px 0px #7D7D7D, inset -4px -4px 0px #111111;
-            padding: 1rem; display: flex; gap: 1rem; align-items: center;
-            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .toast-advancement.show { top: 20px; }
+        /* --- Products --- */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; padding-bottom: 5rem; }
+        .product-card { background: var(--bg-surface); border-radius: 24px; border: 1px solid var(--border-light); padding: 1.5rem; display: flex; flex-direction: column; transition: all 0.4s var(--ease-spring); position: relative; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover), 0 0 0 2px var(--card-accent, var(--text-main)); }
         
-        .adv-icon { font-size: 2rem; text-shadow: 2px 2px 0px #000; }
-        .adv-text { font-family: 'VT323', monospace; }
-        .adv-title { color: #FFFF55; font-size: 1.4rem; line-height: 1; }
-        .adv-desc { color: #FFFFFF; font-size: 1.2rem; text-shadow: 2px 2px 0px #000; }
+        .product-media { height: 260px; background: #f8fafc; border-radius: 16px; margin-bottom: 1.5rem; background-size: cover; background-position: center; position: relative; }
+        [data-theme="dark"] .product-media { background: #1e293b; }
+        .badge-tag { position: absolute; top: 1rem; left: 1rem; background: var(--text-main); color: var(--bg-surface); padding: 0.4rem 1rem; border-radius: 30px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .stock-warning { color: #ef4444; font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; display: block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
+        .product-specs { color: var(--card-accent, var(--text-muted)); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 900; margin-bottom: 0.5rem; }
+        .product-card h3 { font-size: 1.6rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--text-main); }
+        .product-desc { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; margin-bottom: 1.5rem; font-weight: 500; }
+        
+        .product-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 1.5rem; }
+        .price { font-weight: 900; font-size: 1.6rem; color: var(--text-main); }
+        
+        /* Product Button */
+        .add-btn { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 12px; padding: 0.8rem 1.5rem; font-weight: 800; cursor: pointer; transition: all 0.3s; min-width: 110px; }
+        .add-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--card-accent, #334155); }
+        .add-btn:disabled { background: var(--border-light); color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* --- Cart Panel --- */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+        .cart-overlay.active { opacity: 1; pointer-events: all; }
+        .cart-panel { position: fixed; top: 0; right: -100%; width: min(450px, 100vw); height: 100vh; background: var(--bg-surface); z-index: 101; display: flex; flex-direction: column; transition: right 0.5s var(--ease-spring); box-shadow: -20px 0 50px rgba(0,0,0,0.2); }
+        .cart-panel.active { right: 0; }
+        .cart-header { padding: 2rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { font-size: 1.6rem; font-weight: 900; }
+        
+        /* Free Shipping Bar */
+        .shipping-tracker { background: var(--bg-base); padding: 1rem 2rem; border-bottom: 1px solid var(--border-light); }
+        .sh-msg { font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; text-align: center; }
+        .sh-bar { height: 8px; background: var(--border-light); border-radius: 10px; overflow: hidden; }
+        .sh-fill { height: 100%; background: #10b981; transition: width 0.5s var(--ease-spring); width: 0%; }
+        .sh-fill.success { background: linear-gradient(90deg, #10b981, #34d399); }
+
+        .cart-body { flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+        .cart-item { display: flex; gap: 1rem; padding: 1rem; background: var(--bg-base); border-radius: 16px; position: relative; }
+        .item-img { width: 70px; height: 70px; background-size: cover; border-radius: 10px; }
+        .item-info { flex: 1; }
+        .qty-box { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; }
+        .qty-btn { background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-main); width: 28px; height: 28px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .remove-item { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #ef4444; font-weight: 900; cursor: pointer; }
+
+        /* Promo Code */
+        .promo-box { display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .promo-box input { flex: 1; background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-main); padding: 0.8rem; border-radius: 10px; outline: none; font-family: var(--font-modern); font-weight: 600; }
+        .promo-box button { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 10px; padding: 0 1rem; font-weight: 700; cursor: pointer; }
+
+        .cart-footer { padding: 2rem; border-top: 1px solid var(--border-light); }
+        .summary-row { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted); }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 900; margin: 1rem 0 0 0; padding-top: 1rem; border-top: 1px dashed var(--border-light); color: var(--text-main); }
+        .checkout-btn { width: 100%; background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 12px; padding: 1.2rem; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; }
+        .checkout-btn:hover { transform: translateY(-3px); }
+
+        /* --- Footer & FAQ --- */
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 4rem 0; margin-top: 4rem; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .faq-item { margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
+        .faq-q { font-weight: 800; color: var(--text-main); cursor: pointer; display: flex; justify-content: space-between; font-size: 1.1rem; }
+        .faq-a { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; display: none; }
+        .faq-a.open { display: block; animation: fadeUp 0.3s ease; }
+
+        /* --- Modals (Payment) --- */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-content { background: var(--bg-surface); border-radius: 20px; width: min(500px, 95vw); padding: 3rem 2rem; text-align: center; position: relative; display: none; }
+        .modal-content.active { display: block; }
+        .modal-textarea { width: 100%; height: 100px; background: var(--bg-base); color: var(--text-main); border: 1px solid var(--border-light); border-radius: 10px; padding: 1rem; font-family: var(--font-modern); font-weight: 600; margin: 1.5rem 0; outline: none; }
+        .btn-action { background: var(--text-main); color: var(--bg-surface); border: none; padding: 1rem; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%; margin-bottom: 0.5rem; }
+        
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translate(-50%, 40px); background: var(--text-main); color: var(--bg-surface); padding: 1rem 2rem; border-radius: 30px; font-weight: 800; opacity: 0; transition: 0.4s; z-index: 300; }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <!-- HOTBAR (Navigation) -->
     <header>
-        <div class="hotbar" id="hotbar">
-            <!-- Logo Slot -->
-            <div class="hotbar-slot" title="Hemsida" onclick="window.scrollTo(0,0)">
-                <span style="font-size: 1rem; font-family: 'Press Start 2P'; color:#55FF55;">C3D</span>
-            </div>
-            <div class="hotbar-slot"></div>
-            <div class="hotbar-slot"></div>
-            <div class="hotbar-slot"></div>
-            <div class="hotbar-slot"></div>
-            <div class="hotbar-slot"></div>
-            <div class="hotbar-slot"></div>
-            <!-- Cart Slot -->
-            <div class="hotbar-slot active" title="Öppna Kista (Varukorg)" onclick="toggleInventory(true)">
-                🧰
-                <span class="hotbar-count" id="hotbar-qty">0</span>
+        <div class="nav-block">
+            <div class="logo">CRAFTERS</div>
+            <div class="header-controls">
+                <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+                <button onclick="toggleLang()" class="lang-btn"><span id="lang-en" class="active">EN</span> / <span id="lang-sv">SV</span></button>
+                <button class="cart-btn" onclick="toggleCart(true)" id="main-cart-btn">
+                    <span data-i18n="cartBtn">Cart</span> 
+                    <span class="badge-count" id="cart-count">0</span>
+                </button>
             </div>
         </div>
     </header>
 
     <main>
         <section class="hero container">
-            <h1 class="mc-title">CRAFTERS 3D</h1>
-            <p class="mc-subtitle">Premium block-prints for your base.</p>
-            <div style="margin-top: 3rem;">
-                <button class="mc-button" onclick="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})">
-                    Start Crafting
-                </button>
-            </div>
+            <h1 data-i18n="heroH1">Shaping the <span class="accent-text">Future</span> <br>of Matter.</h1>
+            <p data-i18n="heroP">Premium 3D prints designed for the modern workspace.</p>
         </section>
 
-        <section class="container" id="shop">
-            <h2 class="mc-font" style="color:#FFF; border-bottom: 4px solid var(--mc-stone-light); padding-bottom:1rem; margin-bottom: 1rem;">Recipe Book</h2>
-            <div class="product-grid" id="product-grid">
-                <!-- Products injected via JS -->
+        <section class="container">
+            <div class="shop-controls">
+                <div class="search-bar">
+                    <span>🔍</span> 
+                    <input class="search-input" id="search-input" type="text" placeholder="Search..." oninput="filterProducts()">
+                </div>
+                <div class="category-chips" id="cat-chips">
+                    <!-- Fylls med JS -->
+                </div>
             </div>
+            <div class="product-grid" id="product-grid"></div>
         </section>
     </main>
 
-    <!-- INVENTORY GUI (Cart) -->
-    <div class="cart-overlay" id="inv-overlay" onclick="if(event.target===this) toggleInventory(false)">
-        <div class="gui-panel chest-gui">
-            <div class="gui-header">
-                <h3 class="gui-title">Inventory (Chest)</h3>
-                <button class="gui-close" onclick="toggleInventory(false)">X</button>
-            </div>
-            
-            <div class="gui-body" id="inv-items">
-                <!-- Cart items -->
-            </div>
+    <!-- Footer & FAQ -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h2 style="font-weight: 900; margin-bottom: 1rem;" data-i18n="faqTitle">FAQ / Information</h2>
 
-            <div class="gui-footer">
-                <div style="position: relative; margin-bottom: 1rem;">
-                    <div class="xp-level" id="xp-level">0</div>
-                    <div class="xp-bar-container">
-                        <div class="xp-bar-fill" id="xp-bar"></div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">
+                        <span data-i18n="faq1_q">Hur lång är leveranstiden?</span> 
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-a" data-i18n="faq1_a">
+                        Alla produkter 3D-printas på beställning. Leveranstiden är vanligtvis 1–3 arbetsdagar.
                     </div>
                 </div>
 
-                <div class="total-row">
-                    <span>TOTAL COST:</span>
-                    <span style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:1.5rem; text-shadow:2px 2px 0px rgba(0,0,0,0.3)">💎</span> 
-                        <span id="inv-total">0</span>
-                    </span>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">
+                        <span data-i18n="faq2_q">Vilket material används?</span> 
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-a" data-i18n="faq2_a">
+                        Vi använder högkvalitativ PLA-plast.
+                    </div>
                 </div>
-                
-                <button class="mc-button" id="checkout-btn" style="width:100%; margin-top:0.5rem;" onclick="checkout()">
-                    TRADE ITEMS
-                </button>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">
+                        <span data-i18n="faq3_q">Kan jag specialbeställa?</span> 
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-a" data-i18n="faq3_a">
+                        Ja! Kontakta oss via sociala medier så hjälper vi dig att skapa en unik produkt efter dina önskemål.
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <h2 style="font-weight: 900; margin-bottom: 1rem;">Crafters3D Studio</h2>
+                <p style="color: var(--text-muted); font-weight: 500;" data-i18n="footerDesc">
+                    Skapad för entusiaster av entusiaster!
+                </p>
+                <p style="margin-top: 1rem; font-weight: 700;" data-i18n="footerShip">📍 Skickas från Sverige</p>
+                <p style="margin-top: 0.5rem;" data-i18n="footerSec">🔒 Säker betalning</p>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- ADVANCEMENT TOAST -->
-    <div class="toast-advancement" id="toast">
-        <div class="adv-icon">⭐</div>
-        <div class="adv-text">
-            <div class="adv-title">Advancement Made!</div>
-            <div class="adv-desc" id="toast-desc">Item added to inventory.</div>
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart(false)"></div>
+    <aside class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+            <h3 data-i18n="cartTitle">Din Varukorg</h3>
+            <button class="icon-btn" style="border:none;" onclick="toggleCart(false)">✕</button>
+        </div>
+        
+        <!-- Fri Frakt Mätare -->
+        <div class="shipping-tracker">
+            <div class="sh-msg" id="free-sh-msg">Köp för 200 SEK till för fri frakt!</div>
+            <div class="sh-bar"><div class="sh-fill" id="free-sh-fill"></div></div>
+        </div>
+
+        <div class="cart-body" id="cart-items"></div>
+        
+        <div class="cart-footer">
+            <div class="summary-row"><span data-i18n="subtotal">Delsumma</span><span id="cart-subtotal">0 SEK</span></div>
+            <div class="summary-row" id="discount-row" style="display:none; color: #10b981;"><span data-i18n="discount">Rabatt</span><span id="cart-discount">-0 SEK</span></div>
+            <div class="summary-row"><span data-i18n="shipping">Frakt</span><span id="cart-shipping">0 SEK</span></div>
+            <div class="total-row"><span data-i18n="total">Totalt</span><span id="cart-total">0 SEK</span></div>
+            
+            <!-- Rabattkod -->
+            <div class="promo-box">
+                <input type="text" id="promo-input" placeholder="Rabattkod...">
+                <button onclick="applyPromo()" data-i18n="promoBtn">Använd</button>
+            </div>
+            <div id="promo-msg" style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.5rem; display:none;">Rabatt aktiverad!</div>
+
+            <button class="checkout-btn" id="checkout-btn" onclick="openPaymentSelection()" data-i18n="checkoutBtn">Gå till kassan</button>
+        </div>
+    </aside>
+
+    <!-- Payment Modals -->
+    <div class="modal-overlay" id="master-modal">
+        <div class="modal-content" id="view-select">
+            <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1rem; top:1rem; border:none;">✕</button>
+            <h2 data-i18n="payMethodTitle" style="margin-bottom:2rem;">Välj Betalsätt</h2>
+            <button class="btn-action" style="background:var(--accent-swish); padding:1.5rem; font-size:1.2rem;" onclick="showPaymentView('swish')">Swish</button>
+            <button class="btn-action" style="background:var(--accent-paypal); padding:1.5rem; font-size:1.2rem;" onclick="showPaymentView('paypal')">PayPal</button>
+        </div>
+        
+        <div class="modal-content" id="view-swish">
+            <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1rem; top:1rem; border:none;">✕</button>
+            <h2>Swish <span id="swish-total-text" style="color:var(--accent-swish)"></span></h2>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-top:1rem;" data-i18n="swishInst">Kopiera meddelandet, byt ut adressen och swisha till: <strong>070 436 85 77</strong></p>
+            <textarea id="swish-msg" class="modal-textarea" readonly></textarea>
+            <button onclick="copyMsg('swish-msg')" class="btn-action" data-i18n="copyBtn">Kopiera Meddelande</button>
+        </div>
+
+        <div class="modal-content" id="view-paypal">
+            <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1rem; top:1rem; border:none;">✕</button>
+            <h2>PayPal <span id="paypal-total-text" style="color:var(--accent-paypal)"></span></h2>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-top:1rem;" data-i18n="ppInst">Kopiera meddelandet nedan och klistra in som kommentar på PayPal.</p>
+            <textarea id="paypal-msg" class="modal-textarea" readonly></textarea>
+            <button onclick="copyMsg('paypal-msg')" class="btn-action" style="margin-bottom:1rem;" data-i18n="copyBtn">Kopiera Meddelande</button>
+            <button onclick="openPayPalLink()" class="btn-action" style="background:var(--accent-paypal);">Öppna PayPal ↗</button>
         </div>
     </div>
 
+    <div class="toast" id="toast">Kopierat!</div>
+
     <script>
-        // --- DATA ---
-        const products = [
+        // --- TEMA (DARK MODE) ---
+        const themeBtn = document.getElementById('theme-btn');
+        let isDark = localStorage.getItem('theme') === 'dark';
+        if(isDark) document.documentElement.setAttribute('data-theme', 'dark');
+        themeBtn.textContent = isDark ? '☀️' : '🌙';
+
+        const toggleTheme = () => {
+            isDark = !isDark;
+            if(isDark) { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeBtn.textContent = '☀️'; } 
+            else { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); themeBtn.textContent = '🌙'; }
+        };
+
+        const toggleFaq = (el) => {
+            const answer = el.nextElementSibling;
+            const icon = el.querySelector('.faq-icon');
+            if(answer.classList.contains('open')) { answer.classList.remove('open'); icon.textContent = '+'; } 
+            else { answer.classList.add('open'); icon.textContent = '−'; }
+        };
+
+        // --- FRAKT & RABATTER ---
+        const FREE_SHIPPING_LIMIT = 200;
+        const VALID_PROMOS = { 'BETA10': 0.10, 'SOMMAR20': 0.20 }; 
+        let activeDiscount = 0;
+
+        const shippingTiers = [
+            { maxWeight: 50, cost: 18 }, { maxWeight: 100, cost: 36 }, { maxWeight: 250, cost: 59 },    
+            { maxWeight: 500, cost: 65 }, { maxWeight: 1000, cost: 80 }, { maxWeight: Infinity, cost: 109 } 
+        ];
+
+        // --- PRODUKTER ---
+        let products = [
             {
-                id: 'blk_vessel',
-                name: 'Vortex Vessel Block',
-                price: 12,
-                emoji: '🏺',
-                lore: 'A spiraling vase crafted from rare Obsidian PLA. Holds water and flowers.',
-                rarity: 'Epic',
-                rarityColor: '#AA00AA' // Purple
+                id: 'prod_4eclrs', price: 69, weight: 100, stock: 15, image: '', accent: '#10b981', category: 'Mobs',
+                en: { name: 'Panda Pal', badge: 'NEW', specs: 'White & Black PLA', description: 'Your new little desk buddy.' },
+                sv: { name: 'Panda Figur', badge: 'NYHET', specs: 'Svart/Vit PLA', description: 'Din nya lilla kompis på skrivbordet.' }
             },
             {
-                id: 'blk_lunar',
-                name: 'Lunar Monolith',
-                price: 24,
-                emoji: '🌕',
-                lore: 'Emits a light level of 15. Powered by Glow-Core Composite material.',
-                rarity: 'Legendary',
-                rarityColor: '#FFAA00' // Gold
+                id: 'prod_diam', price: 449, weight: 600, stock: 2, image: '', accent: '#06b6d4', category: 'Tools',
+                en: { name: 'Pickaxe Stand', badge: 'Premium', specs: 'Carbon Fiber', description: 'Holds your headset with style.' },
+                sv: { name: 'Hacka Stativ', badge: 'Premium', specs: 'Kolfiber-komposit', description: 'Håller ditt headset med stil.' }
             },
             {
-                id: 'blk_orb',
-                name: 'Kinetic Redstone Orb',
-                price: 8,
-                emoji: '⚙️',
-                lore: 'Print-in-place mechanical gears. Good for testing redstone ticks.',
-                rarity: 'Uncommon',
-                rarityColor: '#55FF55' // Green
-            },
-            {
-                id: 'blk_panda',
-                name: 'Slime Panda',
-                price: 5,
-                emoji: '🐼',
-                lore: 'A low-poly companion entity. Does not require bamboo to survive.',
-                rarity: 'Common',
-                rarityColor: '#FFFFFF' // White
-            },
-            {
-                id: 'blk_stand',
-                name: 'Bedrock Headset Stand',
-                price: 15,
-                emoji: '🎧',
-                lore: 'Indestructible mount for your communication devices.',
-                rarity: 'Rare',
-                rarityColor: '#5555FF' // Blue
+                id: 'prod_sold', price: 199, weight: 200, stock: 0, image: '', accent: '#ef4444', category: 'Decor',
+                en: { name: 'Redstone Lamp', badge: 'Rare', specs: 'LED Included', description: 'Glowing block.' },
+                sv: { name: 'Redstone Lampa', badge: 'Sällsynt', specs: 'LED Ingår', description: 'Lyser upp mörkret.' }
             }
         ];
 
-        let inventory = [];
+        let currentLang = 'sv'; 
+        let currentCat = 'ALL';
 
-        // --- RENDER SHOP ---
-        const renderShop = () => {
-            const grid = document.getElementById('product-grid');
-            
-            grid.innerHTML = products.map((p) => {
-                const badge = `<div class="badge-mc" style="color:${p.rarityColor}; border-color:${p.rarityColor}">${p.rarity}</div>`;
+        const dict = {
+            en: {
+                cartBtn: "Cart", heroH1: "Shaping the <span class='accent-text'>Future</span> <br>of Matter.", heroP: "Premium 3D prints for the modern workspace.",
+                searchPlaceholder: "Search artifacts...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Artifacts", cats_decor: "Decor",
+                emptyGrid: "No artifacts found...", addBtn: "Add +", soldOut: "Sold Out", onlyLeft: "Only {x} left!",
+                cartTitle: "Your Cart", subtotal: "Subtotal", discount: "Discount", shipping: "Shipping", total: "Total", checkoutBtn: "Checkout",
+                emptyCart: "Cart is empty.", payMethodTitle: "Payment Method", copyBtn: "Copy Message",
+                swishInst: "Copy the message, replace the address and Swish to: <strong>070 436 85 77</strong>",
+                ppInst: "Copy the message below and paste it as a comment on PayPal.",
+                addressPlaceholder: "[NAME, STREET, ZIP, CITY, COUNTRY]", 
+                freeSh: "Free Shipping!", awaySh: "Buy for {x} SEK more to get Free Shipping!",
+                promoPlaceholder: "Promo code (e.g. BETA10)", promoBtn: "Apply",
                 
+                // --- FAQ EN ---
+                faqTitle: "FAQ / Information",
+                faq1_q: "What is the delivery time?",
+                faq1_a: "All products are 3D printed on demand. Delivery time is usually 1–3 business days.",
+                faq2_q: "What material is used?",
+                faq2_a: "We use high-quality PLA plastic.",
+                faq3_q: "Can I make a custom order?",
+                faq3_a: "Yes! Contact us via social media and we'll help you create a unique product.",
+                footerDesc: "Created for enthusiasts by enthusiasts!",
+                footerShip: "📍 Ships from Sweden",
+                footerSec: "🔒 Secure payment"
+            },
+            sv: {
+                cartBtn: "Varukorg", heroH1: "Formar <span class='accent-text'>Framtidens</span> <br>Materia.", heroP: "Premium 3D-utskrifter för den moderna arbetsytan.",
+                searchPlaceholder: "Sök artefakter...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Artefakter", cats_decor: "Inredning",
+                emptyGrid: "Inga produkter hittades...", addBtn: "Lägg till +", soldOut: "Slutsåld", onlyLeft: "Endast {x} kvar!",
+                cartTitle: "Din Varukorg", subtotal: "Delsumma", discount: "Rabatt", shipping: "Frakt", total: "Totalt", checkoutBtn: "Gå till kassan",
+                emptyCart: "Varukorgen är tom.", payMethodTitle: "Välj Betalsätt", copyBtn: "Kopiera Meddelande",
+                swishInst: "Kopiera meddelandet, byt ut adressen och swisha till: <strong>070 436 85 77</strong>",
+                ppInst: "Kopiera meddelandet nedan och klistra in som kommentar på PayPal.",
+                addressPlaceholder: "[NAMN, GATA, POSTNR, ORT, LAND]", 
+                freeSh: "Du har Fri Frakt!", awaySh: "Köp för {x} SEK till för Fri Frakt!",
+                promoPlaceholder: "Rabattkod (t.ex. BETA10)", promoBtn: "Använd",
+                
+                // --- FAQ SV ---
+                faqTitle: "FAQ / Information",
+                faq1_q: "Hur lång är leveranstiden?",
+                faq1_a: "Alla produkter 3D-printas på beställning. Leveranstiden är vanligtvis 1–3 arbetsdagar.",
+                faq2_q: "Vilket material används?",
+                faq2_a: "Vi använder högkvalitativ PLA-plast.",
+                faq3_q: "Kan jag specialbeställa?",
+                faq3_a: "Ja! Kontakta oss via sociala medier så hjälper vi dig att skapa en unik produkt efter dina önskemål.",
+                footerDesc: "Skapad för entusiaster av entusiaster!",
+                footerShip: "📍 Skickas från Sverige",
+                footerSec: "🔒 Säker betalning"
+            }
+        };
+
+        const t = (key) => dict[currentLang][key];
+        const getField = (item, field) => item[currentLang] && item[currentLang][field] ? item[currentLang][field] : item[field] || '';
+        const formatPrice = (price) => Math.round(price) + ' SEK';
+
+        const toggleLang = () => {
+            currentLang = currentLang === 'en' ? 'sv' : 'en';
+            document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+            document.getElementById('lang-sv').classList.toggle('active', currentLang === 'sv');
+            updateUI();
+        };
+
+        const updateUI = () => {
+            document.querySelectorAll('[data-i18n]').forEach(el => { if(t(el.getAttribute('data-i18n'))) el.innerHTML = t(el.getAttribute('data-i18n')); });
+            document.getElementById('search-input').placeholder = t('searchPlaceholder');
+            document.getElementById('promo-input').placeholder = t('promoPlaceholder');
+            
+            const chips = document.getElementById('cat-chips');
+            chips.innerHTML = `
+                <button class="chip ${currentCat==='ALL'?'active':''}" onclick="setCat('ALL')">${t('cats_all')}</button>
+                <button class="chip ${currentCat==='Tools'?'active':''}" onclick="setCat('Tools')">${t('cats_tools')}</button>
+                <button class="chip ${currentCat==='Mobs'?'active':''}" onclick="setCat('Mobs')">${t('cats_mobs')}</button>
+                <button class="chip ${currentCat==='Decor'?'active':''}" onclick="setCat('Decor')">${t('cats_decor')}</button>
+            `;
+            filterProducts(); updateCartUI();
+        };
+
+        const setCat = (cat) => { currentCat = cat; updateUI(); };
+
+        let cart = [];
+        let currentProducts = [...products];
+        let globalFinalTotal = 0; 
+
+        const renderProducts = (list) => {
+            const grid = document.getElementById('product-grid');
+            if (list.length === 0) { grid.innerHTML = `<p style="color:var(--text-muted); font-weight:600;">${t('emptyGrid')}</p>`; return; }
+
+            grid.innerHTML = list.map((p, index) => {
+                const badgeHtml = getField(p, 'badge') ? `<div class="badge-tag">${getField(p, 'badge')}</div>` : '';
+                const visualHtml = p.image ? `<div class="product-media" style="background-image: url('${p.image}');">${badgeHtml}</div>` : `<div class="product-media" style="background: linear-gradient(135deg, transparent, rgba(0,0,0,0.05)); border-bottom: 4px solid ${p.accent};">${badgeHtml}</div>`;
+                
+                let stockWarning = '';
+                // SKICKAR MED "this" TILL ADDTOCART FÖR ATT KUNNA ANIMERA KNAPPEN
+                let btnHtml = `<button class="add-btn" onclick="addToCart('${p.id}', this)">${t('addBtn')}</button>`;
+                
+                if(p.stock === 0) {
+                    btnHtml = `<button class="add-btn" disabled>${t('soldOut')}</button>`;
+                } else if (p.stock <= 3) {
+                    stockWarning = `<span class="stock-warning">${t('onlyLeft').replace('{x}', p.stock)}</span>`;
+                }
+
                 return `
-                    <article class="product-block">
-                        <div class="product-visual">
-                            ${badge}
-                            <div class="floating-item">${p.emoji}</div>
+                    <article class="product-card animate-in" style="--card-accent: ${p.accent}; animation-delay: ${index * 0.1}s;">
+                        ${visualHtml}
+                        <p class="product-specs">${getField(p, 'specs')}</p>
+                        <h3>${getField(p, 'name')}</h3>
+                        <p class="product-desc">${getField(p, 'description')}</p>
+                        ${stockWarning}
+                        <div class="product-bottom">
+                            <span class="price">${formatPrice(p.price)}</span>
+                            ${btnHtml}
                         </div>
-                        <div class="product-info">
-                            <h3 class="mc-font product-name" style="color:${p.rarityColor}">${p.name}</h3>
-                            <p class="product-lore">"${p.lore}"</p>
-                            <div class="product-bottom">
-                                <span class="emerald-price">
-                                    <span style="font-size:1.2rem; text-shadow:2px 2px 0px #000">💎</span> ${p.price}
-                                </span>
-                                <button class="mc-button" style="padding: 0.8rem 1rem; font-size:0.6rem;" onclick="addToInventory('${p.id}')">
-                                    MINE
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                `;
+                    </article>`;
             }).join('');
         };
 
-        // --- INVENTORY LOGIC ---
-        const addToInventory = (id) => {
+        const filterProducts = () => {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            currentProducts = products.filter(p => {
+                const name = getField(p, 'name').toLowerCase();
+                return name.includes(searchInput) && (currentCat === 'ALL' || p.category === currentCat);
+            });
+            renderProducts(currentProducts);
+        };
+
+        const addToCart = (id, btnElement) => {
             const product = products.find(p => p.id === id);
-            const existing = inventory.find(item => item.id === id);
+            const existing = cart.find(item => item.id === id);
             
             if (existing) {
-                if(existing.quantity < 64) existing.quantity++;
-                else { showToast('Stack limit (64) reached!'); return; }
+                if(existing.quantity < product.stock) existing.quantity++;
+                else { showToast("Slut i lager!"); return; }
             } else {
-                inventory.push({ ...product, quantity: 1 });
+                if(product.stock > 0) cart.push({ ...product, quantity: 1 });
             }
+            updateCartUI();
+
+            // --- ANIMERA KNAPPEN MAN KLICKADE PÅ ---
+            if(btnElement) {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = '✓';
+                btnElement.style.background = '#10b981';
+                btnElement.style.color = 'white';
+                btnElement.style.boxShadow = '0 10px 20px -5px rgba(16, 185, 129, 0.4)';
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.style.background = '';
+                    btnElement.style.color = '';
+                    btnElement.style.boxShadow = '';
+                }, 800);
+            }
+
+            // --- ANIMERA VARUKORGEN UPPE I MENYN ---
+            const mainCartBtn = document.getElementById('main-cart-btn');
+            const badge = document.getElementById('cart-count');
             
-            updateInventoryUI();
-            showToast(`${product.name} acquired!`);
+            // Nollställ animationer för att kunna köra dem igen
+            mainCartBtn.classList.remove('cart-bump');
+            badge.classList.remove('badge-pop');
+            void mainCartBtn.offsetWidth; // Framtvingar en reflow i webbläsaren
+            
+            // Starta animationerna
+            mainCartBtn.classList.add('cart-bump');
+            badge.classList.add('badge-pop');
         };
 
-        const updateQty = (id, delta) => {
-            const item = inventory.find(i => i.id === id);
+        const updateCartQty = (id, delta) => {
+            const product = products.find(p => p.id === id);
+            const item = cart.find(i => i.id === id);
             if (!item) return;
             
-            item.quantity += delta;
-            if (item.quantity <= 0) inventory = inventory.filter(i => i.id !== id);
-            if (item.quantity > 64) item.quantity = 64;
+            if(delta > 0 && item.quantity >= product.stock) { showToast("Max antal uppnått"); return; }
             
-            updateInventoryUI();
+            item.quantity += delta;
+            if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+            updateCartUI();
         };
 
-        const updateInventoryUI = () => {
-            const container = document.getElementById('inv-items');
-            const totalEl = document.getElementById('inv-total');
-            const hotbarQty = document.getElementById('hotbar-qty');
-            const btn = document.getElementById('checkout-btn');
-            const xpBar = document.getElementById('xp-bar');
-            const xpLevel = document.getElementById('xp-level');
-
-            const totalItems = inventory.reduce((s, i) => s + i.quantity, 0);
-            const totalCost = inventory.reduce((s, i) => s + (i.price * i.quantity), 0);
-
-            hotbarQty.textContent = totalItems;
-            totalEl.textContent = totalCost;
+        const applyPromo = () => {
+            const input = document.getElementById('promo-input').value.replace(/\s+/g, '').toUpperCase();
             
-            // XP Bar logic (just for fun visuals)
-            xpLevel.textContent = totalCost;
-            const xpPercent = Math.min((totalCost % 64) / 64 * 100, 100);
-            xpBar.style.width = `${xpPercent}%`;
+            if(VALID_PROMOS[input]) {
+                activeDiscount = VALID_PROMOS[input];
+                const successMsg = currentLang === 'sv' ? 'Rabatt aktiverad!' : 'Discount applied!';
+                document.getElementById('promo-msg').textContent = successMsg;
+                document.getElementById('promo-msg').style.display = 'block';
+                document.getElementById('promo-input').value = '';
+                updateCartUI();
+            } else {
+                const errorMsg = currentLang === 'sv' ? 'Ogiltig kod' : 'Invalid promo code';
+                showToast(errorMsg);
+            }
+        };
 
-            if (inventory.length === 0) {
-                container.innerHTML = '<p style="text-align:center; padding: 2rem 0;">Chest is empty.</p>';
-                btn.style.opacity = '0.5';
-                btn.style.pointerEvents = 'none';
-                return;
+        const updateCartUI = () => {
+            const container = document.getElementById('cart-items');
+            const btn = document.getElementById('checkout-btn');
+            
+            const totalQty = cart.reduce((sum, i) => sum + i.quantity, 0);
+            const rawSum = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+            
+            const discountAmount = rawSum * activeDiscount;
+            const sumAfterDiscount = rawSum - discountAmount;
+
+            let shippingCost = 0;
+            const totalWeight = cart.reduce((sum, i) => sum + ((i.weight || 100) * i.quantity), 0);
+            
+            if (sumAfterDiscount >= FREE_SHIPPING_LIMIT) {
+                shippingCost = 0;
+            } else if (cart.length > 0) {
+                const tier = shippingTiers.find(t => totalWeight <= t.maxWeight);
+                shippingCost = tier ? tier.cost : 109;
+            }
+            
+            globalFinalTotal = sumAfterDiscount + shippingCost;
+
+            document.getElementById('cart-count').textContent = totalQty;
+            document.getElementById('cart-subtotal').textContent = formatPrice(rawSum);
+            
+            if(activeDiscount > 0) {
+                document.getElementById('discount-row').style.display = 'flex';
+                document.getElementById('cart-discount').textContent = '-' + formatPrice(discountAmount);
+            } else {
+                document.getElementById('discount-row').style.display = 'none';
             }
 
-            btn.style.opacity = '1';
-            btn.style.pointerEvents = 'auto';
-            
-            container.innerHTML = inventory.map(i => `
-                <div class="inv-row">
-                    <div class="gui-slot inv-slot">
-                        <div style="position:relative;">
-                            ${i.emoji}
-                            <span style="position:absolute; bottom:-10px; right:-10px; font-family:'Press Start 2P'; font-size:0.6rem; color:#FFF; text-shadow:2px 2px 0px #000;">
-                                ${i.quantity}
-                            </span>
+            document.getElementById('cart-shipping').textContent = shippingCost === 0 && cart.length > 0 ? '0 SEK' : formatPrice(shippingCost);
+            document.getElementById('cart-total').textContent = formatPrice(globalFinalTotal);
+
+            const shMsg = document.getElementById('free-sh-msg');
+            const shFill = document.getElementById('free-sh-fill');
+            if(sumAfterDiscount >= FREE_SHIPPING_LIMIT && cart.length > 0) {
+                shMsg.textContent = t('freeSh'); shMsg.style.color = '#10b981';
+                shFill.style.width = '100%'; shFill.classList.add('success');
+            } else {
+                const away = FREE_SHIPPING_LIMIT - sumAfterDiscount;
+                shMsg.textContent = t('awaySh').replace('{x}', Math.round(away)); shMsg.style.color = 'var(--text-main)';
+                shFill.style.width = Math.min(100, (sumAfterDiscount / FREE_SHIPPING_LIMIT) * 100) + '%';
+                shFill.classList.remove('success');
+            }
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p style="text-align:center; margin-top:2rem;">${t('emptyCart')} 🛒</p>`;
+                btn.disabled = true; btn.style.opacity = '0.3'; return;
+            }
+
+            btn.disabled = false; btn.style.opacity = '1';
+            container.innerHTML = cart.map(i => {
+                return `
+                <div class="cart-item">
+                    <div class="item-img" style="background: var(--bg-surface); border-left: 4px solid ${i.accent};"></div>
+                    <div class="item-info">
+                        <div style="font-weight:800;">${getField(i, 'name')}</div>
+                        <div style="color:var(--text-muted); font-size:0.9rem; font-weight:700;">${formatPrice(i.price)}</div>
+                        <div class="qty-box">
+                            <button class="qty-btn" onclick="updateCartQty('${i.id}', -1)">-</button>
+                            <span style="font-weight:800; min-width:20px; text-align:center;">${i.quantity}</span>
+                            <button class="qty-btn" onclick="updateCartQty('${i.id}', 1)">+</button>
                         </div>
                     </div>
-                    <div class="inv-details">
-                        <strong style="color:${i.rarityColor}">${i.name}</strong>
-                        <span style="font-size:1.2rem;">Cost: 💎 ${i.price * i.quantity}</span>
-                    </div>
-                    <div class="qty-controls">
-                        <button class="mc-button qty-btn" onclick="updateQty('${i.id}', -1)">-</button>
-                        <button class="mc-button qty-btn" onclick="updateQty('${i.id}', 1)">+</button>
-                    </div>
-                </div>
-            `).join('');
+                    <button class="remove-item" onclick="updateCartQty('${i.id}', -999)">✕</button>
+                </div>`
+            }).join('');
         };
 
-        const toggleInventory = (state) => {
-            const overlay = document.getElementById('inv-overlay');
-            if (state) {
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } else {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+        const toggleCart = (state) => {
+            const panel = document.getElementById('cart-panel');
+            const overlay = document.getElementById('cart-overlay');
+            if(state) { panel.classList.add('active'); overlay.classList.add('active'); } 
+            else { panel.classList.remove('active'); overlay.classList.remove('active'); }
         };
 
-        const checkout = () => {
-            alert('Villagers are pleased with this trade. Connecting to server...');
-            inventory = [];
-            updateInventoryUI();
-            toggleInventory(false);
+        const generateOrderId = () => 'ORD-' + Math.random().toString(36).substr(2, 4).toUpperCase();
+
+        const openPaymentSelection = () => {
+            if (cart.length === 0) return;
+            toggleCart(false);
+            
+            const orderId = generateOrderId();
+            const itemsText = cart.map(i => `${i.quantity}x ${getField(i, 'name')}`).join(', ');
+            const fullMessage = `Order: ${orderId} | ${itemsText}. Adress: ${t('addressPlaceholder')}`;
+            
+            document.getElementById('swish-msg').value = fullMessage;
+            document.getElementById('paypal-msg').value = fullMessage;
+            document.getElementById('swish-total-text').textContent = formatPrice(globalFinalTotal);
+            document.getElementById('paypal-total-text').textContent = formatPrice(globalFinalTotal);
+            
+            document.getElementById('master-modal').classList.add('active');
+            document.querySelectorAll('.modal-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-select').classList.add('active');
         };
 
-        const showToast = (desc) => {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-desc').textContent = desc;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+        const showPaymentView = (method) => { 
+            document.querySelectorAll('.modal-content').forEach(el => el.classList.remove('active')); 
+            document.getElementById(`view-${method}`).classList.add('active'); 
         };
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderShop();
-            updateInventoryUI();
-        });
+        const closeModal = () => document.getElementById('master-modal').classList.remove('active');
+        const copyMsg = (id) => { document.getElementById(id).select(); navigator.clipboard.writeText(document.getElementById(id).value).then(() => showToast("Kopierat!")); };
+        
+        const openPayPalLink = () => { window.open(`https://paypal.me/DITTPAYPALNAMN/${globalFinalTotal}SEK`, '_blank'); };
+        
+        const showToast = (msg) => { const toast = document.getElementById('toast'); toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); };
+
+        document.addEventListener('DOMContentLoaded', () => { updateUI(); });
     </script>
 </body>
 </html>
