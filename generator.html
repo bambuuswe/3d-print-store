@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crafters3D - Produktgenerator</title>
+    <style>
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: #f8f9fa; 
+            color: #333; 
+            padding: 20px; 
+            line-height: 1.5; 
+            min-height: 100vh;
+        }
+        
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            padding: 10px;
+        }
+        
+        .header h1 { 
+            font-size: 1.8rem; 
+            color: #212529; 
+            margin-bottom: 10px;
+        }
+        
+        .header p { 
+            font-size: 0.95rem; 
+            color: #6c757d; 
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .col { 
+            flex: 1; 
+            min-width: 300px; 
+            background: #fff; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+        }
+        
+        label { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            color: #212529;
+        }
+        
+        input, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            border: 1px solid #ced4da; 
+            border-radius: 5px; 
+            font-family: inherit; 
+            transition: border-color 0.2s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+        }
+        
+        textarea { 
+            resize: vertical; 
+            min-height: 80px; 
+        }
+        
+        .preview-card { 
+            border: 1px solid #eaeaea; 
+            border-radius: 10px; 
+            padding: 20px; 
+            text-align: center; 
+            margin-top: 10px;
+        }
+        
+        .preview-image { 
+            width: 100%; 
+            height: 200px; 
+            background: #e9ecef; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 15px; 
+            font-size: 1.1rem; 
+            color: #6c757d; 
+            overflow: hidden; 
+            word-break: break-all;
+            padding: 10px;
+        }
+        
+        .preview-card h3 { 
+            margin-bottom: 10px; 
+            font-size: 1.4rem; 
+        }
+        
+        .preview-card p { 
+            font-size: 0.95rem; 
+            color: #666; 
+            margin-bottom: 15px; 
+            min-height: 40px; 
+        }
+        
+        .preview-card .price { 
+            display: block; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+        }
+        
+        .buy-btn { 
+            width: 100%; 
+            background-color: #198754; 
+            color: white; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 5px; 
+            font-size: 1.1rem; 
+            cursor: not-allowed; 
+            opacity: 0.8; 
+        }
+        
+        .code-output { 
+            width: 100%; 
+            height: 250px; 
+            margin-top: 15px; 
+            background: #282c34; 
+            color: #abb2bf; 
+            font-family: monospace; 
+            font-size: 0.9rem; 
+            padding: 15px; 
+            border-radius: 5px; 
+            border: none; 
+        }
+        
+        .instructions { 
+            background: #cfe2ff; 
+            border-left: 4px solid #0d6efd; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            font-size: 0.9rem; 
+            color: #084298;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .copy-btn {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .copy-btn:active {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🛠️ Crafters3D Produktgenerator</h1>
+        <p>Eftersom webbplatsen är helt statisk (hostad på GitHub) kan produkter inte läggas till via en databas. Använd detta verktyg för att snabbt skapa exakt den HTML-kod du behöver!</p>
+    </div>
+    
+    <div class="grid">
+        <div class="col">
+            <div class="instructions">
+                💡 <strong>Gör så här:</strong> Skriv in detaljerna för din nya 3D-printade produkt här. Verktyget genererar automatiskt koden du ska kopiera och lägga in i <code>index.html</code>.
+            </div>
+            
+            <label for="name">📦 Produktnamn</label>
+            <input type="text" id="name" placeholder="t.ex. Blockig Panda" oninput="updateCode()">
+            
+            <label for="price">💰 Pris (kr)</label>
+            <input type="number" id="price" placeholder="149" oninput="updateCode()">
+            
+            <label for="desc">📝 Beskrivning</label>
+            <textarea id="desc" placeholder="En söt och detaljerad blockig panda..." oninput="updateCode()"></textarea>
+            
+            <label for="image">🖼️ Bildens filnamn (Måste laddas upp på GitHub först)</label>
+            <input type="text" id="image" placeholder="block-panda.jpg" oninput="updateCode()">
+        </div>
+        
+        <div class="col">
+            <label>👀 Förhandsgranskning</label>
+            <div class="preview-card">
+                <div class="preview-image" id="prevImg">🖼️ block-panda.jpg</div>
+                <h3 id="prevName">Blockig Panda</h3>
+                <p id="prevDesc">En söt och detaljerad blockig panda...</p>
+                <span class="price" id="prevPrice">149 kr</span>
+                <button class="buy-btn">🛒 Lägg i varukorg</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid" style="margin-top: 0;">
+        <div class="col">
+            <label>💻 Din genererade HTML-kod</label>
+            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 5px;">
+                1. Klicka på "Kopiera kod"<br>
+                2. Öppna din <code>index.html</code> på GitHub.<br>
+                3. Klistra in koden inuti <code>&lt;section class="product-grid"&gt;</code> (gärna längst ner innan <code>&lt;/section&gt;</code>).
+            </p>
+            <textarea id="output" class="code-output" readonly></textarea>
+            <button class="copy-btn" onclick="copyCode()">📋 Kopiera kod</button>
+            <span id="copyMsg" style="color: #198754; font-size: 0.9rem; margin-left: 10px; display: none;">Kopierad! ✔️</span>
+        </div>
+    </div>
+
+    <script>
+        function updateCode() {
+            const name = document.getElementById('name').value || 'Ny Produkt';
+            const price = document.getElementById('price').value || '0';
+            const desc = document.getElementById('desc').value || 'Kort beskrivning av produkten...';
+            const image = document.getElementById('image').value || 'bild.jpg';
+            
+            // Generate URL-friendly ID based on name
+            const id = name.toLowerCase()
+                           .replace(/ä/g, 'a')
+                           .replace(/å/g, 'a')
+                           .replace(/ö/g, 'o')
+                           .replace(/[^a-z0-9]+/g, '-')
+                           .replace(/(^-|-$)+/g, '') || 'produkt-id';
+
+            // Update Visual Preview
+            document.getElementById('prevName').innerText = name;
+            document.getElementById('prevPrice').innerText = price + ' kr';
+            document.getElementById('prevDesc').innerText = desc;
+            document.getElementById('prevImg').innerText = '🖼️ ' + image;
+
+            // Generate HTML Code String
+            const htmlCode = `            <!-- Produkt: ${name} -->
+            <div class="product-card">
+                <img class="product-image" src="${image}" alt="${name}">
+                <h3>${name}</h3>
+                <p>${desc}</p>
+                <span class="price">${price} kr</span>
+                <button class="buy-btn snipcart-add-item"
+                    data-item-id="${id}"
+                    data-item-price="${price}.00"
+                    data-item-url="/"
+                    data-item-description="${desc}"
+                    data-item-image="${image}"
+                    data-item-name="${name}">
+                    Lägg i varukorg
+                </button>
+            </div>`;
+
+            document.getElementById('output').value = htmlCode;
+        }
+
+        function copyCode() {
+            const codeOutput = document.getElementById('output');
+            codeOutput.select();
+            codeOutput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                navigator.clipboard.writeText(codeOutput.value);
+                const msg = document.getElementById('copyMsg');
+                msg.style.display = 'inline';
+                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+            } catch (err) {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                const msg = document.getElementById('copyMsg');
+                msg.style.display = 'inline';
+                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+            }
+        }
+
+        // Initialize empty state on page load
+        updateCode();
+    </script>
+</body>
+</html>
