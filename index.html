@@ -100,7 +100,6 @@
         .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover), 0 0 0 2px var(--card-accent, var(--text-main)); }
         
         .product-media { height: 260px; background: #f8fafc; border-radius: 16px; margin-bottom: 1.5rem; background-size: cover; background-position: center; position: relative; }
-        /* HÄR ÄR FIXEN: Ändrat background till background-color så att bildinställningarna inte raderas */
         [data-theme="dark"] .product-media { background-color: #1e293b; }
         .badge-tag { position: absolute; top: 1rem; left: 1rem; background: var(--text-main); color: var(--bg-surface); padding: 0.4rem 1rem; border-radius: 30px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
         
@@ -317,8 +316,9 @@
 
     <main>
         <section class="hero container">
-            <h1 data-i18n="heroH1">Shaping the <span class="accent-text">Future</span> <br>of Matter.</h1>
-            <p data-i18n="heroP">Premium 3D prints designed for the modern workspace.</p>
+            <!-- Uppdaterad text i HTML (även om JS skriver över den, är det bra ha den här också) -->
+            <h1 data-i18n="heroH1">Från <span class="accent-text">Skärmen</span> <br>till Skrivbordet.</h1>
+            <p data-i18n="heroP">Högkvalitativa 3D-printade Minecraft-figurer och inredning för din setup.</p>
         </section>
 
         <section class="container">
@@ -597,8 +597,10 @@
 
         const dict = {
             en: {
-                cartBtn: "Cart", heroH1: "Shaping the <span class='accent-text'>Future</span> <br>of Matter.", heroP: "Premium 3D prints for the modern workspace.",
-                searchPlaceholder: "Search figures...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Figures", cats_decor: "Decor",
+                // UPPdaterad text på Engelska
+                heroH1: "From the <span class='accent-text'>Screen</span> <br>to your Desk.", 
+                heroP: "High-quality 3D printed Minecraft figures and decor for your setup.",
+                cartBtn: "Cart", searchPlaceholder: "Search figures...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Figures", cats_decor: "Decor",
                 emptyGrid: "No artifacts found...", addBtn: "Add +", soldOut: "Sold Out", onlyLeft: "Only {x} left!",
                 cartTitle: "Your Cart", subtotal: "Subtotal", discount: "Discount", shipping: "Shipping", total: "Total", checkoutBtn: "Checkout",
                 emptyCart: "Cart is empty.", payMethodTitle: "Payment Method", copyBtn: "Copy Message",
@@ -621,8 +623,10 @@
                 footerSec: "🔒 Secure payment"
             },
             sv: {
-                cartBtn: "Varukorg", heroH1: "Formar <span class='accent-text'>Framtidens</span> <br>Materia.", heroP: "Premium 3D-utskrifter för den moderna arbetsytan.",
-                searchPlaceholder: "Sök figurer...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Figurer", cats_decor: "Inredning",
+                // Uppdaterad text på Svenska
+                heroH1: "Från <span class='accent-text'>Skärmen</span> <br>till Skrivbordet.", 
+                heroP: "Högkvalitativa 3D-printade Minecraft-figurer och inredning för din setup.",
+                cartBtn: "Varukorg", searchPlaceholder: "Sök figurer...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Figurer", cats_decor: "Inredning",
                 emptyGrid: "Inga produkter hittades...", addBtn: "Lägg till +", soldOut: "Slutsåld", onlyLeft: "Endast {x} kvar!",
                 cartTitle: "Din Varukorg", subtotal: "Delsumma", discount: "Rabatt", shipping: "Frakt", total: "Totalt", checkoutBtn: "Gå till kassan",
                 emptyCart: "Varukorgen är tom.", payMethodTitle: "Välj Betalsätt", copyBtn: "Kopiera Meddelande",
