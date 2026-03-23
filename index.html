@@ -100,7 +100,8 @@
         .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover), 0 0 0 2px var(--card-accent, var(--text-main)); }
         
         .product-media { height: 260px; background: #f8fafc; border-radius: 16px; margin-bottom: 1.5rem; background-size: cover; background-position: center; position: relative; }
-        [data-theme="dark"] .product-media { background: #1e293b; }
+        /* HÄR ÄR FIXEN: Ändrat background till background-color så att bildinställningarna inte raderas */
+        [data-theme="dark"] .product-media { background-color: #1e293b; }
         .badge-tag { position: absolute; top: 1rem; left: 1rem; background: var(--text-main); color: var(--bg-surface); padding: 0.4rem 1rem; border-radius: 30px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
         
         .stock-warning { color: #ef4444; font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; display: block; animation: pulse 2s infinite; }
