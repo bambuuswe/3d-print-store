@@ -49,7 +49,7 @@
         /* --- Header --- */
         header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: var(--bg-surface); opacity: 0.95; backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); box-shadow: 0 4px 30px rgba(0,0,0,0.05); transition: background 0.4s ease; }
         .nav-block { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; width: min(1400px, 92vw); margin: 0 auto; }
-        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.04em; color: var(--text-main); }
+        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.04em; color: var(--text-main); cursor: pointer; }
         .header-controls { display: flex; gap: 0.8rem; align-items: center; }
 
         .icon-btn { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid var(--border-light); border-radius: 8px; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; color: var(--text-main); text-decoration: none; transition: all 0.2s; }
@@ -61,21 +61,9 @@
         .cart-btn:hover { transform: scale(1.05); }
         .badge-count { background: var(--bg-surface); color: var(--text-main); padding: 0.1rem 0.6rem; border-radius: 12px; font-weight: 800; transition: 0.2s; }
 
-        /* --- Nya Animationer --- */
-        @keyframes cartBump {
-            0% { transform: scale(1); }
-            25% { transform: scale(0.9); }
-            50% { transform: scale(1.1) translateY(-2px); }
-            75% { transform: scale(1.05) translateY(1px); }
-            100% { transform: scale(1); }
-        }
+        @keyframes cartBump { 0% { transform: scale(1); } 25% { transform: scale(0.9); } 50% { transform: scale(1.1) translateY(-2px); } 75% { transform: scale(1.05) translateY(1px); } 100% { transform: scale(1); } }
         .cart-bump { animation: cartBump 0.4s var(--ease-spring); }
-
-        @keyframes badgePop {
-            0% { transform: scale(1); background: var(--bg-surface); color: var(--text-main); }
-            50% { transform: scale(1.6); background: #10b981; color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
-            100% { transform: scale(1); background: var(--bg-surface); color: var(--text-main); }
-        }
+        @keyframes badgePop { 0% { transform: scale(1); background: var(--bg-surface); color: var(--text-main); } 50% { transform: scale(1.6); background: #10b981; color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); } 100% { transform: scale(1); background: var(--bg-surface); color: var(--text-main); } }
         .badge-pop { animation: badgePop 0.5s var(--ease-spring); }
 
         /* --- Hero --- */
@@ -84,11 +72,10 @@
         .hero .accent-text { color: #64748b; font-weight: 300; font-style: italic; }
         .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; font-weight: 500; }
 
-        /* --- Shop Controls (Chips) --- */
+        /* --- Shop Controls --- */
         .shop-controls { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border-light); }
         .search-bar { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 12px; padding: 0.8rem 1.2rem; display: flex; align-items: center; gap: 0.5rem; max-width: 100%; transition: all 0.3s; }
         .search-input { background: transparent; border: none; color: var(--text-main); width: 100%; outline: none; font-weight: 600; font-size: 1rem; }
-        
         .category-chips { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
         .chip { background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-muted); padding: 0.6rem 1.5rem; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; }
         .chip:hover { border-color: var(--text-main); color: var(--text-main); transform: translateY(-2px); }
@@ -96,27 +83,43 @@
 
         /* --- Products --- */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; padding-bottom: 5rem; }
-        .product-card { background: var(--bg-surface); border-radius: 24px; border: 1px solid var(--border-light); padding: 1.5rem; display: flex; flex-direction: column; transition: all 0.4s var(--ease-spring); position: relative; }
+        .product-card { background: var(--bg-surface); border-radius: 24px; border: 1px solid var(--border-light); padding: 1.5rem; display: flex; flex-direction: column; transition: all 0.4s var(--ease-spring); position: relative; cursor: pointer; }
         .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover), 0 0 0 2px var(--card-accent, var(--text-main)); }
-        
         .product-media { height: 260px; background: #f8fafc; border-radius: 16px; margin-bottom: 1.5rem; background-size: cover; background-position: center; position: relative; }
         [data-theme="dark"] .product-media { background-color: #1e293b; }
-        .badge-tag { position: absolute; top: 1rem; left: 1rem; background: var(--text-main); color: var(--bg-surface); padding: 0.4rem 1rem; border-radius: 30px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        
+        .badge-tag { position: absolute; top: 1rem; left: 1rem; background: var(--text-main); color: var(--bg-surface); padding: 0.4rem 1rem; border-radius: 30px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 2; }
         .stock-warning { color: #ef4444; font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; display: block; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
-
         .product-specs { color: var(--card-accent, var(--text-muted)); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 900; margin-bottom: 0.5rem; }
         .product-card h3 { font-size: 1.6rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--text-main); }
         .product-desc { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; margin-bottom: 1.5rem; font-weight: 500; }
-        
         .product-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 1.5rem; }
         .price { font-weight: 900; font-size: 1.6rem; color: var(--text-main); }
         
-        /* Product Button */
-        .add-btn { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 12px; padding: 0.8rem 1.5rem; font-weight: 800; cursor: pointer; transition: all 0.3s; min-width: 110px; }
+        .add-btn { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 12px; padding: 0.8rem 1.5rem; font-weight: 800; cursor: pointer; transition: all 0.3s; min-width: 110px; position: relative; z-index: 5; }
         .add-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--card-accent, #334155); }
         .add-btn:disabled { background: var(--border-light); color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* --- Social Proof / Wall of Fame --- */
+        .reviews-section { padding: 4rem 0 6rem; border-top: 1px solid var(--border-light); }
+        .reviews-header { text-align: center; margin-bottom: 3rem; }
+        .reviews-header h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+        .review-card { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 24px; padding: 2.5rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.3s ease; }
+        .review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .review-stars { color: #f59e0b; font-size: 1.6rem; margin-bottom: 1.2rem; letter-spacing: 2px; }
+        .review-text { font-style: italic; font-weight: 500; font-size: 1.1rem; color: var(--text-main); margin-bottom: 1.5rem; flex-grow: 1; line-height: 1.6; }
+        .review-author { font-weight: 900; font-size: 0.95rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* --- Footer --- */
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 4rem 0; margin-top: 0; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .faq-item { margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
+        .faq-q { font-weight: 800; color: var(--text-main); cursor: pointer; display: flex; justify-content: space-between; font-size: 1.1rem; }
+        .faq-a { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; display: none; }
+        .faq-a.open { display: block; animation: fadeUp 0.3s ease; }
+        .footer-contact-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; background: var(--text-main); color: var(--bg-surface); padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: 800; text-decoration: none; transition: transform 0.2s var(--ease-spring); }
+        .footer-contact-btn:hover { transform: translateY(-3px); }
 
         /* --- Cart Panel --- */
         .cart-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
@@ -124,15 +127,11 @@
         .cart-panel { position: fixed; top: 0; right: -100%; width: min(450px, 100vw); height: 100vh; background: var(--bg-surface); z-index: 101; display: flex; flex-direction: column; transition: right 0.5s var(--ease-spring); box-shadow: -20px 0 50px rgba(0,0,0,0.2); }
         .cart-panel.active { right: 0; }
         .cart-header { padding: 2rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h3 { font-size: 1.6rem; font-weight: 900; }
-        
-        /* Free Shipping Bar */
         .shipping-tracker { background: var(--bg-base); padding: 1rem 2rem; border-bottom: 1px solid var(--border-light); }
         .sh-msg { font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; text-align: center; }
         .sh-bar { height: 8px; background: var(--border-light); border-radius: 10px; overflow: hidden; }
         .sh-fill { height: 100%; background: #10b981; transition: width 0.5s var(--ease-spring); width: 0%; }
         .sh-fill.success { background: linear-gradient(90deg, #10b981, #34d399); }
-
         .cart-body { flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
         .cart-item { display: flex; gap: 1rem; padding: 1rem; background: var(--bg-base); border-radius: 16px; position: relative; }
         .item-img { width: 70px; height: 70px; background-size: cover; border-radius: 10px; }
@@ -140,160 +139,55 @@
         .qty-box { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; }
         .qty-btn { background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-main); width: 28px; height: 28px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         .remove-item { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #ef4444; font-weight: 900; cursor: pointer; }
-
-        /* Promo Code */
         .promo-box { display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        .promo-box input { flex: 1; background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-main); padding: 0.8rem; border-radius: 10px; outline: none; font-family: var(--font-modern); font-weight: 600; }
+        .promo-box input { flex: 1; background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-main); padding: 0.8rem; border-radius: 10px; outline: none; font-weight: 600; }
         .promo-box button { background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 10px; padding: 0 1rem; font-weight: 700; cursor: pointer; }
-
         .cart-footer { padding: 2rem; border-top: 1px solid var(--border-light); }
         .summary-row { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted); }
         .total-row { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 900; margin: 1rem 0 0 0; padding-top: 1rem; border-top: 1px dashed var(--border-light); color: var(--text-main); }
         .checkout-btn { width: 100%; background: var(--text-main); color: var(--bg-surface); border: none; border-radius: 12px; padding: 1.2rem; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; }
-        .checkout-btn:hover { transform: translateY(-3px); }
 
-        /* --- Footer & FAQ --- */
-        footer { background: var(--bg-surface); border-top: 1px solid var(--border-light); padding: 4rem 0; margin-top: 4rem; }
-        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-        .faq-item { margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
-        .faq-q { font-weight: 800; color: var(--text-main); cursor: pointer; display: flex; justify-content: space-between; font-size: 1.1rem; }
-        .faq-a { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; display: none; }
-        .faq-a.open { display: block; animation: fadeUp 0.3s ease; }
-
-        /* Stor kontaktknapp i footer */
-        .footer-contact-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; background: var(--text-main); color: var(--bg-surface); padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: 800; text-decoration: none; transition: transform 0.2s var(--ease-spring); }
-        .footer-contact-btn:hover { transform: translateY(-3px); }
-
-        /* --- Modals (Payment) --- */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+        /* --- Modals --- */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.3s; padding: 1rem; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
-        .modal-content { background: var(--bg-surface); border-radius: 20px; width: min(500px, 95vw); padding: 3rem 2rem; text-align: center; position: relative; display: none; }
+        .modal-content { background: var(--bg-surface); border-radius: 20px; width: min(500px, 100%); padding: 3rem 2rem; position: relative; display: none; max-height: 90vh; overflow-y: auto; }
         .modal-content.active { display: block; }
+        
+        .product-modal-box { width: min(900px, 100%); display: none; grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 2.5rem; }
+        .product-modal-box.active { display: grid; }
+        .pm-gallery { display: flex; flex-direction: column; gap: 1rem; }
+        .pm-main-img { width: 100%; height: 350px; border-radius: 16px; object-fit: cover; background: var(--bg-base); border: 1px solid var(--border-light); transition: 0.3s; }
+        .pm-thumbnails { display: flex; gap: 0.8rem; overflow-x: auto; padding-bottom: 0.5rem; }
+        .pm-thumb { width: 70px; height: 70px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s; object-fit: cover; background: var(--bg-base); }
+        .pm-thumb:hover, .pm-thumb.active { opacity: 1; border-color: var(--text-main); }
+        .pm-info { display: flex; flex-direction: column; justify-content: center; }
+        .pm-info h2 { font-size: 2.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.5rem; }
+        .pm-price { font-size: 1.8rem; font-weight: 900; margin: 1.5rem 0; color: var(--text-main); }
+
+        /* Färgknappar Design */
+        .color-picker-grid { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .color-btn { background: var(--bg-base); border: 2px solid var(--border-light); color: var(--text-main); padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: var(--font-modern); }
+        .color-btn:hover { border-color: var(--text-muted); }
+        .color-btn.active { border-color: var(--text-main); background: var(--text-main); color: var(--bg-surface); }
+
         .modal-textarea { width: 100%; height: 100px; background: var(--bg-base); color: var(--text-main); border: 1px solid var(--border-light); border-radius: 10px; padding: 1rem; font-family: var(--font-modern); font-weight: 600; margin: 1.5rem 0; outline: none; }
-        .btn-action { background: var(--text-main); color: var(--bg-surface); border: none; padding: 1rem; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%; margin-bottom: 0.5rem; }
+        .btn-action { background: var(--text-main); color: var(--bg-surface); border: none; padding: 1rem; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%; margin-bottom: 0.5rem; transition: 0.2s; }
+        .btn-action:hover { transform: translateY(-2px); }
         
         .toast { position: fixed; bottom: 2rem; left: 50%; transform: translate(-50%, 40px); background: var(--text-main); color: var(--bg-surface); padding: 1rem 2rem; border-radius: 30px; font-weight: 800; opacity: 0; transition: 0.4s; z-index: 300; }
         .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-        /* ========================================= */
-        /* MOBILANPASSNINGAR (Påverkar endast mobil) */
-        /* ========================================= */
+        /* Mobilanpassningar */
         @media (max-width: 768px) {
-            /* --- Header & Navigation --- */
-            .nav-block {
-                gap: 0.3rem;
-                padding: 0.8rem 0;
-            }
-            .logo {
-                font-size: 1.2rem;
-                flex-grow: 1;
-            }
-            .header-controls {
-                gap: 0.4rem;
-            }
-            .icon-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 1rem;
-            }
-            .lang-btn {
-                padding: 0 0.4rem;
-                height: 34px;
-                font-size: 0.8rem;
-            }
-            .cart-btn {
-                padding: 0 0.5rem;
-                height: 34px;
-                gap: 0.4rem;
-            }
-            .cart-btn span[data-i18n="cartBtn"] {
-                display: none; 
-            }
-            .cart-btn::before {
-                content: '🛒';
-                font-size: 0.9rem;
-            }
-
-            /* --- Hero Sektion --- */
-            .hero {
-                padding: 7rem 0 2rem; 
-            }
-            .hero h1 {
-                font-size: clamp(2.2rem, 8vw, 3.5rem); 
-            }
-            .hero p {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-
-            /* --- Sök & Kategorier --- */
-            .shop-controls {
-                margin-bottom: 2rem;
-                gap: 1rem;
-            }
-            .category-chips {
-                gap: 0.5rem;
-            }
-            .chip {
-                padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            /* --- Produkter --- */
-            .product-grid {
-                grid-template-columns: 1fr; 
-                gap: 1.5rem;
-            }
-            .product-card {
-                padding: 1.2rem;
-            }
-            .product-media {
-                height: 220px; 
-            }
-
-            /* --- Varukorg (Sidopanelen) --- */
-            .cart-header, 
-            .cart-body, 
-            .cart-footer {
-                padding: 1.2rem; 
-            }
-            .shipping-tracker {
-                padding: 1rem 1.2rem;
-            }
-            .item-img {
-                width: 55px;
-                height: 55px;
-            }
-            .cart-item {
-                padding: 0.8rem;
-                gap: 0.8rem;
-            }
-            .remove-item {
-                top: 0.8rem;
-                right: 0.8rem;
-            }
-
-            /* --- Betalningsmodaler --- */
-            .modal-content {
-                padding: 2rem 1.2rem; 
-                width: 90vw;
-            }
-            .btn-action {
-                padding: 1rem;
-                font-size: 1.1rem !important; 
-            }
-            .modal-textarea {
-                font-size: 1rem; 
-            }
-
-            /* --- Footer --- */
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-            footer {
-                padding: 3rem 0 4rem; 
-            }
+            .nav-block { gap: 0.3rem; padding: 0.8rem 0; }
+            .logo { font-size: 1.2rem; flex-grow: 1; }
+            .cart-btn span[data-i18n="cartBtn"] { display: none; }
+            .cart-btn::before { content: '🛒'; font-size: 0.9rem; }
+            .hero { padding: 7rem 0 2rem; }
+            .product-modal-box { grid-template-columns: 1fr; padding: 1.5rem; gap: 1.5rem; }
+            .pm-main-img { height: 250px; }
+            .pm-info h2 { font-size: 1.8rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
         }
     </style>
 </head>
@@ -301,7 +195,7 @@
 
     <header>
         <div class="nav-block">
-            <div class="logo">CRAFTERS</div>
+            <div class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">CRAFTERS</div>
             <div class="header-controls">
                 <a href="mailto:contact.crafters3d@gmail.com" class="icon-btn" title="Kontakta Oss">✉️</a>
                 <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
@@ -316,7 +210,6 @@
 
     <main>
         <section class="hero container">
-            <!-- Uppdaterad text i HTML (även om JS skriver över den, är det bra ha den här också) -->
             <h1 data-i18n="heroH1">Från <span class="accent-text">Skärmen</span> <br>till Skrivbordet.</h1>
             <p data-i18n="heroP">Högkvalitativa 3D-printade Minecraft-figurer och inredning för din setup.</p>
         </section>
@@ -327,11 +220,18 @@
                     <span>🔍</span> 
                     <input class="search-input" id="search-input" type="text" placeholder="Search..." oninput="filterProducts()">
                 </div>
-                <div class="category-chips" id="cat-chips">
-                    <!-- Fylls med JS -->
-                </div>
+                <div class="category-chips" id="cat-chips"></div>
             </div>
             <div class="product-grid" id="product-grid"></div>
+        </section>
+
+        <!-- Wall of Fame -->
+        <section class="container reviews-section">
+            <div class="reviews-header">
+                <h2 data-i18n="reviewsTitle">Wall of Fame</h2>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;" data-i18n="reviewsSub">Vad våra kunder säger om våra prints!</p>
+            </div>
+            <div class="reviews-grid" id="reviews-grid"></div>
         </section>
     </main>
 
@@ -340,47 +240,25 @@
         <div class="container footer-grid">
             <div>
                 <h2 style="font-weight: 900; margin-bottom: 1rem;" data-i18n="faqTitle">FAQ / Information</h2>
-
                 <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">
-                        <span data-i18n="faq1_q">Hur lång är leveranstiden?</span> 
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-a" data-i18n="faq1_a">
-                        Alla produkter 3D-printas på beställning. Leveranstiden är vanligtvis 1–3 arbetsdagar.
-                    </div>
+                    <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq1_q">Hur lång är leveranstiden?</span> <span class="faq-icon">+</span></div>
+                    <div class="faq-a" data-i18n="faq1_a">Alla produkter 3D-printas på beställning. Leveranstiden är vanligtvis 1–3 arbetsdagar.</div>
                 </div>
-
                 <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">
-                        <span data-i18n="faq2_q">Vilket material används?</span> 
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-a" data-i18n="faq2_a">
-                        Vi använder högkvalitativ PLA-plast.
-                    </div>
+                    <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq2_q">Vilket material används?</span> <span class="faq-icon">+</span></div>
+                    <div class="faq-a" data-i18n="faq2_a">Vi använder miljövänlig och högkvalitativ PLA-plast.</div>
                 </div>
-
                 <div class="faq-item">
-                    <div class="faq-q" onclick="toggleFaq(this)">
-                        <span data-i18n="faq3_q">Kan jag specialbeställa?</span> 
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-a" data-i18n="faq3_a">
-                        Ja! Kontakta oss via sociala medier så hjälper vi dig att skapa en unik produkt efter dina önskemål.
-                    </div>
+                    <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq3_q">Kan jag specialbeställa?</span> <span class="faq-icon">+</span></div>
+                    <div class="faq-a" data-i18n="faq3_a">Ja! Kontakta oss via mejl så hjälper vi dig att skapa en unik produkt.</div>
                 </div>
-
             </div>
 
             <div>
                 <h2 style="font-weight: 900; margin-bottom: 1rem;">Crafters3D Studio</h2>
-                <p style="color: var(--text-muted); font-weight: 500;" data-i18n="footerDesc">
-                    Skapad för entusiaster av entusiaster!
-                </p>
+                <p style="color: var(--text-muted); font-weight: 500;" data-i18n="footerDesc">Skapad för entusiaster av entusiaster!</p>
                 <p style="margin-top: 1rem; font-weight: 700;" data-i18n="footerShip">📍 Skickas från Sverige</p>
                 <p style="margin-top: 0.5rem;" data-i18n="footerSec">🔒 Säker betalning</p>
-
                 <a href="mailto:contact.crafters3d@gmail.com" class="footer-contact-btn" data-i18n="contactBtn">✉️ Kontakta oss</a>
             </div>
         </div>
@@ -393,22 +271,17 @@
             <h3 data-i18n="cartTitle">Din Varukorg</h3>
             <button class="icon-btn" style="border:none;" onclick="toggleCart(false)">✕</button>
         </div>
-        
-        <!-- Fri Frakt Mätare -->
         <div class="shipping-tracker">
-            <div class="sh-msg" id="free-sh-msg">Köp för 200 SEK till för fri frakt!</div>
+            <div class="sh-msg" id="free-sh-msg"></div>
             <div class="sh-bar"><div class="sh-fill" id="free-sh-fill"></div></div>
         </div>
-
         <div class="cart-body" id="cart-items"></div>
-        
         <div class="cart-footer">
             <div class="summary-row"><span data-i18n="subtotal">Delsumma</span><span id="cart-subtotal">0 SEK</span></div>
             <div class="summary-row" id="discount-row" style="display:none; color: #10b981;"><span data-i18n="discount">Rabatt</span><span id="cart-discount">-0 SEK</span></div>
             <div class="summary-row"><span data-i18n="shipping">Frakt</span><span id="cart-shipping">0 SEK</span></div>
             <div class="total-row"><span data-i18n="total">Totalt</span><span id="cart-total">0 SEK</span></div>
             
-            <!-- Rabattkod -->
             <div class="promo-box">
                 <input type="text" id="promo-input" placeholder="Rabattkod...">
                 <button onclick="applyPromo()" data-i18n="promoBtn">Använd</button>
@@ -419,28 +292,72 @@
         </div>
     </aside>
 
-    <!-- Payment Modals -->
-    <div class="modal-overlay" id="master-modal">
-        <div class="modal-content" id="view-select">
+    <!-- Modals -->
+    <div class="modal-overlay" id="master-modal" onclick="closeIfOverlay(event)">
+        
+        <!-- Produkt Modal -->
+        <div class="modal-content product-modal-box" id="view-product">
+            <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1.5rem; top:1.5rem; border:none; z-index: 10;">✕</button>
+            <div class="pm-gallery">
+                <img id="pm-main-img" class="pm-main-img" src="" alt="Product Image">
+                <div id="pm-thumbnails" class="pm-thumbnails"></div>
+            </div>
+            <div class="pm-info">
+                <p id="pm-specs" class="product-specs"></p>
+                <h2 id="pm-title"></h2>
+                <p id="pm-desc" style="color: var(--text-muted); line-height: 1.8; margin-top: 1rem;"></p>
+                
+                <!-- FÄRGVAL -->
+                <div id="pm-color-container" style="display: none; margin-top: 1.5rem;">
+                    <p style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);" data-i18n="colorLabel">Välj färg:</p>
+                    <div id="pm-color-options" class="color-picker-grid"></div>
+                </div>
+
+                <div id="pm-stock" style="margin-top: 1rem;"></div>
+                
+                <!-- Fält för egen text -->
+                <div id="pm-custom-text-container" style="display: none; margin-top: 1rem; background: var(--bg-base); padding: 1rem; border-radius: 12px;">
+                    <label for="pm-custom-input" style="font-weight: 800; font-size: 0.95rem; display: block; margin-bottom: 0.5rem; color: var(--text-main);" data-i18n="customLabel">Vilken text vill du ha?</label>
+                    <input type="text" id="pm-custom-input" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-light); font-size: 1.1rem; font-family: var(--font-modern); background: var(--bg-surface); color: var(--text-main); outline: none;" placeholder="T.ex. MINECRAFT">
+                    <p id="pm-custom-price-info" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-top: 0.8rem;"></p>
+                </div>
+
+                <div class="pm-price" id="pm-price"></div>
+                <button id="pm-add-btn" class="btn-action" style="padding: 1.2rem; font-size: 1.1rem;"></button>
+            </div>
+        </div>
+
+        <!-- Betalningssätt -->
+        <div class="modal-content" id="view-select" style="text-align: center;">
             <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1rem; top:1rem; border:none;">✕</button>
             <h2 data-i18n="payMethodTitle" style="margin-bottom:2rem;">Välj Betalsätt</h2>
             <button class="btn-action" style="background:var(--accent-swish); padding:1.5rem; font-size:1.2rem;" onclick="showPaymentView('swish')">Swish</button>
             <button class="btn-action" style="background:var(--accent-paypal); padding:1.5rem; font-size:1.2rem;" onclick="showPaymentView('paypal')">PayPal</button>
         </div>
         
-        <div class="modal-content" id="view-swish">
+        <!-- Swish Modal -->
+        <div class="modal-content" id="view-swish" style="text-align: left;">
             <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1rem; top:1rem; border:none;">✕</button>
-            <h2>Swish <span id="swish-total-text" style="color:var(--accent-swish)"></span></h2>
-            <p style="color:var(--text-muted); font-size:0.9rem; margin-top:1rem;" data-i18n="swishInst">Kopiera meddelandet, byt ut adressen och swisha till: <strong>070 436 85 77</strong></p>
-            <textarea id="swish-msg" class="modal-textarea" readonly></textarea>
-            <button onclick="copyMsg('swish-msg')" class="btn-action" data-i18n="copyBtn">Kopiera Meddelande</button>
+            <h2 style="text-align: center;">Swish <span id="swish-total-text" style="color:var(--accent-swish)"></span></h2>
+            <div style="background: var(--bg-base); padding: 1.2rem; border-radius: 16px; margin-top: 1.5rem;">
+                <h4 data-i18n="step1" style="margin-bottom: 0.5rem; color: var(--text-main);">1. Betala via Swish</h4>
+                <p style="color:var(--text-muted); font-size:0.9rem;" data-i18n="swishInst1">Swisha till: <strong>070 436 85 77</strong>. Ange endast Order-ID som meddelande.</p>
+                <textarea id="swish-msg" class="modal-textarea" style="height:55px; text-align:center; font-size:1.2rem; padding-top: 0.8rem;" readonly></textarea>
+                <button onclick="copyMsg('swish-msg')" class="btn-action" data-i18n="copyBtn">Kopiera Order-ID</button>
+            </div>
+            <div style="background: var(--bg-base); padding: 1.2rem; border-radius: 16px; margin-top: 1rem;">
+                <h4 data-i18n="step2" style="margin-bottom: 0.5rem; color: var(--text-main);">2. Skicka din beställning</h4>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom: 1rem;" data-i18n="swishInst2">Klicka nedan för att mejla oss din order och leveransadress!</p>
+                <a id="swish-email-btn" href="#" class="btn-action" style="display:flex; justify-content:center; align-items:center; text-decoration:none; background:var(--text-main); color: var(--bg-surface);" data-i18n="emailBtn">📧 Mejla Order & Adress</a>
+            </div>
         </div>
 
-        <div class="modal-content" id="view-paypal">
+        <!-- PayPal Modal -->
+        <div class="modal-content" id="view-paypal" style="text-align: center;">
             <button onclick="closeModal()" class="icon-btn" style="position:absolute; right:1rem; top:1rem; border:none;">✕</button>
             <h2>PayPal <span id="paypal-total-text" style="color:var(--accent-paypal)"></span></h2>
             <p style="color:var(--text-muted); font-size:0.9rem; margin-top:1rem;" data-i18n="ppInst">Kopiera meddelandet nedan och klistra in som kommentar på PayPal.</p>
-            <textarea id="paypal-msg" class="modal-textarea" readonly></textarea>
+            <textarea id="paypal-msg" class="modal-textarea" style="text-align: left;" readonly></textarea>
             <button onclick="copyMsg('paypal-msg')" class="btn-action" style="margin-bottom:1rem;" data-i18n="copyBtn">Kopiera Meddelande</button>
             <button onclick="openPayPalLink()" class="btn-action" style="background:var(--accent-paypal);">Öppna PayPal ↗</button>
         </div>
@@ -449,12 +366,11 @@
     <div class="toast" id="toast">Kopierat!</div>
 
     <script>
-        // --- TEMA (DARK MODE) ---
+        // --- Tema ---
         const themeBtn = document.getElementById('theme-btn');
         let isDark = localStorage.getItem('theme') === 'dark';
         if(isDark) document.documentElement.setAttribute('data-theme', 'dark');
         themeBtn.textContent = isDark ? '☀️' : '🌙';
-
         const toggleTheme = () => {
             isDark = !isDark;
             if(isDark) { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeBtn.textContent = '☀️'; } 
@@ -468,60 +384,64 @@
             else { answer.classList.add('open'); icon.textContent = '−'; }
         };
 
-        // --- FRAKT & RABATTER ---
         const FREE_SHIPPING_LIMIT = 200;
         const VALID_PROMOS = { 'BETA10': 0.10, 'SOMMAR20': 0.20 }; 
         let activeDiscount = 0;
+        let globalFinalTotal = 0;
+        
+        let rawCart = JSON.parse(localStorage.getItem('crafters3d_cart')) || [];
+        let cart = rawCart.map(i => ({...i, cartItemId: i.cartItemId || i.id}));
 
         const shippingTiers = [
             { maxWeight: 50, cost: 18 }, { maxWeight: 100, cost: 36 }, { maxWeight: 250, cost: 59 },    
             { maxWeight: 500, cost: 65 }, { maxWeight: 1000, cost: 80 }, { maxWeight: Infinity, cost: 109 } 
         ];
 
-        // --- PRODUKTER ---
-      let products = [
-    {
+        let products = [
+          {
         id: "prod_6yec",
         price: 29,
         weight: 26,
         stock: 4,
-        image: "https://i.ibb.co/GQ3d8zNp/IMG-9347.png",
+        images: [
+            "https://i.ibb.co/GQ3d8zNp/IMG-9347.png"
+        ],
         accent: "#000000",
         badgeColor: "#ff8000",
         category: "Mobs",
         en: {
-            name: "2X Ghastling Figure - Movable legs",
+            name: "2X Ghastling Figure",
             badge: "HOT",
-            specs: "White and black PLA",
-            description: "Ghastling Figure with movable legs – a unique and playful 3D printed figure inspired by Minecraft. The articulated legs bring the figure to life, making it perfect as both a decoration and a fidget. Great for desks or as a fun gift for fans."
+            specs: "White & black PLA | Movable",
+            description: "Ghastling Figure with movable legs."
         },
         sv: {
-            name: "2X Ghastling Figur - Rörliga ben",
+            name: "2X Ghastling Figur",
             badge: "HET",
-            specs: "Vit och svart PLA",
-            description: "Ghastling Figur med rörliga ben – en unik och lekfull 3D-printad figur inspirerad av Minecraft. De rörliga benen ger figuren liv och gör den perfekt som både dekoration och fidget. Passar utmärkt på skrivbordet eller som en rolig present till fans."
+            specs: "Vit & svart PLA | Rörliga",
+            description: "Ghastling Figur med rörliga ben."
         }
     },
     {
-        id: "panda_figur",
-        price: 39,
-        weight: 22,
-        stock: 1,
-        image: "https://i.ibb.co/jZ3kWd2q/IMG-9332.png",
+        id: "creeper_wall",
+        price: 19,
+        weight: 21,
+        stock: 3,
+        images: ["https://i.ibb.co/pB0x6T7p/IMG-9370.png"], // <-- HÄR VAR FELET! Nu fixat.
         accent: "#000000",
         badgeColor: "#0080c0",
         category: "Mobs",
         en: {
-            name: "Panda Pal",
+            name: "Creeper Wall Art",
             badge: "NEW",
-            specs: "White and Black PLA",
-            description: "Panda Pal – your new little buddy, perfect for your desk, office, or living room to add a touch of joy to your day!"
+            specs: "Black PLA",
+            description: "A wall decoration of the Creeper from Minecraft."
         },
         sv: {
-            name: "Panda Figur",
+            name: "Creeper Väggkonst",
             badge: "NYHET",
-            specs: "Vit och Svart PLA",
-            description: "Panda Figur – din nya lilla kompis som passar perfekt på skrivbordet, kontoret eller i vardagsrummet för en extra dos glädje varje dag!"
+            specs: "Svart PLA",
+            description: "En väggkonst av Creeper från Minecraft."
         }
     },
     {
@@ -529,21 +449,23 @@
         price: 19,
         weight: 25,
         stock: 2,
-        image: "https://i.ibb.co/KpVfhVqh/IMG-9336.png",
+        images: [
+            "https://i.ibb.co/KpVfhVqh/IMG-9336.png"
+        ],
         accent: "#ff0000",
         badgeColor: "#0080c0",
         category: "Decor",
         en: {
             name: "Music Disc Coaster - Red",
             badge: "NEW",
-            specs: "Black and Red PLA",
-            description: "Coaster inspired by the iconic Minecraft music discs. Designed to protect your surfaces while adding a clean gaming aesthetic to your setup. Great for everyday use or as a gift for fans."
+            specs: "Black & Red PLA",
+            description: "Coaster inspired by Minecraft."
         },
         sv: {
             name: "Musik Disk Underlägg - Röd",
             badge: "NYHET",
-            specs: "Svart och Röd PLA",
-            description: "Underlägg inspirerat av Minecrafts ikoniska music discs. Perfekt för att skydda bordet samtidigt som du ger din setup en tydlig gamer-känsla. Passar utmärkt för både vardag och som present till fans."
+            specs: "Svart & Röd PLA",
+            description: "Underlägg inspirerat av Minecraft."
         }
     },
     {
@@ -551,102 +473,128 @@
         price: 19,
         weight: 20,
         stock: 2,
-        image: "https://i.ibb.co/nNWd3W7Z/IMG-9337.png",
+        images: [
+            "https://i.ibb.co/nNWd3W7Z/IMG-9337.png"
+        ],
         accent: "#000000",
         badgeColor: "#0080c0",
         category: "Decor",
         en: {
             name: "Music Disc Coaster - White",
             badge: "NEW",
-            specs: "White and Black PLA",
-            description: "Coaster inspired by the iconic Minecraft music discs. Perfect for protecting your surfaces while adding a clear gaming aesthetic to your setup. Great for everyday use or as a gift for fans. This white design fits perfectly in a clean setup."
+            specs: "White & Black PLA",
+            description: "Coaster inspired by Minecraft."
         },
         sv: {
             name: "Musik Disk Underlägg - Vit",
             badge: "NYHET",
-            specs: "Vit och Svart PLA",
-            description: "Underlägg inspirerat av Minecrafts ikoniska music discs. Perfekt för att skydda bordet samtidigt som du ger din setup en tydlig gamer-känsla. Passar utmärkt för både vardag och som present till fans. Denna vita design passar perfekt för en clean setup."
+            specs: "Vit & Svart PLA",
+            description: "Underlägg inspirerat av Minecraft."
         }
     },
     {
         id: "iron_sword",
         price: 49,
         weight: 50,
-        stock: 1,
-        image: "https://i.ibb.co/gFtVpQHv/IMG-9338.png",
+        stock: 0,
+        images: [
+            "https://i.ibb.co/gFtVpQHv/IMG-9338.png"
+        ],
         accent: "#8f8f8f",
         badgeColor: "#0080c0",
         category: "Tools",
         en: {
             name: "Iron Sword",
             badge: "NEW",
-            specs: "White and Black PLA",
-            description: "3D printed sword inspired by the classic iron sword from Minecraft. Perfect as a decoration for your setup or as a unique piece for any fan of the game. The clean design makes it a great fit for both desks and collections."
+            specs: "White & Black PLA",
+            description: "3D printed sword inspired by Minecraft."
         },
         sv: {
             name: "Järn Svärd",
             badge: "NYHET",
-            specs: "Vit och Svart PLA",
-            description: "3D-printat svärd inspirerat av det klassiska järnsvärdet från Minecraft. Perfekt som dekoration för din setup eller som en unik detalj för alla fans av spelet. Den stilrena designen gör att den passar lika bra på skrivbordet som i samlingen."
+            specs: "Vit & Svart PLA",
+            description: "3D-printat svärd."
+        }
+    },
+    {
+        id: "custom_text",
+        price: 0,
+        weight: 5,
+        stock: 99,
+        images: [
+            "https://images.unsplash.com/photo-1614036417651-1d478f0b88c9?q=80&w=600&auto=format&fit=crop"
+        ],
+        accent: "#10b981",
+        badgeColor: "#10b981",
+        category: "Decor",
+        colors: [
+            "Röd",
+            "Vit",
+            "Svart"
+        ],
+        isCustomText: true,
+        pricePerLetter: 3,
+        en: {
+            name: "Custom Text",
+            badge: "DESIGN YOURS",
+            specs: "Pick your color | Loose Letters",
+            description: "Design your own text! Price is calculated per letter (spaces are free)."
+        },
+        sv: {
+            name: "Egen Text",
+            badge: "EGEN DESIGN",
+            specs: "Välj din färg | Lösa bokstäver",
+            description: "Skriv din egen text! Priset räknas ut per bokstav (mellanslag är gratis)."
         }
     }
 ];
 
+        const reviews = [
+            { sv: { text: "Så himla fina prints! Svärdet ser magiskt ut.", author: "- Kalle S." }, en: { text: "Amazing prints!", author: "- Kalle S." } },
+            { sv: { text: "Köpte Ghastlingen och jag älskar att benen går att röra.", author: "- Amanda J." }, en: { text: "Bought the Ghastling and I love it.", author: "- Amanda J." } },
+            { sv: { text: "Music disc underläggen är ett måste för alla setups.", author: "- Viktor M." }, en: { text: "The music disc coasters are a must.", author: "- Viktor M." } }
+        ];
+
         let currentLang = 'sv'; 
         let currentCat = 'ALL';
+        let currentProducts = [...products];
 
         const dict = {
             en: {
-                // UPPdaterad text på Engelska
-                heroH1: "From the <span class='accent-text'>Screen</span> <br>to your Desk.", 
-                heroP: "High-quality 3D printed Minecraft figures and decor for your setup.",
+                heroH1: "From the <span class='accent-text'>Screen</span> <br>to your Desk.", heroP: "High-quality 3D printed Minecraft figures and decor for your setup.",
                 cartBtn: "Cart", searchPlaceholder: "Search figures...", cats_all: "All", cats_tools: "Tools", cats_mobs: "Figures", cats_decor: "Decor",
-                emptyGrid: "No artifacts found...", addBtn: "Add +", soldOut: "Sold Out", onlyLeft: "Only {x} left!",
+                emptyGrid: "No artifacts found...", addBtn: "Add to Cart", soldOut: "Sold Out", onlyLeft: "Only {x} left!",
                 cartTitle: "Your Cart", subtotal: "Subtotal", discount: "Discount", shipping: "Shipping", total: "Total", checkoutBtn: "Checkout",
-                emptyCart: "Cart is empty.", payMethodTitle: "Payment Method", copyBtn: "Copy Message",
-                swishInst: "Copy the message, replace the address and Swish to: <strong>070 436 85 77</strong>",
-                ppInst: "Copy the message below and paste it as a comment on PayPal.",
-                addressPlaceholder: "[NAME, STREET, ZIP, CITY, COUNTRY]", 
+                emptyCart: "Cart is empty.", payMethodTitle: "Payment Method", copyBtn: "Copy",
+                swishInst1: "Swish to: <strong>070 436 85 77</strong>. Use only the Order ID as the message.",
+                swishInst2: "Click below to email us your order details and shipping address!",
+                step1: "1. Pay via Swish", step2: "2. Send Order Details", emailBtn: "📧 Email Order & Address",
+                ppInst: "Copy the message below and paste it as a comment on PayPal.", addressPlaceholder: "[NAME, STREET, ZIP, CITY, COUNTRY]", 
                 freeSh: "Free Shipping!", awaySh: "Buy for {x} SEK more to get Free Shipping!",
                 promoPlaceholder: "Promo code (e.g. BETA10)", promoBtn: "Apply", contactBtn: "✉️ Contact Us",
-                
-                // --- FAQ EN ---
-                faqTitle: "FAQ / Information",
-                faq1_q: "What is the delivery time?",
-                faq1_a: "All products are 3D printed on demand. Delivery time is usually 1–3 business days.",
-                faq2_q: "What material is used?",
-                faq2_a: "We use high-quality PLA plastic.",
-                faq3_q: "Can I make a custom order?",
-                faq3_a: "Yes! Contact us via social media and we'll help you create a unique product.",
-                footerDesc: "Created for enthusiasts by enthusiasts!",
-                footerShip: "📍 Ships from Sweden",
-                footerSec: "🔒 Secure payment"
+                faqTitle: "FAQ / Information", faq1_q: "What is the delivery time?", faq1_a: "Delivery time is usually 1–3 business days.",
+                faq2_q: "What material is used?", faq2_a: "We use high-quality PLA plastic.", faq3_q: "Can I make a custom order?", faq3_a: "Yes! Contact us via email.",
+                footerDesc: "Created for enthusiasts by enthusiasts!", footerShip: "📍 Ships from Sweden", footerSec: "🔒 Secure payment",
+                reviewsTitle: "Wall of Fame", reviewsSub: "What our customers say about our prints!", customLabel: "What text do you want?", pricePerLetter: "Price: {x} SEK per letter",
+                colorLabel: "Choose color:"
             },
             sv: {
-                // Uppdaterad text på Svenska
-                heroH1: "Från <span class='accent-text'>Skärmen</span> <br>till Skrivbordet.", 
-                heroP: "Högkvalitativa 3D-printade Minecraft-figurer och inredning för din setup.",
+                heroH1: "Från <span class='accent-text'>Skärmen</span> <br>till Skrivbordet.", heroP: "Högkvalitativa 3D-printade Minecraft-figurer och inredning för din setup.",
                 cartBtn: "Varukorg", searchPlaceholder: "Sök figurer...", cats_all: "Alla", cats_tools: "Verktyg", cats_mobs: "Figurer", cats_decor: "Inredning",
-                emptyGrid: "Inga produkter hittades...", addBtn: "Lägg till +", soldOut: "Slutsåld", onlyLeft: "Endast {x} kvar!",
+                emptyGrid: "Inga produkter hittades...", addBtn: "Lägg i varukorg", soldOut: "Slutsåld", onlyLeft: "Endast {x} kvar!",
                 cartTitle: "Din Varukorg", subtotal: "Delsumma", discount: "Rabatt", shipping: "Frakt", total: "Totalt", checkoutBtn: "Gå till kassan",
-                emptyCart: "Varukorgen är tom.", payMethodTitle: "Välj Betalsätt", copyBtn: "Kopiera Meddelande",
-                swishInst: "Kopiera meddelandet, byt ut adressen och swisha till: <strong>070 436 85 77</strong>",
-                ppInst: "Kopiera meddelandet nedan och klistra in som kommentar på PayPal.",
-                addressPlaceholder: "[NAMN, GATA, POSTNR, ORT, LAND]", 
+                emptyCart: "Varukorgen är tom.", payMethodTitle: "Välj Betalsätt", copyBtn: "Kopiera",
+                swishInst1: "Swisha till: <strong>070 436 85 77</strong>. Ange endast Order-ID som meddelande.",
+                swishInst2: "Klicka nedan för att mejla oss din adress och order!",
+                step1: "1. Betala med Swish", step2: "2. Skicka din beställning", emailBtn: "📧 Mejla Order & Adress",
+                ppInst: "Kopiera meddelandet nedan och klistra in som kommentar på PayPal.", addressPlaceholder: "[NAMN, GATA, POSTNR, ORT, LAND]", 
                 freeSh: "Du har Fri Frakt!", awaySh: "Köp för {x} SEK till för Fri Frakt!",
                 promoPlaceholder: "Rabattkod (t.ex. BETA10)", promoBtn: "Använd", contactBtn: "✉️ Kontakta oss",
-                
-                // --- FAQ SV ---
-                faqTitle: "FAQ / Information",
-                faq1_q: "Hur lång är leveranstiden?",
-                faq1_a: "Alla produkter 3D-printas på beställning. Leveranstiden är vanligtvis 1–3 arbetsdagar.",
-                faq2_q: "Vilket material används?",
-                faq2_a: "Vi använder högkvalitativ PLA-plast.",
-                faq3_q: "Kan jag specialbeställa?",
-                faq3_a: "Ja! Kontakta oss via sociala medier så hjälper vi dig att skapa en unik produkt efter dina önskemål.",
-                footerDesc: "Skapad för entusiaster av entusiaster!",
-                footerShip: "📍 Skickas från Sverige",
-                footerSec: "🔒 Säker betalning"
+                faqTitle: "FAQ / Information", faq1_q: "Hur lång är leveranstiden?", faq1_a: "Leveranstiden är vanligtvis 1–3 arbetsdagar.",
+                faq2_q: "Vilket material används?", faq2_a: "Vi använder miljövänlig och högkvalitativ PLA-plast.", faq3_q: "Kan jag specialbeställa?", faq3_a: "Ja! Kontakta oss via mejl så löser vi det.",
+                footerDesc: "Skapad för entusiaster av entusiaster!", footerShip: "📍 Skickas från Sverige", footerSec: "🔒 Säker betalning",
+                reviewsTitle: "Wall of Fame", reviewsSub: "Vad våra kunder säger om våra prints!", customLabel: "Vilken text vill du ha?", pricePerLetter: "Pris: {x} SEK per bokstav",
+                colorLabel: "Välj färg:"
             }
         };
 
@@ -673,50 +621,50 @@
                 <button class="chip ${currentCat==='Mobs'?'active':''}" onclick="setCat('Mobs')">${t('cats_mobs')}</button>
                 <button class="chip ${currentCat==='Decor'?'active':''}" onclick="setCat('Decor')">${t('cats_decor')}</button>
             `;
-            filterProducts(); updateCartUI();
+            filterProducts(); 
+            renderReviews();
+            updateCartUI();
         };
 
         const setCat = (cat) => { currentCat = cat; updateUI(); };
-
-        let cart = [];
-        let currentProducts = [...products];
-        let globalFinalTotal = 0; 
 
         const renderProducts = (list) => {
             const grid = document.getElementById('product-grid');
             if (list.length === 0) { grid.innerHTML = `<p style="color:var(--text-muted); font-weight:600;">${t('emptyGrid')}</p>`; return; }
 
             grid.innerHTML = list.map((p, index) => {
-                
-                // Om 'badgeColor' finns appliceras den direkt, annars anpassar den sig efter Dark/Light mode som vanligt
                 const badgeStyle = p.badgeColor ? `background: ${p.badgeColor}; color: #ffffff;` : ``;
                 const badgeHtml = getField(p, 'badge') ? `<div class="badge-tag" style="${badgeStyle}">${getField(p, 'badge')}</div>` : '';
+                const displayImg = p.images[0];
+                const visualHtml = displayImg ? `<div class="product-media" style="background-image: url('${displayImg}');">${badgeHtml}</div>` : `<div class="product-media" style="background: var(--bg-base); border-bottom: 4px solid ${p.accent};">${badgeHtml}</div>`;
                 
-                const visualHtml = p.image ? `<div class="product-media" style="background-image: url('${p.image}');">${badgeHtml}</div>` : `<div class="product-media" style="background: linear-gradient(135deg, transparent, rgba(0,0,0,0.05)); border-bottom: 4px solid ${p.accent};">${badgeHtml}</div>`;
+                const displayPrice = p.isCustomText ? (currentLang === 'sv' ? 'Från 0 SEK' : 'From 0 SEK') : formatPrice(p.price);
                 
-                let stockWarning = '';
-                let btnHtml = `<button class="add-btn" onclick="addToCart('${p.id}', this)">${t('addBtn')}</button>`;
-                
-                if(p.stock === 0) {
-                    btnHtml = `<button class="add-btn" disabled>${t('soldOut')}</button>`;
-                } else if (p.stock <= 3) {
-                    stockWarning = `<span class="stock-warning">${t('onlyLeft').replace('{x}', p.stock)}</span>`;
-                }
-
                 return `
-                    <article class="product-card animate-in" style="--card-accent: ${p.accent}; animation-delay: ${index * 0.1}s;">
+                    <article class="product-card animate-in" style="--card-accent: ${p.accent}; animation-delay: ${index * 0.1}s;" onclick="openProductModal('${p.id}')">
                         ${visualHtml}
                         <p class="product-specs">${getField(p, 'specs')}</p>
                         <h3>${getField(p, 'name')}</h3>
                         <p class="product-desc">${getField(p, 'description')}</p>
-                        ${stockWarning}
+                        ${p.stock <= 3 && !p.isCustomText ? `<span class="stock-warning">${t('onlyLeft').replace('{x}', p.stock)}</span>` : ''}
                         <div class="product-bottom">
-                            <span class="price">${formatPrice(p.price)}</span>
-                            ${btnHtml}
+                            <span class="price">${displayPrice}</span>
+                            <button class="add-btn" onclick="event.stopPropagation(); openProductModal('${p.id}')">${(p.isCustomText || (p.colors && p.colors.length > 0)) ? (currentLang==='sv'?'Designa':'Design') : t('addBtn')}</button>
                         </div>
                     </article>`;
             }).join('');
         };
+
+        const renderReviews = () => {
+            const grid = document.getElementById('reviews-grid');
+            grid.innerHTML = reviews.map(r => `
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"${getField(r, 'text')}"</p>
+                    <p class="review-author">${getField(r, 'author')}</p>
+                </div>
+            `).join('');
+        }
 
         const filterProducts = () => {
             const searchInput = document.getElementById('search-input').value.toLowerCase();
@@ -727,15 +675,163 @@
             renderProducts(currentProducts);
         };
 
-        const addToCart = (id, btnElement) => {
+        const selectColor = (btn) => {
+            document.querySelectorAll('#pm-color-options .color-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        };
+
+        const openProductModal = (id) => {
+            const p = products.find(prod => prod.id === id);
+            if(!p) return;
+
+            document.getElementById('pm-title').textContent = getField(p, 'name');
+            document.getElementById('pm-desc').textContent = getField(p, 'description');
+            document.getElementById('pm-specs').textContent = getField(p, 'specs');
+            
+            const mainImg = document.getElementById('pm-main-img');
+            mainImg.src = p.images[0];
+            mainImg.style.borderColor = p.accent;
+
+            const thumbContainer = document.getElementById('pm-thumbnails');
+            if (p.images.length > 1) {
+                thumbContainer.style.display = 'flex';
+                thumbContainer.innerHTML = p.images.map((imgUrl, i) => `
+                    <img src="${imgUrl}" class="pm-thumb ${i===0?'active':''}" onclick="changeModalImg(this, '${imgUrl}')">
+                `).join('');
+            } else {
+                thumbContainer.style.display = 'none';
+            }
+
+            const btn = document.getElementById('pm-add-btn');
+            const stockDiv = document.getElementById('pm-stock');
+            const priceEl = document.getElementById('pm-price');
+            const customContainer = document.getElementById('pm-custom-text-container');
+            const customInput = document.getElementById('pm-custom-input');
+            const colorContainer = document.getElementById('pm-color-container');
+            const colorOptionsDiv = document.getElementById('pm-color-options');
+
+            if (p.colors && p.colors.length > 0) {
+                colorContainer.style.display = 'block';
+                colorOptionsDiv.innerHTML = p.colors.map((c, i) => 
+                    `<button class="color-btn ${i===0 ? 'active' : ''}" data-color="${c}" onclick="selectColor(this)">${c}</button>`
+                ).join('');
+            } else {
+                colorContainer.style.display = 'none';
+                colorOptionsDiv.innerHTML = '';
+            }
+
+            if (p.isCustomText) {
+                customContainer.style.display = 'block';
+                customInput.value = ''; 
+                priceEl.textContent = formatPrice(0);
+                btn.disabled = true;
+                btn.style.background = 'var(--border-light)';
+                btn.style.color = 'var(--text-muted)';
+                btn.textContent = currentLang === 'sv' ? "Skriv text först" : "Enter text first";
+                stockDiv.innerHTML = '';
+                
+                document.getElementById('pm-custom-price-info').textContent = t('pricePerLetter').replace('{x}', p.pricePerLetter);
+
+                customInput.oninput = (e) => {
+                    const text = e.target.value;
+                    const letterCount = text.replace(/\s/g, '').length;
+                    const dynamicPrice = letterCount * p.pricePerLetter;
+                    priceEl.textContent = formatPrice(dynamicPrice);
+
+                    if (letterCount > 0) {
+                        btn.disabled = false;
+                        btn.style.background = 'var(--text-main)';
+                        btn.style.color = 'var(--bg-surface)';
+                        btn.textContent = `${t('addBtn')} (${formatPrice(dynamicPrice)})`;
+                    } else {
+                        btn.disabled = true;
+                        btn.style.background = 'var(--border-light)';
+                        btn.style.color = 'var(--text-muted)';
+                        btn.textContent = currentLang === 'sv' ? "Skriv text först" : "Enter text first";
+                    }
+                };
+
+                btn.onclick = () => {
+                    const text = customInput.value;
+                    const letterCount = text.replace(/\s/g, '').length;
+                    if(letterCount > 0) {
+                        let chosenColor = null;
+                        if(p.colors) {
+                            const activeBtn = document.querySelector('#pm-color-options .color-btn.active');
+                            if(activeBtn) chosenColor = activeBtn.dataset.color;
+                        }
+                        addToCart(p.id, btn, text, letterCount * p.pricePerLetter, chosenColor);
+                    }
+                };
+
+            } else {
+                customContainer.style.display = 'none';
+                priceEl.textContent = formatPrice(p.price);
+
+                if(p.stock === 0) {
+                    btn.disabled = true;
+                    btn.textContent = t('soldOut');
+                    btn.style.background = 'var(--border-light)';
+                    btn.style.color = 'var(--text-muted)';
+                    btn.onclick = null;
+                    stockDiv.innerHTML = '';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = t('addBtn');
+                    btn.style.background = 'var(--text-main)';
+                    btn.style.color = 'var(--bg-surface)';
+                    
+                    btn.onclick = () => {
+                        let chosenColor = null;
+                        if(p.colors) {
+                            const activeBtn = document.querySelector('#pm-color-options .color-btn.active');
+                            if(activeBtn) chosenColor = activeBtn.dataset.color;
+                        }
+                        addToCart(p.id, btn, null, null, chosenColor);
+                    };
+                    
+                    if (p.stock <= 3) {
+                        stockDiv.innerHTML = `<span class="stock-warning">${t('onlyLeft').replace('{x}', p.stock)}</span>`;
+                    } else {
+                        stockDiv.innerHTML = `<span style="color: #10b981; font-weight: 700; font-size: 0.9rem;">✓ Finns i lager</span>`;
+                    }
+                }
+            }
+
+            document.getElementById('master-modal').classList.add('active');
+            document.querySelectorAll('.modal-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-product').classList.add('active');
+        };
+
+        const changeModalImg = (el, url) => {
+            document.getElementById('pm-main-img').src = url;
+            document.querySelectorAll('.pm-thumb').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        };
+
+        const addToCart = (id, btnElement, customText = null, customPrice = null, selectedColor = null) => {
             const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
+            
+            let cartItemId = id;
+            if (selectedColor) cartItemId += `_color-${selectedColor.replace(/\s+/g, '')}`;
+            if (customText) cartItemId += `_text-${customText.toLowerCase().replace(/[^a-z0-9åäö]/g, '')}`;
+
+            const existing = cart.find(item => item.cartItemId === cartItemId);
             
             if (existing) {
                 if(existing.quantity < product.stock) existing.quantity++;
-                else { showToast("Slut i lager!"); return; }
+                else { showToast(currentLang==='sv'?"Slut i lager!":"Out of stock!"); return; }
             } else {
-                if(product.stock > 0) cart.push({ ...product, quantity: 1 });
+                if(product.stock > 0) {
+                    cart.push({ 
+                        ...product, 
+                        cartItemId: cartItemId,
+                        quantity: 1,
+                        customText: customText,
+                        color: selectedColor,
+                        price: customPrice !== null ? customPrice : product.price
+                    });
+                }
             }
             updateCartUI();
 
@@ -744,62 +840,50 @@
                 btnElement.innerHTML = '✓';
                 btnElement.style.background = '#10b981';
                 btnElement.style.color = 'white';
-                btnElement.style.boxShadow = '0 10px 20px -5px rgba(16, 185, 129, 0.4)';
-                
                 setTimeout(() => {
                     btnElement.innerHTML = originalText;
                     btnElement.style.background = '';
                     btnElement.style.color = '';
-                    btnElement.style.boxShadow = '';
                 }, 800);
             }
 
             const mainCartBtn = document.getElementById('main-cart-btn');
             const badge = document.getElementById('cart-count');
-            
             mainCartBtn.classList.remove('cart-bump');
             badge.classList.remove('badge-pop');
             void mainCartBtn.offsetWidth; 
-            
             mainCartBtn.classList.add('cart-bump');
             badge.classList.add('badge-pop');
         };
 
-        const updateCartQty = (id, delta) => {
-            const product = products.find(p => p.id === id);
-            const item = cart.find(i => i.id === id);
+        const updateCartQty = (cartItemId, delta) => {
+            const item = cart.find(i => i.cartItemId === cartItemId);
             if (!item) return;
-            
+            const product = products.find(p => p.id === item.id);
             if(delta > 0 && item.quantity >= product.stock) { showToast("Max antal uppnått"); return; }
-            
             item.quantity += delta;
-            if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+            if (item.quantity <= 0) cart = cart.filter(i => i.cartItemId !== cartItemId);
             updateCartUI();
         };
 
         const applyPromo = () => {
             const input = document.getElementById('promo-input').value.replace(/\s+/g, '').toUpperCase();
-            
             if(VALID_PROMOS[input]) {
                 activeDiscount = VALID_PROMOS[input];
-                const successMsg = currentLang === 'sv' ? 'Rabatt aktiverad!' : 'Discount applied!';
-                document.getElementById('promo-msg').textContent = successMsg;
+                document.getElementById('promo-msg').textContent = currentLang === 'sv' ? 'Rabatt aktiverad!' : 'Discount applied!';
                 document.getElementById('promo-msg').style.display = 'block';
                 document.getElementById('promo-input').value = '';
                 updateCartUI();
-            } else {
-                const errorMsg = currentLang === 'sv' ? 'Ogiltig kod' : 'Invalid promo code';
-                showToast(errorMsg);
-            }
+            } else { showToast(currentLang === 'sv' ? 'Ogiltig kod' : 'Invalid promo code'); }
         };
 
         const updateCartUI = () => {
+            localStorage.setItem('crafters3d_cart', JSON.stringify(cart));
+
             const container = document.getElementById('cart-items');
             const btn = document.getElementById('checkout-btn');
-            
             const totalQty = cart.reduce((sum, i) => sum + i.quantity, 0);
             const rawSum = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-            
             const discountAmount = rawSum * activeDiscount;
             const sumAfterDiscount = rawSum - discountAmount;
 
@@ -847,10 +931,11 @@
 
             btn.disabled = false; btn.style.opacity = '1';
             container.innerHTML = cart.map(i => {
-                // NY KOD: Ladda bilden i varukorgen, om ingen bild finns sätts en fallback-färg.
-                const imgStyle = i.image 
-                    ? `background-image: url('${i.image}'); background-size: cover; background-position: center; border-left: 4px solid ${i.accent};` 
-                    : `background: var(--bg-surface); border-left: 4px solid ${i.accent};`;
+                const displayImg = i.images && i.images[0] ? i.images[0] : '';
+                const imgStyle = displayImg ? `background-image: url('${displayImg}'); background-size: cover; background-position: center; border-left: 4px solid ${i.accent};` : `background: var(--bg-surface); border-left: 4px solid ${i.accent};`;
+                
+                const textTag = i.customText ? `<div style="font-size: 0.8rem; background: var(--bg-surface); border: 1px solid var(--border-light); padding: 0.2rem 0.5rem; border-radius: 6px; display: inline-block; margin-top: 0.3rem;">"${i.customText}"</div>` : '';
+                const colorTag = i.color ? `<span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.2rem; font-weight: 700;">Färg: ${i.color}</span>` : '';
 
                 return `
                 <div class="cart-item">
@@ -858,13 +943,15 @@
                     <div class="item-info">
                         <div style="font-weight:800;">${getField(i, 'name')}</div>
                         <div style="color:var(--text-muted); font-size:0.9rem; font-weight:700;">${formatPrice(i.price)}</div>
+                        ${colorTag}
+                        ${textTag}
                         <div class="qty-box">
-                            <button class="qty-btn" onclick="updateCartQty('${i.id}', -1)">-</button>
+                            <button class="qty-btn" onclick="updateCartQty('${i.cartItemId}', -1)">-</button>
                             <span style="font-weight:800; min-width:20px; text-align:center;">${i.quantity}</span>
-                            <button class="qty-btn" onclick="updateCartQty('${i.id}', 1)">+</button>
+                            <button class="qty-btn" onclick="updateCartQty('${i.cartItemId}', 1)">+</button>
                         </div>
                     </div>
-                    <button class="remove-item" onclick="updateCartQty('${i.id}', -999)">✕</button>
+                    <button class="remove-item" onclick="updateCartQty('${i.cartItemId}', -999)">✕</button>
                 </div>`
             }).join('');
         };
@@ -883,14 +970,25 @@
             toggleCart(false);
             
             const orderId = generateOrderId();
-            const itemsText = cart.map(i => `${i.quantity}x ${getField(i, 'name')}`).join(', ');
-            const fullMessage = `Order: ${orderId} | ${itemsText}. Adress: ${t('addressPlaceholder')}`;
+            const itemsText = cart.map(i => {
+                let txt = `${i.quantity}x ${getField(i, 'name')}`;
+                if(i.color) txt += ` (Färg: ${i.color})`;
+                if(i.customText) txt += ` Text: "${i.customText}"`;
+                return txt;
+            }).join(', ');
             
-            document.getElementById('swish-msg').value = fullMessage;
+            const fullMessage = `Order: ${orderId}\nProdukter: ${itemsText}\nAdress: ${t('addressPlaceholder')}`;
+            const swishMessage = `Order-${orderId}`; 
+            
+            document.getElementById('swish-msg').value = swishMessage;
             document.getElementById('paypal-msg').value = fullMessage;
             document.getElementById('swish-total-text').textContent = formatPrice(globalFinalTotal);
             document.getElementById('paypal-total-text').textContent = formatPrice(globalFinalTotal);
             
+            const mailSubject = encodeURIComponent(`Ny Order - ${orderId}`);
+            const mailBody = encodeURIComponent(`Hej Crafters!\n\nJag har precis betalat ${formatPrice(globalFinalTotal)} via Swish.\n\nMin beställning:\nOrder-ID: ${orderId}\nProdukter: ${itemsText}\n\nMin leveransadress:\nNamn: \nGata: \nPostnummer och Ort: \nLand: `);
+            document.getElementById('swish-email-btn').href = `mailto:contact.crafters3d@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+
             document.getElementById('master-modal').classList.add('active');
             document.querySelectorAll('.modal-content').forEach(el => el.classList.remove('active'));
             document.getElementById('view-select').classList.add('active');
@@ -902,10 +1000,10 @@
         };
 
         const closeModal = () => document.getElementById('master-modal').classList.remove('active');
-        const copyMsg = (id) => { document.getElementById(id).select(); navigator.clipboard.writeText(document.getElementById(id).value).then(() => showToast("Kopierat!")); };
-        
+        const closeIfOverlay = (e) => { if(e.target.id === 'master-modal') closeModal(); };
+
+        const copyMsg = (id) => { document.getElementById(id).select(); navigator.clipboard.writeText(document.getElementById(id).value).then(() => showToast(t('copyBtn') + "rat!")); };
         const openPayPalLink = () => { window.open(`https://paypal.me/PelleHallqvist/${globalFinalTotal}SEK`, '_blank'); };
-        
         const showToast = (msg) => { const toast = document.getElementById('toast'); toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); };
 
         document.addEventListener('DOMContentLoaded', () => { updateUI(); });
