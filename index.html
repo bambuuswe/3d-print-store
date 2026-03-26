@@ -397,7 +397,7 @@
             { maxWeight: 500, cost: 65 }, { maxWeight: 1000, cost: 80 }, { maxWeight: Infinity, cost: 109 } 
         ];
 
-        let products = [
+let products = [
     {
         id: "prod_6yec",
         price: 29,
@@ -449,7 +449,7 @@
     {
         id: "custom_text",
         price: 0,
-        weight: 2,
+        weight: 1,
         stock: 99,
         images: [
             "https://i.ibb.co/wF5bqBr2/IMG-9371.png"
@@ -465,13 +465,44 @@
         isCustomText: true,
         pricePerLetter: 1,
         en: {
-            name: "Custom Text",
+            name: "Custom Text (Small)",
             badge: "DESIGN YOURS",
             specs: "Pick your color | Loose Letters",
             description: "Design your own text! Price is calculated per letter (spaces are free)."
         },
         sv: {
-            name: "Egen Text",
+            name: "Egen Text (Liten)",
+            badge: "EGEN DESIGN",
+            specs: "Välj din färg | Lösa bokstäver",
+            description: "Skriv din egen text! Priset räknas ut per bokstav (mellanslag är gratis)."
+        }
+    },
+    {
+        id: "custom_text_b",
+        price: 0,
+        weight: 1,
+        stock: 99,
+        images: [
+            "https://i.ibb.co/5h2WSWzF/IMG-9374.png"
+        ],
+        accent: "#10b981",
+        badgeColor: "#10b981",
+        category: "Decor",
+        colors: [
+            "Röd",
+            "Vit",
+            "Svart"
+        ],
+        isCustomText: true,
+        pricePerLetter: 1.5,
+        en: {
+            name: "Custom Text (Medium)",
+            badge: "DESIGN YOURS",
+            specs: "Pick your color | Loose Letters",
+            description: "Design your own text! Price is calculated per letter (spaces are free)."
+        },
+        sv: {
+            name: "Egen Text (Medel)",
             badge: "EGEN DESIGN",
             specs: "Välj din färg | Lösa bokstäver",
             description: "Skriv din egen text! Priset räknas ut per bokstav (mellanslag är gratis)."
